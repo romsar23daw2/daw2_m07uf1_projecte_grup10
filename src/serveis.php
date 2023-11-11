@@ -2,11 +2,11 @@
 
 session_start();
 if (!isset($_SESSION['usuari'])) {
-	header("Location: error_acces.php");
+	header("Location: ./Errors/error_acces.php");
 }
 
 if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
-	header("Location: logout_expira_sessio.php");
+	header("Location: ./logout_expira_sessio.php");
 }
 ?>
 

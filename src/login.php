@@ -14,7 +14,7 @@ if ((isset($_POST['usuari'])) && (isset($_POST['ctsnya']))) {
 	}
 
 	if (!isset($_SESSION['usuari'])) {
-		header("Location: error_login.php");
+		header("Location: ./Errors/error_login.php");
 	}
 }
 ?>

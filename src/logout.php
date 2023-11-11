@@ -12,7 +12,7 @@ if ((isset($_POST['resp'])) && ($_POST['resp'] == "y")) {
 } else {
 	session_start();
 	if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
-		header("Location: logout_expira_sessio.php");
+		header("Location: ./logout_expira_sessio.php");
 	}
 }
 ?>
