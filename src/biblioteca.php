@@ -59,13 +59,33 @@ function fAutenticacio($nomUsuariComprova)
 	return $autenticat;
 }
 
-function fActualitzaUsuaris($nomUsuari, $ctsnya, $tipus)
+function fRegistrarGestor($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $tipus)
 {
 	$ctsnya_hash = password_hash($ctsnya, PASSWORD_DEFAULT);
-	$dades_nou_usuari = $nomUsuari . ":" . $ctsnya_hash . ":" . $tipus . "\n";
+	$dades_nou_gestor = $id . ":" . $nomUsuari . ":" . $ctsnya_hash . ":" . $nomComplet . ":" . $correu . ":" . $telefon . ":"  . $tipus . "\n";
 
 	if ($fp = fopen(FITXER_USUARIS, "a")) {
-		if (fwrite($fp, $dades_nou_usuari)) {
+		if (fwrite($fp, $dades_nou_gestor)) {
+			$afegit = true;
+		} else {
+			$afegit = false;
+		}
+
+		fclose($fp);
+	} else {
+		$afegit = false;
+	}
+
+	return $afegit;
+}
+
+function fRegistrarClient($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $adrecaPostal, $numeroVisa, $nomGestorAssignat,  $tipus)
+{
+	$ctsnya_hash = password_hash($ctsnya, PASSWORD_DEFAULT);
+	$dades_nou_client = $id . ":" . $nomUsuari . ":" . $ctsnya_hash . ":" . $nomComplet . ":" . $correu . ":" . $telefon . ":" . $adrecaPostal . ":" . ":" . $numeroVisa  . ":" . $nomGestorAssignat . ":" . $tipus . "\n";
+
+	if ($fp = fopen(FITXER_USUARIS, "a")) {
+		if (fwrite($fp, $dades_nou_client)) {
 			$afegit = true;
 		} else {
 			$afegit = false;

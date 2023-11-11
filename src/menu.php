@@ -2,11 +2,11 @@
 session_start();
 
 if (!isset($_SESSION['usuari'])) {
-	header("Location: error_acces.php");
+	header("Location: ./Errors/error_acces.php");
 }
 
 if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
-	header("Location: logout_expira_sessio.php");
+	header("Location: ./logout_expira_sessio.php");
 }
 ?>
 
@@ -25,25 +25,48 @@ if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
 	if ($_SESSION['usuari'] == "admin") {
 		echo '<p>Usuari Administrador.</p>';
 		echo '<div>
-			<h3><b>Menú del visualitzador</b></h3>
-			<a href="personal.php">Agenda personal</a><br>
-			<a href="professional.php">Agenda professional</a><br>
-			<a href="serveis.php">Agenda de serveis</a><br>
-			<p><a href="registre.php">Registre de nous usuaris</a></p>
-			<p><a href="logout.php">Finalitza la sessió</a></p>
-		</div>';
+						<h3><b>Menú del visualitzador:</b></h3>
+						<p>
+							<a href="registre_gestor.php">Registrar nou gestor.</a><br>
+							<a href="registre_client.php">Registrar nou client.</a>
+						</p>
+
+						<a href="personal.php">Llista de gestors.</a><br>
+						<a href="serveis.php">Modificar o esborrar dades de un gestor.</a><br>
+						<a href="professional.php">Llista de clients.</a><br>
+						<a href="serveis.php">Modificar o esborrar dades de un client.</a><br>
+
+						<p><a href="serveis.php">Modificació de dades de accés.</a></p>
+
+						<p><a href="logout.php">Finalitza la sessió.</a></p>
+					</div>';
 	} else if ($_SESSION['usuari'] == "gestor0") {
 		echo "<p>Gestor de l'aplicació.</p>";
 		echo '<div>
-			<h3><b>Menú del visualitzador</b></h3>
-			<a href="personal.php">Llista de clients.</a><br>
-			<a href="professional.php">Eviar correu per esborrar client.</a><br>
-			<a href="serveis.php">Agenda de serveis</a><br>
-			<p><a href="registre.php">Registre de nous usuaris</a></p>
-			<p><a href="logout.php">Finalitza la sessió</a></p>
-		</div>';
-	} else if ($_SESSION['usuari'] == "usuari0") {
+						<h3><b>Menú del visualitzador:</b></h3>
+						<a href="personal.php">Llista de clients.</a><br>
+						<a href="professional.php">Eviar correu al administrador per esborrar client.</a><br>
+
+						<p><a href="serveis.php">Gestió de productes.</a></p>
+
+						<p><a href="logout.php">Finalitza la sessió.</a></p>
+					</div>';
+	} else if ($_SESSION['usuari'] == "client0") {
 		echo "<p>Usuari de l'aplicació.</p>";
+		echo '<div>
+						<h3><b>Menú del visualitzador:</b></h3>
+						<p><a href="personal.php">Visualitzar dades personals.</a><br></p>
+
+						<a href="professional.php">Eviar correu al gestor per modificacio/esborrament del compte de client.</a><br>
+						<a href="professional.php">Eviar correu al gestor per petició de justificació de comanda rebutjada.</a><br>
+
+						<p>
+							<a href="serveis.php">Gestionar cistella.</a><br>
+							<a href="serveis.php">Gestionar comanda.</a><br>
+						</p>
+
+						<p><a href="logout.php">Finalitza la sessió.</a></p>
+					</div>';
 	}
 	?>
 
