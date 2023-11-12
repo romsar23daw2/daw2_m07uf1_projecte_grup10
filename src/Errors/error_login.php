@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Visualitzador de l'agenda</title>
-	<link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
+	<link rel="stylesheet" href="../Assets/Stylesheets/agenda.css">
 </head>
 
 <body>
