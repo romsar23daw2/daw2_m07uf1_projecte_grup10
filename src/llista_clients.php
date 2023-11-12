@@ -20,20 +20,27 @@ if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
 </head>
 
 <body>
-	<h3><b>Agenda telefònica de contactes personals</b></h3>
+	<h3><b>Llista de clients:</b></h3>
 	<table>
 		<thead>
 			<tr>
-				<th>Noms</th>
-				<th>Telèfons</th>
+				<th>Identificador</th>
+				<th>Nom d'usuari</th>
+				<th>Contrasenya</th>
+				<th>Nom complet</th>
+				<th>Correu electrònic</th>
+				<th>Telèfon de contacte</th>
+				<th>Adreça postal</th>
+				<th>Número targeta visa</th>
+				<th>Gestor assignat</th>
 			</tr>
 		</thead>
 
 		<tbody>
 			<?php
 			require("biblioteca.php");
-			$llista = fLlegeixFitxer(FITXER_PERSONAL);
-			fCreaTaula($llista, COMU);
+			$llista = fLlegeixFitxer(FITXER_USUARIS);
+			fCreaTaulaClients($llista);
 			?>
 		</tbody>
 

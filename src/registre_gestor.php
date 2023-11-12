@@ -5,16 +5,18 @@ session_start();
 if (!isset($_SESSION['usuari'])) {
 	header("Location: ./Errors/error_acces.php");
 } else {
-	$autoritzat = fAutoritzacio($_SESSION['usuari']);
+	$autoritzat_admin = fAutoritzacio($_SESSION['usuari']);
 
 	if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
 		header("Location: ./logout_expira_sessio.php");
-	} else if (!$autoritzat) {
+	} else if (!$autoritzat_admin) {
 		header("Location: ./Errors/error_autoritzacio.php");
 	}
 }
 
-if ((isset($_POST['id_nou_gestor'])) && (isset($_POST['nom_usuari'])) && (isset($_POST['cts_nou_gestor'])) && (isset($_POST['nom_complet_nou_gestor'])) && (isset($_POST['correu_nou_gestor'])) && (isset($_POST['telefon_nou_gestor'])) && (isset($_POST['tipus_usuari']))) {
+$parametres_complets = (isset($_POST['id_nou_gestor'])) && (isset($_POST['nom_usuari'])) && (isset($_POST['cts_nou_gestor'])) && (isset($_POST['nom_complet_nou_gestor'])) && (isset($_POST['correu_nou_gestor'])) && (isset($_POST['telefon_nou_gestor'])) && (isset($_POST['tipus_usuari']));
+
+if ($parametres_complets) {
 	$afegit = fRegistrarGestor($_POST['id_nou_gestor'], $_POST['nom_usuari'], $_POST['cts_nou_gestor'], $_POST['nom_complet_nou_gestor'], $_POST['correu_nou_gestor'], $_POST['telefon_nou_gestor'], $_POST['tipus_usuari']);
 	$_SESSION['afegit'] = $afegit;
 
@@ -37,7 +39,7 @@ if ((isset($_POST['id_nou_gestor'])) && (isset($_POST['nom_usuari'])) && (isset(
 	<form action="registre_gestor.php" method="POST">
 		<p>
 			<label>ID del nou gestor:</label>
-			<input type="number" name="id_nou_gestor" min=0 max=100 required><br>
+			<input type="number" name="id_nou_gestor" min=1 max=1000 required><br>
 
 			<label>Nom d'usuari:</label>
 			<input type="text" name="nom_usuari" required><br>

@@ -14,7 +14,9 @@ if (!isset($_SESSION['usuari'])) {
 	}
 }
 
-if ((isset($_POST['id_nou_client'])) && (isset($_POST['nom_usuari'])) && (isset($_POST['cts_nou_client'])) && (isset($_POST['nom_complet_nou_client'])) && (isset($_POST['correu_nou_client'])) && (isset($_POST['telefon_nou_client'])) && (isset($_POST['adreca_nou_client'])) && (isset($_POST['num_visa_nou_client'])) && (isset($_POST['nom_gestor_nou_client'])) && (isset($_POST['tipus_usuari']))) {
+$parametres_complets = (isset($_POST['id_nou_client'])) && (isset($_POST['nom_usuari'])) && (isset($_POST['cts_nou_client'])) && (isset($_POST['nom_complet_nou_client'])) && (isset($_POST['correu_nou_client'])) && (isset($_POST['telefon_nou_client'])) && (isset($_POST['adreca_nou_client'])) && (isset($_POST['num_visa_nou_client'])) && (isset($_POST['nom_gestor_nou_client'])) && (isset($_POST['tipus_usuari']));
+
+if ($parametres_complets) {
 	$afegit = fRegistrarClient($_POST['id_nou_client'], $_POST['nom_usuari'], $_POST['cts_nou_client'], $_POST['nom_complet_nou_client'], $_POST['correu_nou_client'], $_POST['telefon_nou_client'], $_POST['adreca_nou_client'], $_POST['num_visa_nou_client'], $_POST['nom_gestor_nou_client'], $_POST['tipus_usuari']);
 	$_SESSION['afegit'] = $afegit;
 

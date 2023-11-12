@@ -2,9 +2,12 @@
 require("biblioteca.php");
 
 if ((isset($_POST['usuari'])) && (isset($_POST['ctsnya']))) {
-	$autenticat = fAutenticacio($_POST['usuari']);
 
-	if ($autenticat) {
+	// Here I have two possible authentications because the admin doesn't have an ID at the beggining of the string, so the index 0 of the array is the name, not the ID of the user.
+	$autenticat_admin = fAutenticacioAdmin($_POST['usuari']);
+	$autenticat_ges_usr = fAutenticacioGest_Usr($_POST['usuari']);
+
+	if ($autenticat_admin || $autenticat_ges_usr) {
 		session_start(); // Inici de sessió
 		$_SESSION['usuari'] = $_POST['usuari'];
 		//$_SESSION['usuari'] EMMAGATZEMA EL NOM DE L'USUARI VALIDAT

@@ -23,7 +23,6 @@ if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
 	<?php
 
 	if ($_SESSION['usuari'] == "admin") {
-		echo '<p>Usuari Administrador.</p>';
 		echo '<div>
 						<h3><b>Menú del visualitzador:</b></h3>
 						<p>
@@ -31,17 +30,16 @@ if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
 							<a href="registre_client.php">Registrar nou client.</a>
 						</p>
 
-						<a href="personal.php">Llista de gestors.</a><br>
+						<a href="llista_gestors.php">Llista de gestors.</a><br>
 						<a href="serveis.php">Modificar o esborrar dades de un gestor.</a><br>
-						<a href="professional.php">Llista de clients.</a><br>
+						<a href="llista_clients.php">Llista de clients.</a><br>
 						<a href="serveis.php">Modificar o esborrar dades de un client.</a><br>
 
-						<p><a href="serveis.php">Modificació de dades de accés.</a></p>
+						<p><a href="modificar_dades_administrador.php">Modificació de dades del administrador.</a></p>
 
 						<p><a href="logout.php">Finalitza la sessió.</a></p>
 					</div>';
-	} else if ($_SESSION['usuari'] == "gestor0") {
-		echo "<p>Gestor de l'aplicació.</p>";
+	} else if ($_SESSION['usuari'] ==  "gestor00") {
 		echo '<div>
 						<h3><b>Menú del visualitzador:</b></h3>
 						<a href="personal.php">Llista de clients.</a><br>
@@ -51,8 +49,7 @@ if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
 
 						<p><a href="logout.php">Finalitza la sessió.</a></p>
 					</div>';
-	} else if ($_SESSION['usuari'] == "client0") {
-		echo "<p>Usuari de l'aplicació.</p>";
+	} else if ($_SESSION['usuari'] == "client00") {
 		echo '<div>
 						<h3><b>Menú del visualitzador:</b></h3>
 						<p><a href="personal.php">Visualitzar dades personals.</a><br></p>
