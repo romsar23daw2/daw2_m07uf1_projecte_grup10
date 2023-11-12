@@ -1,7 +1,6 @@
 <?php
 define('TEMPS_EXPIRACIO', 900);  # TEMPS D'EXPIRACIÓ DE LA SESSIÓ EN SEGONS (15').
 define('TIMEOUT', 5);  # TEMPS DE VISUALITZACIÓ DEL MISSATGE INFORMATIU SOBRE LA CREACIÓ D'USUARIS
-define('PROFESSIONAL', "PROFESSIONAL");
 
 define('ADMIN', "2");
 define('GESTOR', "1");
@@ -65,11 +64,10 @@ function fAutenticacioAdmin($nomUsuariComprova)
 	return $autenticat;
 }
 
-// Function that I use to check if an user or manager is authenticated.
-function fAutenticacioGest_Usr($nomUsuariComprova)
+// Function that I use to check if a manager is authentified.
+function fAutenticacioGestor($nomUsuariComprova)
 {
 	$usuari_gestor = fLlegeixFitxer(FITXER_GESTORS);
-	$usuari_normal = fLlegeixFitxer(FITXER_USUARIS);
 
 	foreach ($usuari_gestor as $usuari_g) {
 		$dadesUsuari = explode(":", $usuari_g);
@@ -82,9 +80,17 @@ function fAutenticacioGest_Usr($nomUsuariComprova)
 		} else  $autenticat = false;
 	}
 
-	foreach ($usuari_normal as $usuari_n) {
-		$dadesUsuari = explode(":", $usuari_n);
-		$nomUsuari = $dadesUsuari[0];
+	return $autenticat;
+}
+
+// Function that I use to check if a manager is authentified.
+function fAutenticacioClient($nomUsuariComprova)
+{
+	$usuari_client = fLlegeixFitxer(FITXER_USUARIS);
+
+	foreach ($usuari_client as $usuari_c) {
+		$dadesUsuari = explode(":", $usuari_c);
+		$nomUsuari = $dadesUsuari[1]; // Here as I have an id before the name, the name is on the second index of the array.
 		$ctsUsuari = $dadesUsuari[2];
 
 		if (($nomUsuari == $nomUsuariComprova) && (password_verify($_POST['ctsnya'], $ctsUsuari))) {

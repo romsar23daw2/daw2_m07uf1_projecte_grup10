@@ -69,7 +69,7 @@ if ($parametres_complets) {
 		echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
 
 		if (isset($_SESSION['afegit'])) {
-			if ($_SESSION['afegit']) echo "<p style='color:red'>L'Usuari ha estat registrat correctament</p>";
+			if ($_SESSION['afegit']) echo "<p style='color:red'>El gestor ha estat registrat correctament</p>";
 			else {
 				echo "L'Usuari no ha estat registrat<br>";
 				echo "Comprova si hi ha algún problema del sistema per poder enregistrar nous usuaris<br>";
