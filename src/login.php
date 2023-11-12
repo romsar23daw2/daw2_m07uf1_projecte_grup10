@@ -2,17 +2,29 @@
 require("biblioteca.php");
 
 if ((isset($_POST['usuari'])) && (isset($_POST['ctsnya']))) {
-
-	// Here I have two possible authentications because the admin doesn't have an ID at the beggining of the string, so the index 0 of the array is the name, not the ID of the user.
 	$autenticat_admin = fAutenticacioAdmin($_POST['usuari']);
-	$autenticat_ges_usr = fAutenticacioGest_Usr($_POST['usuari']);
+	$autenticat_gestor = fAutenticacioGestor($_POST['usuari']);
+	$autenticat_client = fAutenticacioClient($_POST['usuari']);
 
-	if ($autenticat_admin || $autenticat_ges_usr) {
+	if ($autenticat_admin) {
 		session_start(); // Inici de sessió
 		$_SESSION['usuari'] = $_POST['usuari'];
+		$_SESSION['tipus_usuari'] = 2;  // Here I set the user type for the admin.
 		//$_SESSION['usuari'] EMMAGATZEMA EL NOM DE L'USUARI VALIDAT
 		$_SESSION['expira'] = time() + TEMPS_EXPIRACIO;
 		// $_SESSION['expira'] EMMAGATZEMA EL TEMPS D'EXPIRACIÓ DE LA SESSIÓ = HORA ACTUAL + TEMPS_EXPIRACIÓ EN SEGONS
+		header("Location: menu.php");
+	} elseif ($autenticat_gestor) {
+		session_start(); // Inici de sessió
+		$_SESSION['usuari'] = $_POST['usuari'];
+		$_SESSION['tipus_usuari'] = 1;  // Here I set the user type for gestor.
+		$_SESSION['expira'] = time() + TEMPS_EXPIRACIO;
+		header("Location: menu.php");
+	} elseif ($autenticat_client) {
+		session_start(); // Inici de sessió
+		$_SESSION['usuari'] = $_POST['usuari'];
+		$_SESSION['tipus_usuari'] = 0;  // Here I set the user type for client.
+		$_SESSION['expira'] = time() + TEMPS_EXPIRACIO;
 		header("Location: menu.php");
 	}
 

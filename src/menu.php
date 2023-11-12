@@ -21,8 +21,7 @@ if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
 
 <body>
 	<?php
-
-	if ($_SESSION['usuari'] == "admin") {
+	if ($_SESSION['tipus_usuari'] == 2) {
 		echo '<div>
 						<h3><b>Menú del visualitzador:</b></h3>
 						<p>
@@ -39,7 +38,7 @@ if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
 
 						<p><a href="logout.php">Finalitza la sessió.</a></p>
 					</div>';
-	} else if ($_SESSION['usuari'] ==  "gestor00") {
+	} elseif ($_SESSION['tipus_usuari'] ==  1) {
 		echo '<div>
 						<h3><b>Menú del visualitzador:</b></h3>
 						<a href="personal.php">Llista de clients.</a><br>
@@ -49,7 +48,7 @@ if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
 
 						<p><a href="logout.php">Finalitza la sessió.</a></p>
 					</div>';
-	} else if ($_SESSION['usuari'] == "client00") {
+	} elseif ($_SESSION['tipus_usuari'] == 0) {
 		echo '<div>
 						<h3><b>Menú del visualitzador:</b></h3>
 						<p><a href="personal.php">Visualitzar dades personals.</a><br></p>
