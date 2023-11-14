@@ -14,10 +14,10 @@ if (!isset($_SESSION['usuari'])) {
 	}
 }
 
-$parametres_complets = (isset($_POST['id_nou_client'])) && (isset($_POST['nom_usuari'])) && (isset($_POST['cts_nou_client'])) && (isset($_POST['nom_complet_nou_client'])) && (isset($_POST['correu_nou_client'])) && (isset($_POST['telefon_nou_client'])) && (isset($_POST['adreca_nou_client'])) && (isset($_POST['num_visa_nou_client'])) && (isset($_POST['nom_gestor_nou_client'])) && (isset($_POST['tipus_usuari']));
+$parametres_complets = (isset($_POST['id_nou_client'])) && (isset($_POST['nom_usuari'])) && (isset($_POST['cts_nou_client'])) && (isset($_POST['nom_complet_nou_client'])) && (isset($_POST['correu_nou_client'])) && (isset($_POST['telefon_nou_client'])) && (isset($_POST['adreca_nou_client'])) && (isset($_POST['num_visa_nou_client'])) && (isset($_POST['id_gestor_nou_client'])) && (isset($_POST['tipus_usuari']));
 
 if ($parametres_complets) {
-	$afegit = fRegistrarClient($_POST['id_nou_client'], $_POST['nom_usuari'], $_POST['cts_nou_client'], $_POST['nom_complet_nou_client'], $_POST['correu_nou_client'], $_POST['telefon_nou_client'], $_POST['adreca_nou_client'], $_POST['num_visa_nou_client'], $_POST['nom_gestor_nou_client'], $_POST['tipus_usuari']);
+	$afegit = fRegistrarClient($_POST['id_nou_client'], $_POST['nom_usuari'], $_POST['cts_nou_client'], $_POST['nom_complet_nou_client'], $_POST['correu_nou_client'], $_POST['telefon_nou_client'], $_POST['adreca_nou_client'], $_POST['num_visa_nou_client'], $_POST['id_gestor_nou_client'], $_POST['tipus_usuari']);
 	$_SESSION['afegit'] = $afegit;
 
 	header("refresh: 5; url=menu.php"); // Passats 5 segons el navegador demana menu.php i es torna a menu.php.
@@ -39,7 +39,7 @@ if ($parametres_complets) {
 	<form action="registre_client.php" method="POST">
 		<p>
 			<label>ID del nou client:</label>
-			<input type="number" name="id_nou_client" min=0 max=100 required><br>
+			<input type="number" name="id_nou_client" min=0 max=1000 required><br>
 
 			<label>Nom d'usuari:</label>
 			<input type="text" name="nom_usuari" required><br>
@@ -62,8 +62,8 @@ if ($parametres_complets) {
 			<label>Número de visa del nou client:</label>
 			<input type="number" name="num_visa_nou_client" required><br>
 
-			<label>Nom del gestor assignat pel nou client:</label>
-			<input type="text" name="nom_gestor_nou_client" required><br>
+			<label>ID del gestor assignat pel nou client:</label>
+			<input type="number" name="id_gestor_nou_client" min=0 max=100 required><br>
 		</p>
 
 		<button type="submit" name="tipus_usuari" value=<?php echo USR ?>>Crear nou client.</button> <!-- value=<?php echo GESTOR ?> is to be able the type of user.-->

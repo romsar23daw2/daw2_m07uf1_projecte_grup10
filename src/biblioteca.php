@@ -102,6 +102,7 @@ function fAutenticacioClient($nomUsuariComprova)
 	return $autenticat;
 }
 
+// Function to modify the credentials from the admin.
 function fModificacioDadesAdmin($nomUsuari, $ctsnya, $correu, $tipus)
 {
 	$ctsnya_hash = password_hash($ctsnya, PASSWORD_DEFAULT);
@@ -122,6 +123,7 @@ function fModificacioDadesAdmin($nomUsuari, $ctsnya, $correu, $tipus)
 	return $afegit;
 }
 
+// Function to register a new manager.
 function fRegistrarGestor($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $tipus)
 {
 	$ctsnya_hash = password_hash($ctsnya, PASSWORD_DEFAULT);
@@ -142,10 +144,11 @@ function fRegistrarGestor($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telef
 	return $afegit;
 }
 
-function fRegistrarClient($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $adrecaPostal, $numeroVisa, $nomGestorAssignat,  $tipus)
+// Function to register a new client.
+function fRegistrarClient($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $adrecaPostal, $numeroVisa, $idGestorAssignat,  $tipus)
 {
 	$ctsnya_hash = password_hash($ctsnya, PASSWORD_DEFAULT);
-	$dades_nou_client = $id . ":" . $nomUsuari . ":" . $ctsnya_hash . ":" . $nomComplet . ":" . $correu . ":" . $telefon . ":" . $adrecaPostal . ":" . $numeroVisa  . ":" . $nomGestorAssignat . ":" . $tipus . "\n";
+	$dades_nou_client = $id . ":" . $nomUsuari . ":" . $ctsnya_hash . ":" . $nomComplet . ":" . $correu . ":" . $telefon . ":" . $adrecaPostal . ":" . $numeroVisa  . ":" . $idGestorAssignat . ":" . $tipus . "\n";
 
 	if ($fp = fopen(FITXER_USUARIS, "a")) {
 		if (fwrite($fp, $dades_nou_client)) {
@@ -156,7 +159,6 @@ function fRegistrarClient($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telef
 
 		fclose($fp);
 	}
-
 
 	if ($fp = fopen(DIRECTORI_COMANDES . $nomUsuari, "w")) {  // "DIRECTORI_COMANDES . $nomUsuari" is to create the name of the user in the directory.
 		if (fwrite($fp, "")) {
@@ -177,30 +179,68 @@ function fRegistrarClient($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telef
 	return $afegit;
 }
 
+// Function that I use to check the ID of a manager.
+function fLocalitzarUsuari($id_usuari_comprova)
+{
+	$usuaris = fLlegeixFitxer(FITXER_GESTORS);
+
+	foreach ($usuaris as $usuari) {
+		$dadesUsuari = explode(":", $usuari);
+		$id = $dadesUsuari[0];
+
+		if ($id == $id_usuari_comprova) {
+			return true;
+		}
+	}
+
+	echo "El gestor amb id " . $id_usuari_comprova .  " no existeix.";
+	return false;
+}
+
+// Function modify the credentials of a manager.
+function fModificarGestor($id_usuari_comprova)
+{
+	$usuaris = fLlegeixFitxer(FITXER_GESTORS);
+
+	foreach ($usuaris as $usuari) {
+		$dadesUsuari = explode(":", $usuari);
+		$id = $dadesUsuari[0];
+
+		if ($id == $id_usuari_comprova) {
+			return true;
+		}
+	}
+
+	echo "El gestor amb id " . $id_usuari_comprova .  " no existeix.";
+	return false;
+}
+
+// Function to create the table of the managers.
 function fCreaTaulaGestors($llista)
 {
 	foreach ($llista as $entrada) {
 		$dadesEntrada = explode(":", $entrada);
 		$id = $dadesEntrada[0];
 		$nom = $dadesEntrada[1];
-		$contrasenya = $dadesEntrada[2];
+		// $contrasenya = $dadesEntrada[2];
 		$nom_complet = $dadesEntrada[3];
 		$correu_electronic = $dadesEntrada[4];
 		$telefon_contacte = $dadesEntrada[5];
 
-		echo "<tr><td>$id</td><td>$nom</td><td>$contrasenya</td><td>$nom_complet</td><td>$correu_electronic</td><td>$telefon_contacte</td><tr>";
+		echo "<tr><td>$id</td><td>$nom</td><td>$nom_complet</td><td>$correu_electronic</td><td>$telefon_contacte</td><tr>";
 	}
 
 	return 0;
 }
 
+// Function to create the table of the clients.
 function fCreaTaulaClients($llista)
 {
 	foreach ($llista as $entrada) {
 		$dadesEntrada = explode(":", $entrada);
 		$id = $dadesEntrada[0];
 		$nom = $dadesEntrada[1];
-		$contrasenya = $dadesEntrada[2];
+		// $contrasenya = $dadesEntrada[2];
 		$nom_complet = $dadesEntrada[3];
 		$correu_electronic = $dadesEntrada[4];
 		$telefon_contacte = $dadesEntrada[5];
@@ -208,7 +248,31 @@ function fCreaTaulaClients($llista)
 		$num_visa = $dadesEntrada[7];
 		$gestor_assignat = $dadesEntrada[8];
 
-		echo "<tr><td>$id</td><td>$nom</td><td>$contrasenya</td><td>$nom_complet</td><td>$correu_electronic</td><td>$telefon_contacte</td><td>$adreca_postal</td><td>$num_visa</td><td>$gestor_assignat</td><tr>";
+		echo "<tr><td>$id</td><td>$nom</td><td>$nom_complet</td><td>$correu_electronic</td><td>$telefon_contacte</td><td>$adreca_postal</td><td>$num_visa</td><td>$gestor_assignat</td><tr>";
+	}
+
+	return 0;
+}
+
+// Function to show the clients from a specific manager.
+function fCreaTaulaClientsPerGestor($nom_usuari, $llista)
+{
+	foreach ($llista as $entrada) {
+		$dadesEntrada = explode(":", $entrada);
+		$id = $dadesEntrada[0];
+		$nom = $dadesEntrada[1];
+		// $contrasenya = $dadesEntrada[2];
+		$nom_complet = $dadesEntrada[3];
+		$correu_electronic = $dadesEntrada[4];
+		$telefon_contacte = $dadesEntrada[5];
+		$adreca_postal = $dadesEntrada[6];
+		$num_visa = $dadesEntrada[7];
+		$gestor_assignat = $dadesEntrada[8];
+
+		// Check if the name of the manager (I get it using the user session, not the ID) is the same as $gestor_assignat from the table:
+		if ($nom_usuari == $gestor_assignat) {
+			echo "<tr><td>$id</td><td>$nom</td><td>$nom_complet</td><td>$correu_electronic</td><td>$telefon_contacte</td><td>$adreca_postal</td><td>$num_visa</td><td>$gestor_assignat</td><tr>";
+		}
 	}
 
 	return 0;

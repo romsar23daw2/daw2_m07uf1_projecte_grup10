@@ -26,7 +26,7 @@ if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
 			<tr>
 				<th>Identificador</th>
 				<th>Nom d'usuari</th>
-				<th>Contrasenya</th>
+				<!-- <th>Contrasenya</th> -->
 				<th>Nom complet</th>
 				<th>Correu electrònic</th>
 				<th>Telèfon de contacte</th>
