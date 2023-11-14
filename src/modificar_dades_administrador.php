@@ -5,7 +5,7 @@ session_start();
 if (!isset($_SESSION['usuari'])) {
   header("Location: ./Errors/error_acces.php");
 } else {
-  $autoritzat = fAutoritzacio($_SESSION['usuari']);
+  $autoritzat = fAutenticacioAdmin($_SESSION['usuari']);
 
   if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
     header("Location: ./logout_expira_sessio.php");

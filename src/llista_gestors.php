@@ -3,9 +3,7 @@ session_start();
 
 if (!isset($_SESSION['usuari'])) {
 	header("Location: ./Errors/error_acces.php");
-}
-
-if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
+} elseif (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
 	header("Location: ./logout_expira_sessio.php");
 }
 ?>
@@ -20,28 +18,35 @@ if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
 </head>
 
 <body>
-	<h3><b>Llista de gestors:</b></h3>
-	<table>
-		<thead>
-			<tr>
-				<th>Identificador</th>
-				<th>Nom d'usuari</th>
-				<!-- <th>Contrasenya</th> -->
-				<th>Nom complet</th>
-				<th>Correu electrònic</th>
-				<th>Telèfon de contacte</th>
-			</tr>
-		</thead>
+	<?php
+	if ($_SESSION['tipus_usuari'] == 2) {
+		echo '<div>';
+		echo '<h3><b>Llista de gestors:</b></h3>';
+		echo '<table>';
+		echo '<thead>';
+		echo '<tr>';
+		echo '<th>Identificador</th>';
+		echo '<th>Nom de usuari</th>';
+		echo '<th>Nom complet</th>';
+		echo '<th>Correu electrònic</th>';
+		echo '<th>Telèfon de contacte</th>';
+		echo '</tr>';
+		echo '</thead>';
+		echo '<tbody>';
 
-		<tbody>
-			<?php
-			require("biblioteca.php");
-			$llista = fLlegeixFitxer(FITXER_GESTORS);
-			fCreaTaulaGestors($llista);
-			?>
-		</tbody>
+		require("biblioteca.php");
+		$llista = fLlegeixFitxer(FITXER_GESTORS);
+		fCreaTaulaGestors($llista);
 
-	</table>
+		echo '</tbody>';
+		echo '</table>';
+		echo '</div>';
+	} else {
+		// Only an admin can access here.
+		header("Location: ./Errors/error_autoritzacio.php");
+	}
+	?>
+
 	<p><a href="menu.php">Torna al menú</a></p>
 
 	<label class="diahora">
