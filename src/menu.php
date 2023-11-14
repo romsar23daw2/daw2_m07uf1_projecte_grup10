@@ -30,7 +30,7 @@ if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
 						</p>
 
 						<a href="llista_gestors.php">Llista de gestors.</a><br>
-						<a href="serveis.php">Modificar o esborrar dades de un gestor.</a><br>
+						<a href="modificar_gestor.php">Modificar o esborrar dades de un gestor.</a><br>
 						<a href="llista_clients.php">Llista de clients.</a><br>
 						<a href="serveis.php">Modificar o esborrar dades de un client.</a><br>
 
@@ -41,7 +41,7 @@ if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
 	} elseif ($_SESSION['tipus_usuari'] ==  1) {
 		echo '<div>
 						<h3><b>Menú del visualitzador:</b></h3>
-						<a href="personal.php">Llista de clients.</a><br>
+						<a href="llista_clients.php">Llista de clients.</a><br>
 						<a href="professional.php">Eviar correu al administrador per esborrar client.</a><br>
 
 						<p><a href="serveis.php">Gestió de productes.</a></p>

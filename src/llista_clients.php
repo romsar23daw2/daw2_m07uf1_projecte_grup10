@@ -20,31 +20,71 @@ if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
 </head>
 
 <body>
-	<h3><b>Llista de clients:</b></h3>
-	<table>
-		<thead>
-			<tr>
-				<th>Identificador</th>
-				<th>Nom d'usuari</th>
-				<th>Contrasenya</th>
-				<th>Nom complet</th>
-				<th>Correu electrònic</th>
-				<th>Telèfon de contacte</th>
-				<th>Adreça postal</th>
-				<th>Número targeta visa</th>
-				<th>Gestor assignat</th>
-			</tr>
-		</thead>
 
-		<tbody>
+	<form action="llista_clients.php" method="POST">
+		<p>
 			<?php
-			require("biblioteca.php");
-			$llista = fLlegeixFitxer(FITXER_USUARIS);
-			fCreaTaulaClients($llista);
-			?>
-		</tbody>
+			// If logged in with the admin, show all managers, in this case, as I need to use a function inside the php code, I echo the table in individual parts.
 
-	</table>
+			if ($_SESSION['tipus_usuari'] == 2) {
+				echo '<div>';
+				echo '<h3><b>Llista de clients:</b></h3>';
+				echo '<table>';
+				echo '<thead>';
+				echo '<tr>';
+				echo '<th>Identificador</th>';
+				echo '<th>Nom de usuari</th>';
+				echo '<th>Nom complet</th>';
+				echo '<th>Correu electrònic</th>';
+				echo '<th>Telèfon de contacte</th>';
+				echo '<th>Adreça postal</th>';
+				echo '<th>Número targeta visa</th>';
+				echo '<th>Gestor assignat</th>';
+				echo '</tr>';
+				echo '</thead>';
+				echo '<tbody>';
+
+				require("biblioteca.php");
+				$llista = fLlegeixFitxer(FITXER_USUARIS);
+				fCreaTaulaClients($llista);
+
+				echo '</tbody>';
+				echo '</table>';
+				echo '</div>';
+			}
+			// It I'm not the admin means that I'm a manager.
+			else {
+				echo '<div>';
+				echo '<h3><b>Llista de clients:</b></h3>';
+				echo '<table>';
+				echo '<thead>';
+				echo '<tr>';
+				echo '<th>Identificador</th>';
+				echo '<th>Nom de usuari</th>';
+				echo '<th>Nom complet</th>';
+				echo '<th>Correu electrònic</th>';
+				echo '<th>Telèfon de contacte</th>';
+				echo '<th>Adreça postal</th>';
+				echo '<th>Número targeta visa</th>';
+				echo '<th>Gestor assignat</th>';
+				echo '</tr>';
+				echo '</thead>';
+				echo '<tbody>';
+
+				require("biblioteca.php");
+				$llista = fLlegeixFitxer(FITXER_USUARIS);
+
+				// Here I create a table showing the clients that a manager has, not using the ID but the username of the manager.
+				fCreaTaulaClientsPerGestor($_SESSION['usuari'], $llista);
+
+				echo '</tbody>';
+				echo '</table>';
+				echo '</div>';
+			}
+			?>
+		</p>
+	</form>
+
 	<p><a href="menu.php">Torna al menú</a></p>
 
 	<label class="diahora">
