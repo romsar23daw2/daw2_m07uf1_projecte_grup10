@@ -8,7 +8,7 @@ define('USR', "0");
 
 define('FITXER_ADMINISTRADOR', "./usuaris/administrador");
 define('FITXER_GESTORS', "./usuaris/gestors");
-define('FITXER_USUARIS', "./usuaris/usuaris");
+define('FITXER_CLIENTS', "./usuaris/clients");
 
 define('DIRECTORI_COMANDES', "./comandes/");
 define('DIRECTORI_CISTELLES', "./cistelles/");
@@ -25,8 +25,19 @@ function fLlegeixFitxer($nomFitxer)
 	return $dades;
 }
 
+function fLlegeixFitxerGenTaula($nomFitxer)
+{
+	if ($fp = fopen($nomFitxer, "r")) {
+		$midaFitxer = filesize($nomFitxer);
+		$dades = explode(PHP_EOL, fread($fp, $midaFitxer));
+		array_pop($dades); //La darrera línia, és una línia en blanc i s'ha d'eliminar de l'array
+		fclose($fp);
+	}
+
+	return $dades;
+}
+
 // Function that I use to check if I have the right user type (3 = admin) when I try to create a new manager or client.
-// MODIFY, now just works with admin.
 function fAutoritzacio($nomUsuariComprova)
 {
 	$usuaris = fLlegeixFitxer(FITXER_ADMINISTRADOR);
@@ -64,7 +75,7 @@ function fAutenticacioAdmin($nomUsuariComprova)
 	return $autenticat;
 }
 
-// Function that I use to check if a manager is authentified.
+// Function that I use to check if a manager is authentified (by name).
 function fAutenticacioGestor($nomUsuariComprova)
 {
 	$usuari_gestor = fLlegeixFitxer(FITXER_GESTORS);
@@ -83,10 +94,10 @@ function fAutenticacioGestor($nomUsuariComprova)
 	return $autenticat;
 }
 
-// Function that I use to check if a manager is authentified.
+// Function that I use to check if a user is authentified (by name).
 function fAutenticacioClient($nomUsuariComprova)
 {
-	$usuari_client = fLlegeixFitxer(FITXER_USUARIS);
+	$usuari_client = fLlegeixFitxer(FITXER_CLIENTS);
 
 	foreach ($usuari_client as $usuari_c) {
 		$dadesUsuari = explode(":", $usuari_c);
@@ -150,7 +161,7 @@ function fRegistrarClient($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telef
 	$ctsnya_hash = password_hash($ctsnya, PASSWORD_DEFAULT);
 	$dades_nou_client = $id . ":" . $nomUsuari . ":" . $ctsnya_hash . ":" . $nomComplet . ":" . $correu . ":" . $telefon . ":" . $adrecaPostal . ":" . $numeroVisa  . ":" . $idGestorAssignat . ":" . $tipus . "\n";
 
-	if ($fp = fopen(FITXER_USUARIS, "a")) {
+	if ($fp = fopen(FITXER_CLIENTS, "a")) {
 		if (fwrite($fp, $dades_nou_client)) {
 			$afegit = true;
 		} else {
@@ -197,22 +208,15 @@ function fLocalitzarUsuari($id_usuari_comprova)
 	return false;
 }
 
-// Function modify the credentials of a manager.
-function fModificarGestor($id_usuari_comprova)
+// Function to modify a manager.
+function fModificarGestor($id_gestor)
 {
-	$usuaris = fLlegeixFitxer(FITXER_GESTORS);
+	$usuari_gestor = fLlegeixFitxer(FITXER_GESTORS);
 
-	foreach ($usuaris as $usuari) {
-		$dadesUsuari = explode(":", $usuari);
-		$id = $dadesUsuari[0];
-
-		if ($id == $id_usuari_comprova) {
-			return true;
-		}
+	foreach ($usuari_gestor as $usuari_g) {
+		$dadesUsuari = explode(":", $usuari_g);
+		echo $dadesUsuari;
 	}
-
-	echo "El gestor amb id " . $id_usuari_comprova .  " no existeix.";
-	return false;
 }
 
 // Function to create the table of the managers.

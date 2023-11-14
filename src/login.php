@@ -2,6 +2,8 @@
 require("biblioteca.php");
 
 if ((isset($_POST['usuari'])) && (isset($_POST['ctsnya']))) {
+	// Here I have thee diferent variables, which I use to check the user type.
+
 	$autenticat_admin = fAutenticacioAdmin($_POST['usuari']);
 	$autenticat_gestor = fAutenticacioGestor($_POST['usuari']);
 	$autenticat_client = fAutenticacioClient($_POST['usuari']);
