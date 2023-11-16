@@ -10,15 +10,24 @@ define('FITXER_ADMINISTRADOR', "./usuaris/administrador");
 define('FITXER_GESTORS', "./usuaris/gestors");
 define('FITXER_CLIENTS', "./usuaris/clients");
 
-define('DIRECTORI_COMANDES', "./comandes/");
-define('DIRECTORI_CISTELLES', "./cistelles/");
+define('DIRECTORI_COMANDA', "../comandes/");
+define('DIRECTORI_CISTELLA', "../cistelles/");
 
 function fLlegeixFitxer($nomFitxer)
 {
 	if ($fp = fopen($nomFitxer, "r")) {
 		$midaFitxer = filesize($nomFitxer);
-		$dades = explode(PHP_EOL, fread($fp, $midaFitxer));
-		array_pop($dades); //La darrera línia, és una línia en blanc i s'ha d'eliminar de l'array
+
+		// If the size of the file is greated than 0:
+		if ($midaFitxer > 0) {
+			$dades = explode(PHP_EOL, fread($fp, $midaFitxer));  // I read line by line.
+			array_pop($dades); //La darrera línia, és una línia en blanc i s'ha d'eliminar de l'array
+		} else {
+			// If it's less than 0 (in producte.php), I create an array where I store the values.
+			$dades = [];
+		}
+
+
 		fclose($fp);
 	}
 
@@ -155,6 +164,13 @@ function fRegistrarGestor($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telef
 	return $afegit;
 }
 
+// Function to modify a manager.
+// I NEED TO FINISH IT.
+function fModificarGestor($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $tipus)
+{
+	preg_replace([$id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $tipus], fRegistrarGestor($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $tipus), fLlegeixFitxer(FITXER_GESTORS));
+}
+
 // Function to register a new client.
 function fRegistrarClient($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $adrecaPostal, $numeroVisa, $idGestorAssignat,  $tipus)
 {
@@ -171,14 +187,16 @@ function fRegistrarClient($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telef
 		fclose($fp);
 	}
 
-	if ($fp = fopen(DIRECTORI_COMANDES . $nomUsuari, "w")) {  // "DIRECTORI_COMANDES . $nomUsuari" is to create the name of the user in the directory.
+	// Create an empty file with the username of the client in DIRECTORI_COMANDA.
+	if ($fp = fopen(DIRECTORI_COMANDA . $nomUsuari, "w")) {  // "DIRECTORI_COMANDA . $nomUsuari" is to create the name of the user in the directory.
 		if (fwrite($fp, "")) {
 			$afegit = true;
 			fclose($fp);
 		}
 	}
 
-	if ($fp = fopen(DIRECTORI_CISTELLES . $nomUsuari, "w")) {
+	// Create an empty file with the username of the client in DIRECTORI_CISTELLA.
+	if ($fp = fopen(DIRECTORI_CISTELLA . $nomUsuari, "w")) {
 		if (fwrite($fp, "")) {
 			$afegit = true;
 			fclose($fp);
@@ -198,25 +216,16 @@ function fLocalitzarUsuari($id_usuari_comprova)
 	foreach ($usuaris as $usuari) {
 		$dadesUsuari = explode(":", $usuari);
 		$id = $dadesUsuari[0];
+		$nom = $dadesUsuari[1];
 
 		if ($id == $id_usuari_comprova) {
+			echo "Modificant el gestor amb nom " . $nom .  " i ID equivalent a " . $id . ".";
 			return true;
 		}
 	}
 
 	echo "El gestor amb id " . $id_usuari_comprova .  " no existeix.";
 	return false;
-}
-
-// Function to modify a manager.
-function fModificarGestor($id_gestor)
-{
-	$usuari_gestor = fLlegeixFitxer(FITXER_GESTORS);
-
-	foreach ($usuari_gestor as $usuari_g) {
-		$dadesUsuari = explode(":", $usuari_g);
-		echo $dadesUsuari;
-	}
 }
 
 // Function to create the table of the managers.
@@ -280,4 +289,43 @@ function fCreaTaulaClientsPerGestor($nom_usuari, $llista)
 	}
 
 	return 0;
+}
+
+// Function to show the clients from a specific manager.
+function fVeureDadesPersonalsClient($nom_usuari, $llista)
+{
+	foreach ($llista as $entrada) {
+		$dadesEntrada = explode(":", $entrada);
+		$id = $dadesEntrada[0];
+		$nom = $dadesEntrada[1];
+		// $contrasenya = $dadesEntrada[2];
+		$nom_complet = $dadesEntrada[3];
+		$correu_electronic = $dadesEntrada[4];
+		$telefon_contacte = $dadesEntrada[5];
+		$adreca_postal = $dadesEntrada[6];
+		$num_visa = $dadesEntrada[7];
+		$gestor_assignat = $dadesEntrada[8];
+
+		// Check if the name of the manager (I get it using the user session, not the ID) is the same as $gestor_assignat from the table:
+		if ($nom_usuari == $nom) {
+			echo "<tr><td>$id</td><td>$nom</td><td>$nom_complet</td><td>$correu_electronic</td><td>$telefon_contacte</td><td>$adreca_postal</td><td>$num_visa</td><td>$gestor_assignat</td><tr>";
+		}
+	}
+
+	return 0;
+}
+
+// Function to create the cart fr the client.
+function fCreaCistella($nomUsuari, $nomProducte)
+{
+	$nomFitxer = DIRECTORI_CISTELLA . $nomUsuari;
+	$afegit = false;
+
+	if ($fp = fopen($nomFitxer, "a")) {
+		if (fwrite($fp, $nomProducte)) {
+			$afegit = true;
+			fclose($fp);
+		}
+	}
+	return $afegit;
 }

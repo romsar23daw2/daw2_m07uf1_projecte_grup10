@@ -22,19 +22,21 @@ if ((isset($_POST['resp'])) && ($_POST['resp'] == "y")) {
 
 <head>
 	<meta charset="utf-8">
-	<title>Visualitzador de l'agenda</title>
+	<title>Tancar sessió - Rellotgeria</title>
 	<link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
 </head>
 
 <body>
 	<h3><b>Finalització de sessió del visualitzador de l'agenda</b></h3>
 	<p>Estàs segur que vols finalitzar la sessió?:</p>
+
 	<form action="logout.php" method="POST">
 		<input type="radio" name="resp" value="y" />Sí<br />
 		<input type="radio" name="resp" value="n" checked />No<br />
 		<br>
 		<input type="submit" value="Valida" />
 	</form>
+
 	<p><a href="menu.php">Torna al menú de l'agenda</a></p>
 
 	<label class="diahora">

@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Visualitzador de l'agenda</title>
+    <title>Informació - Rellotgeria</title>
     <link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
 </head>
 
 <body>
-    <h2><b>Informació sobre el visualitzador de l'agenda</b></h2>
+    <h2><b>Informació sobre la botiga de rellotges</b></h2>
     <p>Aquesta aplicació mostra les dades de:</p>
     <label>a) L'agenda telèfonica personal (família i amics)</label><br>
     <label>b) L'agenda telèfonica professional</label><br>
