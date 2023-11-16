@@ -3,12 +3,12 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Visualitzador de l'agenda</title>
+	<title>Botiga de rellotges</title>
 	<link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
 </head>
 
 <body>
-	<h3><b>Pàgina d'inici del visualitzador de l'agenda</b></h3>
+	<h3><b>Pàgina d'inici de la botiga de rellotges</b></h3>
 	<a href="login.php">Login</a><br>
 	<a href="info.php">Informació</a><br>
 

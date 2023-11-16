@@ -20,7 +20,7 @@ if ($parametres_complets) {
 	$afegit = fRegistrarClient($_POST['id_nou_client'], $_POST['nom_usuari'], $_POST['cts_nou_client'], $_POST['nom_complet_nou_client'], $_POST['correu_nou_client'], $_POST['telefon_nou_client'], $_POST['adreca_nou_client'], $_POST['num_visa_nou_client'], $_POST['id_gestor_nou_client'], $_POST['tipus_usuari']);
 	$_SESSION['afegit'] = $afegit;
 
-	header("refresh: 5; url=menu.php"); // Passats 5 segons el navegador demana menu.php i es torna a menu.php.
+	header("refresh: 5; url=menu.php"); // After 5 seconds automatically send the user to menu.php.
 }
 ?>
 
@@ -29,7 +29,7 @@ if ($parametres_complets) {
 
 <head>
 	<meta charset="utf-8">
-	<title>Visualitzador de l'agenda</title>
+	<title>Registrar client - Rellotgeria</title>
 	<link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
 </head>
 

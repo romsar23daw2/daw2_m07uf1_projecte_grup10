@@ -5,7 +5,7 @@ session_start();
 if (!isset($_SESSION['usuari'])) {
   header("Location: ./Errors/error_acces.php");
 } else {
-  $autoritzat = fAutenticacioAdmin($_SESSION['usuari']);
+  $autoritzat = fAutoritzacio($_SESSION['usuari']);
 
   if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
     header("Location: ./logout_expira_sessio.php");
@@ -29,12 +29,12 @@ if ($parametres_complets) {
 
 <head>
   <meta charset="utf-8">
-  <title>Visualitzador de l'agenda</title>
+  <title>Modificar dades - Rellotgeria</title>
   <link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
 </head>
 
 <body>
-  <h3><b>Modificació de dades de l'administrador:</b></h3>
+  <h3><b>Modificació de crendencials de l'administrador:</b></h3>
 
   <form action="modificar_dades_administrador.php" method="POST">
     <p>
