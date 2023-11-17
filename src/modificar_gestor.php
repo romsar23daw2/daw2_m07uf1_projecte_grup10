@@ -1,5 +1,5 @@
 <?php
-require("biblioteca.php");
+require("./biblioteca.php");
 session_start();
 
 if (!isset($_SESSION['usuari'])) {
@@ -84,7 +84,7 @@ if ($parametres_complets) {
 			<h3><b>Borrar un gestor:</b></h3>
 			<label>O prefereixes <b>borrar</b> el gestor?</label><br>
 
-			<button type="submit" name="tipus_usuari" value=<?php echo GESTOR ?>>Borrar el nou gestor.</button>
+			<button type="submit" name="tipus_usuari" value=<?php echo fBorrarGestor($_POST['id_gestor_trobat']) ?>>Borrar el nou gestor.</button>
 		</div>
 	<?php
 			}

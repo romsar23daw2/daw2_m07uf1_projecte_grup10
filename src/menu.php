@@ -20,7 +20,7 @@ if (!isset($_SESSION['usuari'])) {
 <body>
 	<!-- If I'm the admin. -->
 	<?php if ($_SESSION['tipus_usuari'] == 2) { ?>
-
+		<!-- <?php echo $_SESSION['tipus_usuari']; ?> -->
 		<div>
 			<h3><b>Menú del visualitzador:</b></h3>
 			<p>
@@ -45,7 +45,7 @@ if (!isset($_SESSION['usuari'])) {
 			<a href="./llista_clients.php">Llista de clients.</a><br>
 			<a href="./professional.php">Eviar correu al administrador per esborrar client.</a><br>
 
-			<p><a href="./productes/producte.php">Gestió de productes.</a></p>
+			<p><a href="./producte.php">Gestió de productes.</a></p>
 
 			<p><a href="./logout.php">Finalitza la sessió.</a></p>
 		</div>
@@ -59,7 +59,7 @@ if (!isset($_SESSION['usuari'])) {
 			<a href="./professional.php">Eviar correu al gestor per petició de justificació de comanda rebutjada.</a><br>
 
 			<p>
-				<a href="./productes/producte.php">Gestionar cistella.</a><br>
+				<a href="./producte.php">Gestionar cistella.</a><br>
 				<a href="./serveis.php">Gestionar comanda.</a><br>
 			</p>
 

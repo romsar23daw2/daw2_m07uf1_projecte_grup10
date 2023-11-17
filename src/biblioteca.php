@@ -10,8 +10,8 @@ define('FITXER_ADMINISTRADOR', "./usuaris/administrador");
 define('FITXER_GESTORS', "./usuaris/gestors");
 define('FITXER_CLIENTS', "./usuaris/clients");
 
-define('DIRECTORI_COMANDA', "../comandes/");
-define('DIRECTORI_CISTELLA', "../cistelles/");
+define('DIRECTORI_COMANDA', "./comandes/");
+define('DIRECTORI_CISTELLA', "./cistelles/");
 
 function fLlegeixFitxer($nomFitxer)
 {
@@ -39,7 +39,7 @@ function fLlegeixFitxerGenTaula($nomFitxer)
 	if ($fp = fopen($nomFitxer, "r")) {
 		$midaFitxer = filesize($nomFitxer);
 		$dades = explode(PHP_EOL, fread($fp, $midaFitxer));
-		array_pop($dades); //La darrera línia, és una línia en blanc i s'ha d'eliminar de l'array
+		array_pop($dades); // The last line is a blankspace that is genated when creating a new user.
 		fclose($fp);
 	}
 
@@ -171,6 +171,12 @@ function fModificarGestor($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telef
 	preg_replace([$id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $tipus], fRegistrarGestor($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $tipus), fLlegeixFitxer(FITXER_GESTORS));
 }
 
+// Function to delete a manger.
+function fBorrarGestor($id)
+{
+	fLocalitzarUsuari($id);
+}
+
 // Function to register a new client.
 function fRegistrarClient($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $adrecaPostal, $numeroVisa, $idGestorAssignat,  $tipus)
 {
@@ -299,6 +305,7 @@ function fVeureDadesPersonalsClient($nom_usuari, $llista)
 		$id = $dadesEntrada[0];
 		$nom = $dadesEntrada[1];
 		// $contrasenya = $dadesEntrada[2];
+
 		$nom_complet = $dadesEntrada[3];
 		$correu_electronic = $dadesEntrada[4];
 		$telefon_contacte = $dadesEntrada[5];
