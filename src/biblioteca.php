@@ -305,6 +305,7 @@ function fVeureDadesPersonalsClient($nom_usuari, $llista)
 		$id = $dadesEntrada[0];
 		$nom = $dadesEntrada[1];
 		// $contrasenya = $dadesEntrada[2];
+
 		$nom_complet = $dadesEntrada[3];
 		$correu_electronic = $dadesEntrada[4];
 		$telefon_contacte = $dadesEntrada[5];
