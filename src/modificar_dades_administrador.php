@@ -1,5 +1,5 @@
 <?php
-require("biblioteca.php");
+require("./biblioteca.php");
 session_start();
 
 if (!isset($_SESSION['usuari'])) {
@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuari'])) {
   $autoritzat = fAutoritzacio($_SESSION['usuari']);
 
   if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
-    header("Location: ./logout_expira_sessio.php");
+    header("Location:  ./logout_expira_sessio.php");
   } else if (!$autoritzat) {
     header("Location: ./Errors/error_autoritzacio.php");
   }
@@ -17,7 +17,7 @@ if (!isset($_SESSION['usuari'])) {
 $parametres_complets = (isset($_POST['nom_usuari']) && isset($_POST['cts_admin']) && isset($_POST['correu_admin']) && isset($_POST['tipus_usuari']));
 
 if ($parametres_complets) {
-  $afegit = fModificacioDadesAdmin($_POST['nom_usuari'],$_POST['cts_admin'],$_POST['correu_admin'],$_POST['tipus_usuari']);
+  $afegit = fModificacioDadesAdmin($_POST['nom_usuari'], $_POST['cts_admin'], $_POST['correu_admin'], $_POST['tipus_usuari']);
   $_SESSION['afegit'] = $afegit;
 
   header("refresh: 5; url=menu.php"); // Passats 5 segons el navegador demana menu.php i es torna a menu.php.
@@ -29,12 +29,12 @@ if ($parametres_complets) {
 
 <head>
   <meta charset="utf-8">
-  <title>Visualitzador de l'agenda</title>
+  <title>Modificar dades - Rellotgeria</title>
   <link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
 </head>
 
 <body>
-  <h3><b>Modificació de dades de l'administrador:</b></h3>
+  <h3><b>Modificació de crendencials de l'administrador:</b></h3>
 
   <form action="modificar_dades_administrador.php" method="POST">
     <p>
@@ -51,7 +51,7 @@ if ($parametres_complets) {
     <button type="submit" name="tipus_usuari" value=<?php echo ADMIN ?>>Modificar credencials.</button> <!-- value=<?php echo ADMIN ?> is to be able the type of user.-->
   </form>
 
-  <p><a href="menu.php">Torna al menú.</a></p>
+  <p><a href="./menu.php">Torna al menú.</a></p>
 
   <label class="diahora">
     <?php
@@ -60,7 +60,7 @@ if ($parametres_complets) {
     echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
 
     if (isset($_SESSION['afegit'])) {
-      if ($_SESSION['afegit']) echo "<p style='color:red'>L'Usuari ha estat modificat correctament</p>";
+      if ($_SESSION['afegit']) echo "<p style='color:green'>L'Usuari ha estat modificat correctament</p>";
       else {
         echo "L'Usuari no ha estat modificat<br>";
         echo "Comprova si hi ha algún problema del sistema per poder modificar l'usuari<br>";

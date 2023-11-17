@@ -5,7 +5,7 @@ SENSE HAVER-SE VALIDAT PRÈVIAMENT I ESCRIVINT DIRECTAMENT LA URL A LA BARRA D'A
 
 <head>
 	<meta charset="utf-8">
-	<title>Visualitzador de l'agenda</title>
+	<title>Error d'accés - Rellotgeria</title>
 	<link rel="stylesheet" href="../Assets/Stylesheets/agenda.css">
 </head>
 
@@ -14,8 +14,8 @@ SENSE HAVER-SE VALIDAT PRÈVIAMENT I ESCRIVINT DIRECTAMENT LA URL A LA BARRA D'A
 	<p>Per poder accedir a aquesta secció de l'aplicació cal tenir iniciada una sessió d'accés</p>
 	<p>Per poder iniciar una sessió cal haver-se validat amb un compte d'usuari de l'aplicació</p>
 	<p>No pots accedir a aquesta secció de l'aplicació per no haver iniciat un sessió amb un compte d'usuari de l'aplicació</p>
-	<p><a href="index.php">Torna a la pàgina inicial</a></p>
-	<p><a href="login.php">Torna a la pàgina d'inici de sessió</a></p>
+	<p><a href="../index.php">Torna a la pàgina inicial</a></p>
+	<p><a href="../login.php">Torna a la pàgina d'inici de sessió</a></p>
 
 	<label class="diahora">
 		<?php

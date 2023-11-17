@@ -29,7 +29,7 @@ if ($parametres_complets) {
 
 <head>
 	<meta charset="utf-8">
-	<title>Visualitzador de l'agenda</title>
+	<title>Registrar gestor - Rellotgeria</title>
 	<link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
 </head>
 
@@ -39,7 +39,7 @@ if ($parametres_complets) {
 	<form action="registre_gestor.php" method="POST">
 		<p>
 			<label>ID del nou gestor:</label>
-			<input type="number" name="id_nou_gestor" min=1 max=1000 required><br>
+			<input type="number" name="id_nou_gestor" min=1 max=100 required><br>
 
 			<label>Nom d'usuari:</label>
 			<input type="text" name="nom_usuari" required><br>

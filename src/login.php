@@ -2,6 +2,8 @@
 require("biblioteca.php");
 
 if ((isset($_POST['usuari'])) && (isset($_POST['ctsnya']))) {
+	// Here I have thee diferent variables, which I use to check the user type.
+
 	$autenticat_admin = fAutenticacioAdmin($_POST['usuari']);
 	$autenticat_gestor = fAutenticacioGestor($_POST['usuari']);
 	$autenticat_client = fAutenticacioClient($_POST['usuari']);
@@ -39,12 +41,12 @@ if ((isset($_POST['usuari'])) && (isset($_POST['ctsnya']))) {
 
 <head>
 	<meta charset="utf-8">
-	<title>Visualitzador de l'agenda</title>
+	<title>Iniciar sessió - Rellotgeria</title>
 	<link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
 </head>
 
 <body>
-	<h3><b>Inici de sessió del visualitzador de l'agenda</b></h3>
+	<h3><b>Inici de sessió la botiga de rellotges</b></h3>
 	<form action="login.php" method="POST">
 		<p>Indica el teu nom d'usuari: <input type="text" name="usuari"></p>
 		<p>Indica la teva contrasenya: <input type="password" name="ctsnya"></p>
