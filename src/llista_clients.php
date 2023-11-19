@@ -1,10 +1,54 @@
 <?php
 session_start();
 
+require_once __DIR__ . '/vendor/autoload.php'; // Asegúrate de que el autoloader de Composer está incluido
+
+use Dompdf\Dompdf;
+
 if (!isset($_SESSION['usuari'])) {
 	header("Location: ./Errors/error_acces.php");
+	exit;
 } elseif (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
 	header("Location: ./logout_expira_sessio.php");
+	exit;
+}
+
+if (isset($_POST['generate_pdf'])) {
+	ob_start();
+	?>
+	<div>
+		<h3><b>Llista de clients:</b></h3>
+		<table>
+			<thead>
+				<tr>
+					<th>Identificador</th>
+					<th>Nom de usuari</th>
+					<th>Nom complet</th>
+					<th>Correu electrònic</th>
+					<th>Telèfon de contacte</th>
+					<th>Adreça postal</th>
+					<th>Número targeta visa</th>
+					<th>Gestor assignat</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+				require("biblioteca.php");
+				$llista = fLlegeixFitxer(FITXER_CLIENTS);
+				fCreaTaulaClients($llista);
+				?>
+			</tbody>
+		</table>
+	</div>
+	<?php
+	$html = ob_get_clean();
+
+	$dompdf = new Dompdf();
+	$dompdf->loadHtml($html);
+	$dompdf->setPaper('A4', 'portrait');
+	$dompdf->render();
+	$dompdf->stream("llista_clients.pdf");
+	exit;
 }
 ?>
 
@@ -19,7 +63,7 @@ if (!isset($_SESSION['usuari'])) {
 
 <body>
 
-	<?php if ($_SESSION['tipus_usuari'] == 2) : ?>
+	<?php if ($_SESSION['tipus_usuari'] == 2): ?>
 		<!-- If logged in with the admin, show all managers. In this case, as I need to use a function inside the PHP code, I echo the table in individual parts. -->
 		<div>
 			<h3><b>Llista de clients:</b></h3>
@@ -48,9 +92,11 @@ if (!isset($_SESSION['usuari'])) {
 
 		<div>
 			<h3><b>Generar PDF de la llista de clients:</b></h3>
-			<button>Generar PDF</button>
+			<form method="post">
+				<input type="submit" name="generate_pdf" value="Generar PDF">
+			</form>
 		</div>
-	<?php elseif ($_SESSION['tipus_usuari'] == 1) : ?>
+	<?php elseif ($_SESSION['tipus_usuari'] == 1): ?>
 		<!-- If logged in with the manager, create a table showing the clients that a manager has, not using the ID but the username of the manager. -->
 		<div>
 			<h3><b>Llista de clients:</b></h3>
@@ -76,7 +122,7 @@ if (!isset($_SESSION['usuari'])) {
 				</tbody>
 			</table>
 		</div>
-	<?php elseif ($_SESSION['tipus_usuari'] == 0) : ?>
+	<?php elseif ($_SESSION['tipus_usuari'] == 0): ?>
 		<!-- If logged in with the client, show the personal data from the client. -->
 		<div>
 			<h3><b>Dades personals:</b></h3>
@@ -102,7 +148,7 @@ if (!isset($_SESSION['usuari'])) {
 				</tbody>
 			</table>
 		</div>
-	<?php else : ?>
+	<?php else: ?>
 		<!-- If it's someone else, it shouldn't be here, so redirect to "error_autoritzacio". -->
 		<?php header("Location: ./Errors/error_autoritzacio.php"); ?>
 	<?php endif; ?>
