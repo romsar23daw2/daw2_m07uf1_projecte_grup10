@@ -31,7 +31,7 @@ if (!isset($_SESSION['usuari'])) {
 			<a href="./llista_gestors.php">Llista de gestors.</a><br>
 			<a href="./modificar_gestor.php">Modificar o esborrar dades de un gestor.</a><br>
 			<a href="./llista_clients.php">Llista de clients.</a><br>
-			<a href="./serveis.php">Modificar o esborrar dades de un client.</a><br>
+			<a href="./modificar_client.php">Modificar o esborrar dades de un client.</a><br>
 
 			<p><a href="./modificar_dades_administrador.php">Modificació de dades del administrador.</a></p>
 

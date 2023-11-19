@@ -9,6 +9,7 @@ define('USR', "0");
 define('FITXER_ADMINISTRADOR', "./usuaris/administrador");
 define('FITXER_GESTORS', "./usuaris/gestors");
 define('FITXER_CLIENTS', "./usuaris/clients");
+define('FITXER_PRODUCTES', "./productes/productes");
 
 define('DIRECTORI_COMANDA', "./comandes/");
 define('DIRECTORI_CISTELLA', "./cistelles/");
@@ -26,7 +27,6 @@ function fLlegeixFitxer($nomFitxer)
 			// If it's less than 0 (in producte.php), I create an array where I store the values.
 			$dades = [];
 		}
-
 
 		fclose($fp);
 	}
@@ -164,24 +164,67 @@ function fRegistrarGestor($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telef
 	return $afegit;
 }
 
-// Function to modify a manager.
-// I NEED TO FINISH IT.
-function fModificarGestor($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $tipus)
+// Function that I use to check the ID of a manager.
+function fLocalitzarGestor($id_usuari_comprova)
 {
-	preg_replace([$id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $tipus], fRegistrarGestor($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $tipus), fLlegeixFitxer(FITXER_GESTORS));
+	$usuaris = fLlegeixFitxer(FITXER_GESTORS);
+
+	foreach ($usuaris as $usuari) {
+		$dadesUsuari = explode(":", $usuari);
+		$id = $dadesUsuari[0];
+		$nom = $dadesUsuari[1];
+
+		if ($id == $id_usuari_comprova) {
+			echo "Modificant el gestor amb nom " . $nom .  " i ID equivalent a " . $id . ".";
+			return true;
+		}
+	}
+
+	// echo "El gestor amb id " . $id_usuari_comprova[$valor] .  " no existeix.";
+	echo "El gestor amb id " . $id_usuari_comprova .  " no existeix.";
+	return false;
 }
 
-// Function to delete a manger.
-function fBorrarGestor($id)
+// Function to modify a manager.
+function fModificarGestor($id_usuari_comprova, $nou_id_usuari, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $tipusUsuari)
 {
-	fLocalitzarUsuari($id);
+	$usuaris = fLlegeixFitxer(FITXER_GESTORS);
+
+	// Here I must use &$usuari, as a pointer because I need to modify it later.
+	foreach ($usuaris as &$usuari) {
+		$dadesUsuari = explode(":", $usuari);
+		$id = $dadesUsuari[0];
+
+		if ($id == $id_usuari_comprova) {
+			$dadesUsuari[0] = $nou_id_usuari;
+			$dadesUsuari[1] = $nomUsuari;
+			$dadesUsuari[2] = password_hash($ctsnya, PASSWORD_DEFAULT);
+			$dadesUsuari[3] = $nomComplet;
+			$dadesUsuari[4] = $correu;
+			$dadesUsuari[5] = $telefon;
+			$dadesUsuari[6] = $tipusUsuari;
+
+			$usuari = implode(":", $dadesUsuari);
+			// Here I declare a variable that stores each line from the usuaris, it has a \n at the ending in order to have an enpty line at the bottom.
+			$linies_actualitzades = implode("\n", $usuaris) . "\n";
+
+			if (file_put_contents(FITXER_GESTORS, $linies_actualitzades) !== false) {
+				return true;
+			} else {
+				echo "Ha ocorregut un error escrivint al fitxer de gestors.";
+				return false;
+			}
+		}
+	}
+
+	return false;
 }
 
 // Function to register a new client.
-function fRegistrarClient($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $adrecaPostal, $numeroVisa, $idGestorAssignat,  $tipus)
+function fRegistrarClient($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $adrecaPostal, $numeroVisa, $nomGestorAssignat,  $tipus)
 {
 	$ctsnya_hash = password_hash($ctsnya, PASSWORD_DEFAULT);
-	$dades_nou_client = $id . ":" . $nomUsuari . ":" . $ctsnya_hash . ":" . $nomComplet . ":" . $correu . ":" . $telefon . ":" . $adrecaPostal . ":" . $numeroVisa  . ":" . $idGestorAssignat . ":" . $tipus . "\n";
+	$dades_nou_client = $id . ":" . $nomUsuari . ":" . $ctsnya_hash . ":" . $nomComplet . ":" . $correu . ":" . $telefon . ":" . $adrecaPostal . ":" . $numeroVisa  . ":" . $nomGestorAssignat . ":" . $tipus . "\n";
 
 	if ($fp = fopen(FITXER_CLIENTS, "a")) {
 		if (fwrite($fp, $dades_nou_client)) {
@@ -214,10 +257,10 @@ function fRegistrarClient($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telef
 	return $afegit;
 }
 
-// Function that I use to check the ID of a manager.
-function fLocalitzarUsuari($id_usuari_comprova)
+// Function that I use to check the ID of a client.
+function fLocalitzarClient($id_usuari_comprova)
 {
-	$usuaris = fLlegeixFitxer(FITXER_GESTORS);
+	$usuaris = fLlegeixFitxer(FITXER_CLIENTS);
 
 	foreach ($usuaris as $usuari) {
 		$dadesUsuari = explode(":", $usuari);
@@ -225,12 +268,50 @@ function fLocalitzarUsuari($id_usuari_comprova)
 		$nom = $dadesUsuari[1];
 
 		if ($id == $id_usuari_comprova) {
-			echo "Modificant el gestor amb nom " . $nom .  " i ID equivalent a " . $id . ".";
+			echo "Modificant el client amb nom " . $nom .  " i ID equivalent a " . $id . ".";
 			return true;
 		}
 	}
 
-	echo "El gestor amb id " . $id_usuari_comprova .  " no existeix.";
+	echo "El client amb id " . $id_usuari_comprova .  " no existeix.";
+	return false;
+}
+
+// Function to modify a client.
+function fModificarClient($id_usuari_comprova, $nou_id_usuari, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $adrecaPostal, $numeroVisa, $nomGestorAssignat,  $tipusUsuari)
+{
+	$usuaris = fLlegeixFitxer(FITXER_CLIENTS);
+
+	// Here I must use &$usuari, as a pointer because I need to modify it later.
+	foreach ($usuaris as &$usuari) {
+		$dadesUsuari = explode(":", $usuari);
+		$id = $dadesUsuari[0];
+
+		if ($id == $id_usuari_comprova) {
+			$dadesUsuari[0] = $nou_id_usuari;
+			$dadesUsuari[1] = $nomUsuari;
+			$dadesUsuari[2] = password_hash($ctsnya, PASSWORD_DEFAULT);
+			$dadesUsuari[3] = $nomComplet;
+			$dadesUsuari[4] = $correu;
+			$dadesUsuari[5] = $telefon;
+			$dadesUsuari[6] = $adrecaPostal;
+			$numeroVisa[7] = $telefon;
+			$nomGestorAssignat[8] = $adrecaPostal;
+			$nomGestorAssignat[9] = $tipusUsuari;
+
+			$usuari = implode(":", $dadesUsuari);
+			// Here I declare a variable that stores each line from the usuaris, it has a \n at the ending in order to have an enpty line at the bottom.
+			$linies_actualitzades = implode("\n", $usuaris) . "\n";
+
+			if (file_put_contents(FITXER_CLIENTS, $linies_actualitzades) !== false) {
+				return true;
+			} else {
+				echo "Ha ocorregut un error escrivint al fitxer de gestors.";
+				return false;
+			}
+		}
+	}
+
 	return false;
 }
 
@@ -335,4 +416,40 @@ function fCreaCistella($nomUsuari, $nomProducte)
 		}
 	}
 	return $afegit;
+}
+
+function fGenerarLlistaProductes($llista)
+{
+	foreach ($llista as $entrada) {
+		$dadesEntrada = explode(":", $entrada);
+		$nom_producte = $dadesEntrada[0];
+		$id_producte = $dadesEntrada[1];
+		$preu_producte = $dadesEntrada[2];
+		$iva_producte = $dadesEntrada[3];
+		$disponibilitat_producte = $dadesEntrada[4];
+
+		echo "<tr><td>$nom_producte</td><td>$id_producte</td><td>$preu_producte</td><td>$iva_producte</td><td>$disponibilitat_producte</td><tr>";
+	}
+
+	return 0;
+}
+
+// I need to finish it.
+function fComprovarDisponibilitat($id_p, $llista)
+{
+	foreach ($llista as $entrada) {
+		$dadesEntrada = explode(":", $entrada);
+		$nom_producte = $dadesEntrada[0];
+		$id_producte = $dadesEntrada[1];
+		$preu_producte = $dadesEntrada[2];
+		$iva_producte = $dadesEntrada[3];
+		$disponibilitat_producte = $dadesEntrada[4];
+
+		// Check if the name of the manager (I get it using the user session, not the ID) is the same as $gestor_assignat from the table:
+		if ($id_p == $nom_producte && $disponibilitat_producte == 'Disponible') {
+			echo "<tr><td>$nom_producte</td><td>$id_producte</td><td>$preu_producte</td><td>$iva_producte</td><td>$disponibilitat_producte</td><tr>";
+		}
+	}
+
+	return 0;
 }
