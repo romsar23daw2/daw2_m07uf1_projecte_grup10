@@ -1,10 +1,19 @@
 <?php
 session_start();
+require("./biblioteca.php");
+
+$nomFitxer = DIRECTORI_CISTELLA . $_SESSION['usuari'];
+$_SESSION['producte'] = fLlegeixFitxer($nomFitxer);
 
 if (!isset($_SESSION['usuari'])) {
 	header("Location: ./Errors/error_acces.php");
 } elseif (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
 	header("Location: ./logout_expira_sessio.php");
+}
+
+if (isset($_POST['producte'])) {
+	$_SESSION['producte'] = $_POST['producte'] . "\n";
+	header("Location: ./desar_cistella.php");
 }
 ?>
 <!DOCTYPE html>
@@ -17,14 +26,9 @@ if (!isset($_SESSION['usuari'])) {
 </head>
 
 <body>
-
 	<!-- If I'm a client. -->
-	<?php if ($_SESSION['tipus_usuari'] == 0) {
-		require("./biblioteca.php");
-		$nomFitxer = DIRECTORI_CISTELLA . $_SESSION['usuari'];
-		$_SESSION['producte'] = fLlegeixFitxer($nomFitxer);
-
-		if ($_SESSION['producte']) {
+	<?php if ($_SESSION['tipus_usuari'] == 0) : ?>
+		<?php if ($_SESSION['producte']) {
 			echo "<b><u>Productes actuals a la cistella: </u></b>" . "<br>";
 			echo "<br>" . "<table>" . "<tr>";
 
@@ -41,25 +45,64 @@ if (!isset($_SESSION['usuari'])) {
 		} else {
 			echo "Cap producte a la cistella<br>";
 		}
-		if (isset($_POST['producte'])) {
-			$_SESSION['producte'] = $_POST['producte'] . "\n";
-			header("Location: ./desar_cistella.php");
-		}
-	} else {
-		// No one can acess to this.
+		?>
+
+		<div>
+			<h3><b>Productes que es venen la botiga:</b></h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Nom producte</th>
+						<th>ID producte</th>
+						<th>Preu producte</th>
+						<th>IVA producte</th>
+						<th>Disponibilitat</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$llista = fLlegeixFitxer(FITXER_PRODUCTES);
+					fGenerarLlistaProductes($llista);
+					?>
+				</tbody>
+			</table>
+
+			<br><b><u>LLISTA DE PRODUCTES:</u></b><br>
+			<form action="producte.php" method="POST">
+				<input type="radio" name="producte" value="bombetes30W" /> Bombetes de 30 W<br />
+				<input type="radio" name="producte" value="bombetes60W" /> Bombetes de 60 W<br />
+				<input type="radio" name="producte" value="bombetes100W" /> Bombetes de 100 W<br /><br>
+				<input value="Selecciona" type="submit"><br><br>
+			</form>
+		</div>
+
+	<?php elseif ($_SESSION['tipus_usuari'] == 1) : ?>
+		<div>
+			<h3><b>Llista de productes actuals:</b></h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Nom producte</th>
+						<th>ID producte</th>
+						<th>Preu producte</th>
+						<th>IVA producte</th>
+						<th>Disponibilitat</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$llista = fLlegeixFitxer(FITXER_PRODUCTES);
+					fGenerarLlistaProductes($llista);
+					?>
+				</tbody>
+			</table>
+		</div>
+	<?php else :
+		// No one else can acess to this.
 		header("Location: ./Errors/error_acces.php");
-	}
 	?>
-
-	<b><u>LLISTA DE PRODUCTES:</u></b><br>
-	<form action="producte.php" method="POST">
-		<input type="radio" name="producte" value="bombetes30W" /> Bombetes de 30 W<br />
-		<input type="radio" name="producte" value="bombetes60W" /> Bombetes de 60 W<br />
-		<input type="radio" name="producte" value="bombetes100W" /> Bombetes de 100 W<br /><br>
-		<input value="Selecciona" type="submit"></td><br><br>
-	</form>
+	<?php endif; ?>
 </body>
-
 
 <label class="diahora">
 	<p><a href="./menu.php">Torna al menú</a></p>
