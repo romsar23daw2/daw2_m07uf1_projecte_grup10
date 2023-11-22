@@ -453,3 +453,23 @@ function fComprovarDisponibilitat($id_p, $llista)
 
 	return 0;
 }
+
+function fAconsegueixemail($id_usuari_comprova)
+{
+	$usuaris = fLlegeixFitxer(FITXER_GESTORS);
+
+	foreach ($usuaris as $usuari) {
+		$dadesUsuari = explode(":", $usuari);
+		$id = $dadesUsuari[0];
+		$email = $dadesUsuari[4];
+
+		if ($id == $id_usuari_comprova) {
+			echo "El correu del gestor és " . $email .  " i ID equivalent a " . $id . ".";
+			return true;
+		}
+	}
+
+	// echo "El gestor amb id " . $id_usuari_comprova[$valor] .  " no existeix.";
+	echo "El gestor amb id " . $id_usuari_comprova .  " no existeix.";
+	return false;
+}
