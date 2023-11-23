@@ -144,9 +144,41 @@ function fModificacioDadesAdmin($nomUsuari, $ctsnya, $correu, $tipus)
 }
 
 // Function to register a new manager.
-function fRegistrarGestor($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $tipus)
-{
-	$ctsnya_hash = password_hash($ctsnya, PASSWORD_DEFAULT);
+
+// Classe gestor que implementa los atributos que un gestor puede tener.
+// Se ha usado chatgpt para como ayuda para crear la classe. 
+class Gestor {
+   
+    public function getId() {
+        return $this->id;
+    }
+
+    public function getNomUsuari() {
+        return $this->nomUsuari;
+    }
+
+    public function getCtsnya() {
+        return $this->ctsnya;
+    }
+
+    public function getNomComplet() {
+        return $this->nomComplet;
+    }
+
+    public function getCorreu() {
+        return $this->correu;
+    }
+
+    public function getTelefon() {
+        return $this->telefon;
+    }
+
+    public function getTipus() {
+        return $this->tipus;
+    }
+}
+
+function fRegistrarGestor(Gestor $gestor){
 	$dades_nou_gestor = $id . ":" . $nomUsuari . ":" . $ctsnya_hash . ":" . $nomComplet . ":" . $correu . ":" . $telefon . ":"  . $tipus . "\n";
 
 	if ($fp = fopen(FITXER_GESTORS, "a")) {
