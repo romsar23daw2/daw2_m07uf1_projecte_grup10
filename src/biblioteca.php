@@ -144,9 +144,41 @@ function fModificacioDadesAdmin($nomUsuari, $ctsnya, $correu, $tipus)
 }
 
 // Function to register a new manager.
-function fRegistrarGestor($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $tipus)
-{
-	$ctsnya_hash = password_hash($ctsnya, PASSWORD_DEFAULT);
+
+// Classe gestor que implementa los atributos que un gestor puede tener.
+// Se ha usado chatgpt para como ayuda para crear la classe. 
+class Gestor {
+   
+    public function getId() {
+        return $this->id;
+    }
+
+    public function getNomUsuari() {
+        return $this->nomUsuari;
+    }
+
+    public function getCtsnya() {
+        return $this->ctsnya;
+    }
+
+    public function getNomComplet() {
+        return $this->nomComplet;
+    }
+
+    public function getCorreu() {
+        return $this->correu;
+    }
+
+    public function getTelefon() {
+        return $this->telefon;
+    }
+
+    public function getTipus() {
+        return $this->tipus;
+    }
+}
+
+function fRegistrarGestor(Gestor $gestor){
 	$dades_nou_gestor = $id . ":" . $nomUsuari . ":" . $ctsnya_hash . ":" . $nomComplet . ":" . $correu . ":" . $telefon . ":"  . $tipus . "\n";
 
 	if ($fp = fopen(FITXER_GESTORS, "a")) {
@@ -466,11 +498,24 @@ function fLocalitzarProducte($id_producte)
 
 		if ($id == $id_producte) {
 			echo "Modificant el producte amb nom " . $nom .  " i ID equivalent a " . $id . ".";
+
+function fAconsegueixemail($id_usuari_comprova)
+{
+	$usuaris = fLlegeixFitxer(FITXER_GESTORS);
+
+	foreach ($usuaris as $usuari) {
+		$dadesUsuari = explode(":", $usuari);
+		$id = $dadesUsuari[0];
+		$email = $dadesUsuari[4];
+
+		if ($id == $id_usuari_comprova) {
+			echo "El correu del gestor és " . $email .  " i ID equivalent a " . $id . ".";
 			return true;
 		}
 	}
 
 	// echo "El gestor amb id " . $id_usuari_comprova[$valor] .  " no existeix.";
+
 	echo "El producte amb id " . $id_producte .  " no existeix.";
 	return false;
 }
