@@ -55,8 +55,8 @@ if (!isset($_SESSION['usuari'])) {
 			<h3><b>Menú del visualitzador:</b></h3>
 			<p><a href="./llista_clients.php">Visualitzar dades personals.</a><br></p>
 
-			<a href="./professional.php">Eviar correu al gestor per modificacio/esborrament del compte de client.</a><br>
-			<a href="./professional.php">Eviar correu al gestor per petició de justificació de comanda rebutjada.</a><br>
+			<a href="./sendmail_Torrente">Eviar correu al gestor per modificacio/esborrament del compte de client.</a><br>
+			<a href="./sendmail_Torrente">Eviar correu al gestor per petició de justificació de comanda rebutjada.</a><br>
 
 			<p>
 				<a href="./producte.php">Gestionar cistella.</a><br>

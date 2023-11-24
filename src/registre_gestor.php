@@ -17,10 +17,20 @@ if (!isset($_SESSION['usuari'])) {
 $parametres_complets = (isset($_POST['id_nou_gestor'])) && (isset($_POST['nom_usuari'])) && (isset($_POST['cts_nou_gestor'])) && (isset($_POST['nom_complet_nou_gestor'])) && (isset($_POST['correu_nou_gestor'])) && (isset($_POST['telefon_nou_gestor'])) && (isset($_POST['tipus_usuari']));
 
 if ($parametres_complets) {
-	$afegit = fRegistrarGestor($_POST['id_nou_gestor'], $_POST['nom_usuari'], $_POST['cts_nou_gestor'], $_POST['nom_complet_nou_gestor'], $_POST['correu_nou_gestor'], $_POST['telefon_nou_gestor'], $_POST['tipus_usuari']);
+	$nou_gestor = new Gestor(
+		$_POST['id_nou_gestor'],
+		$_POST['nom_usuari'],
+		$_POST['cts_nou_gestor'],
+		$_POST['nom_complet_nou_gestor'],
+		$_POST['correu_nou_gestor'],
+		$_POST['telefon_nou_gestor'],
+		$_POST['tipus_usuari']
+	);
+
+	$afegit = fRegistrarGestor($nou_gestor);
 	$_SESSION['afegit'] = $afegit;
 
-	header("refresh: 5; url=menu.php"); // Passats 5 segons el navegador demana menu.php i es torna a menu.php.
+	header("refresh: 5; url=menu.php");
 }
 ?>
 
@@ -35,7 +45,7 @@ if ($parametres_complets) {
 
 <body>
 	<h3><b>Registre d'un nou gestor:</b></h3>
-
+	
 	<form action="registre_gestor.php" method="POST">
 		<p>
 			<label>ID del nou gestor:</label>
@@ -57,7 +67,7 @@ if ($parametres_complets) {
 			<input type="number" name="telefon_nou_gestor" required>
 		</p>
 
-		<button type="submit" name="tipus_usuari" value=<?php echo GESTOR ?>>Crear nou gestor.</button> <!-- value=<?php echo GESTOR ?> is to be able the type of user.-->
+		<button type="submit" name="tipus_usuari" value=<?php echo GESTOR ?>>Crear nou gestor.</button>
 	</form>
 
 	<p><a href="menu.php">Torna al menú.</a></p>
