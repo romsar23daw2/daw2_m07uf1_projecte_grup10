@@ -2,7 +2,6 @@
 session_start();
 
 require_once __DIR__ . '/vendor/autoload.php'; // Asegúrate de que el autoloader de Composer está incluido
-
 use Dompdf\Dompdf;
 
 if (!isset($_SESSION['usuari'])) {
@@ -13,9 +12,9 @@ if (!isset($_SESSION['usuari'])) {
 	exit;
 }
 
-if (isset($_POST['generate_pdf'])) {
+if (isset($_POST['generar_pdf'])) {
 	ob_start();
-	?>
+?>
 	<div>
 		<h3><b>Llista de clients:</b></h3>
 		<table>
@@ -40,7 +39,8 @@ if (isset($_POST['generate_pdf'])) {
 			</tbody>
 		</table>
 	</div>
-	<?php
+<?php
+	// Here I create a PDF of the current page. 
 	$html = ob_get_clean();
 
 	$dompdf = new Dompdf();
@@ -63,7 +63,7 @@ if (isset($_POST['generate_pdf'])) {
 
 <body>
 
-	<?php if ($_SESSION['tipus_usuari'] == 2): ?>
+	<?php if ($_SESSION['tipus_usuari'] == 2) : ?>
 		<!-- If logged in with the admin, show all managers. In this case, as I need to use a function inside the PHP code, I echo the table in individual parts. -->
 		<div>
 			<h3><b>Llista de clients:</b></h3>
@@ -93,10 +93,10 @@ if (isset($_POST['generate_pdf'])) {
 		<div>
 			<h3><b>Generar PDF de la llista de clients:</b></h3>
 			<form method="post">
-				<input type="submit" name="generate_pdf" value="Generar PDF">
+				<input type="submit" name="generar_pdf" value="Generar PDF">
 			</form>
 		</div>
-	<?php elseif ($_SESSION['tipus_usuari'] == 1): ?>
+	<?php elseif ($_SESSION['tipus_usuari'] == 1) : ?>
 		<!-- If logged in with the manager, create a table showing the clients that a manager has, not using the ID but the username of the manager. -->
 		<div>
 			<h3><b>Llista de clients:</b></h3>
@@ -122,7 +122,7 @@ if (isset($_POST['generate_pdf'])) {
 				</tbody>
 			</table>
 		</div>
-	<?php elseif ($_SESSION['tipus_usuari'] == 0): ?>
+	<?php elseif ($_SESSION['tipus_usuari'] == 0) : ?>
 		<!-- If logged in with the client, show the personal data from the client. -->
 		<div>
 			<h3><b>Dades personals:</b></h3>
@@ -148,7 +148,7 @@ if (isset($_POST['generate_pdf'])) {
 				</tbody>
 			</table>
 		</div>
-	<?php else: ?>
+	<?php else : ?>
 		<!-- If it's someone else, it shouldn't be here, so redirect to "error_autoritzacio". -->
 		<?php header("Location: ./Errors/error_autoritzacio.php"); ?>
 	<?php endif; ?>

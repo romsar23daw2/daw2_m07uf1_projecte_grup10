@@ -16,6 +16,7 @@ if (isset($_POST['producte'])) {
 	header("Location: ./desar_cistella.php");
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="ca">
 
@@ -68,7 +69,7 @@ if (isset($_POST['producte'])) {
 			</table>
 
 			<br><b><u>LLISTA DE PRODUCTES:</u></b><br>
-			<form action="producte.php" method="POST">
+			<form action="./cistella_gestio_productes.php" method="POST">
 				<input type="radio" name="producte" value="bombetes30W" /> Bombetes de 30 W<br />
 				<input type="radio" name="producte" value="bombetes60W" /> Bombetes de 60 W<br />
 				<input type="radio" name="producte" value="bombetes100W" /> Bombetes de 100 W<br /><br>
@@ -97,20 +98,37 @@ if (isset($_POST['producte'])) {
 				</tbody>
 			</table>
 		</div>
+
+		<div>
+			<h3>Gestió de productes</h3>
+			<form action="./modificar_producte.php" method="POST">
+				<input type="submit" name="modificar_productes" value="Modificar producte">
+			</form>
+
+			<!-- To finish. -->
+			<form action="./afegir_producte.php" method="POST">
+				<input type="submit" name="afegir_producte" value="Afegir producte">
+			</form>
+
+			<h3><b>Generar PDF de la llista dels productes:</b></h3>
+			<form method="post">
+				<input type="submit" name="generar_pdf" value="Generar PDF">
+			</form>
+		</div>
 	<?php else :
 		// No one else can acess to this.
 		header("Location: ./Errors/error_acces.php");
 	?>
 	<?php endif; ?>
+
+	<label class="diahora">
+		<p><a href="./menu.php">Torna al menú</a></p>
+
+		<?php
+		echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
+		date_default_timezone_set('Europe/Andorra');
+		echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
+		?>
 </body>
-
-<label class="diahora">
-	<p><a href="./menu.php">Torna al menú</a></p>
-
-	<?php
-	echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
-	date_default_timezone_set('Europe/Andorra');
-	echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
-	?>
 
 </html>

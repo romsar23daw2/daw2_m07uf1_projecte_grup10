@@ -29,9 +29,9 @@ if (!isset($_SESSION['usuari'])) {
 			</p>
 
 			<a href="./llista_gestors.php">Llista de gestors.</a><br>
-			<a href="./modificar_gestor.php">Modificar o esborrar dades de un gestor.</a><br>
+			<a href="./modificar_gestor.php">Modificar dades d'un gestor.</a><br>
 			<a href="./llista_clients.php">Llista de clients.</a><br>
-			<a href="./modificar_client.php">Modificar o esborrar dades de un client.</a><br>
+			<a href="./modificar_client.php">Modificar dades de un client.</a><br>
 
 			<p><a href="./modificar_dades_administrador.php">Modificació de dades del administrador.</a></p>
 
@@ -45,7 +45,7 @@ if (!isset($_SESSION['usuari'])) {
 			<a href="./llista_clients.php">Llista de clients.</a><br>
 			<a href="./professional.php">Eviar correu al administrador per esborrar client.</a><br>
 
-			<p><a href="./producte.php">Gestió de productes.</a></p>
+			<p><a href="./cistella_gestio_productes.php">Gestió de productes.</a></p>
 
 			<p><a href="./logout.php">Finalitza la sessió.</a></p>
 		</div>
@@ -59,7 +59,7 @@ if (!isset($_SESSION['usuari'])) {
 			<a href="./sendmail_Torrente">Eviar correu al gestor per petició de justificació de comanda rebutjada.</a><br>
 
 			<p>
-				<a href="./producte.php">Gestionar cistella.</a><br>
+				<a href="./cistella_gestio_productes.php">Gestionar cistella.</a><br>
 				<a href="./serveis.php">Gestionar comanda.</a><br>
 			</p>
 

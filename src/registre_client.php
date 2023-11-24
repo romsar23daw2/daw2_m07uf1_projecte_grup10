@@ -101,7 +101,7 @@ if ($parametres_complets) {
 			<input type="text" name="nom_gestor_nou_client"><br>
 		</p>
 
-		<button type="submit" name="tipus_usuari" value=<?php echo USR ?>>Crear client.</button> <!-- value=<?php echo GESTOR ?> is to be able the type of user.-->
+		<button type="submit" name="tipus_usuari" value=<?php echo CLIENT ?>>Crear client.</button> <!-- value=<?php echo CLIENT ?> is to be able the type of user.-->
 	</form>
 
 	<p><a href="menu.php">Torna al menú.</a></p>

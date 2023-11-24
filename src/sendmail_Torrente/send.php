@@ -1,10 +1,11 @@
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
 require 'phpmailer/src/Exception.php';
 require 'phpmailer/src/PHPMailer.php';
 require 'phpmailer/src/SMTP.php';
+
 
 // Verifica la sesión del cliente antes de procesar el formulario
 session_start();
@@ -29,6 +30,7 @@ if (isset($_POST["send"])) {
             $mail->Password ='ghiikpskvgwsgpyt';
             $mail->SMTPSecure = 'ssl';
             $mail->Port = 465;
+
 
             $mail->setFrom('a48465927@gmail.com');
             $mail->addAddress($gestor_asignado);
@@ -78,4 +80,3 @@ function obtenerGestorAsignado($nombre_de_usuario_cliente) {
     // Devolvemos null si no se encontró el gestor asignado
     return null;
 }
-?>
