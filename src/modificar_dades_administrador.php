@@ -60,10 +60,10 @@ if ($parametres_complets) {
     echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
 
     if (isset($_SESSION['afegit'])) {
-      if ($_SESSION['afegit']) echo "<p style='color:green'>L'Usuari ha estat modificat correctament</p>";
+      if ($_SESSION['afegit']) echo "<p style='color:red'>L'Administrador ha estat modificat correctament</p>";
       else {
-        echo "L'Usuari no ha estat modificat<br>";
-        echo "Comprova si hi ha algún problema del sistema per poder modificar l'usuari<br>";
+        echo "L'Administrador no ha estat modificat<br>";
+        echo "Comprova si hi ha algún problema del sistema per poder modificar l'Administrador<br>";
       }
 
       unset($_SESSION['afegit']);

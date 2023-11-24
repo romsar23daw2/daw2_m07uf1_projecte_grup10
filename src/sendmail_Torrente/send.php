@@ -1,19 +1,19 @@
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
 require 'phpmailer/src/Exception.php';
 require 'phpmailer/src/PHPMailer.php';
 require 'phpmailer/src/SMTP.php';
 
-if(isset($_POST["send"])){
+if (isset($_POST["send"])) {
     $mail = new PHPMailer(true);
 
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
     $mail->Username = 'a48465927@gmail.com';
-    $mail->Password ='ghiikpskvgwsgpyt';
+    $mail->Password = 'ghiikpskvgwsgpyt';
     $mail->SMTPSecure = 'ssl';
     $mail->Port = 465;
 
@@ -35,6 +35,4 @@ if(isset($_POST["send"])){
     document.location.href = 'index.php';
     </script>
     ";
-
 }
-?>

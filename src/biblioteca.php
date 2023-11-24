@@ -4,7 +4,7 @@ define('TIMEOUT', 5);  # TEMPS DE VISUALITZACIÓ DEL MISSATGE INFORMATIU SOBRE L
 
 define('ADMIN', "2");
 define('GESTOR', "1");
-define('USR', "0");
+define('CLIENT', "0");
 
 define('FITXER_ADMINISTRADOR', "./usuaris/administrador");
 define('FITXER_GESTORS', "./usuaris/gestors");
@@ -445,11 +445,65 @@ function fComprovarDisponibilitat($id_p, $llista)
 		$iva_producte = $dadesEntrada[3];
 		$disponibilitat_producte = $dadesEntrada[4];
 
-		// Check if the name of the manager (I get it using the user session, not the ID) is the same as $gestor_assignat from the table:
+		// Check if the id of the product and if it's available:
 		if ($id_p == $nom_producte && $disponibilitat_producte == 'Disponible') {
 			echo "<tr><td>$nom_producte</td><td>$id_producte</td><td>$preu_producte</td><td>$iva_producte</td><td>$disponibilitat_producte</td><tr>";
 		}
 	}
 
 	return 0;
+}
+
+// Function I use to find a product.
+function fLocalitzarProducte($id_producte)
+{
+	$productes = fLlegeixFitxer(FITXER_PRODUCTES);
+
+	foreach ($productes as $producte) {
+		$dadesProducte = explode(":", $producte);
+		$nom = $dadesProducte[0];
+		$id = $dadesProducte[1];
+
+		if ($id == $id_producte) {
+			echo "Modificant el producte amb nom " . $nom .  " i ID equivalent a " . $id . ".";
+			return true;
+		}
+	}
+
+	// echo "El gestor amb id " . $id_usuari_comprova[$valor] .  " no existeix.";
+	echo "El producte amb id " . $id_producte .  " no existeix.";
+	return false;
+}
+
+// Function to modify a product.
+function fModificarProducte($id_producte_comprova, $nom_producte, $id_producte, $preu_producte, $iva_producte, $disponibilitat_producte)
+{
+	$productes = fLlegeixFitxer(FITXER_PRODUCTES);
+
+	// Here I must use &$producte, as a pointer because I need to modify it later.
+	foreach ($productes as &$producte) {
+		$dadesProducte = explode(":", $producte);
+		$id = $dadesProducte[1];
+
+		if ($id == $id_producte_comprova) {
+			$dadesProducte[0] =  $nom_producte;
+			$dadesProducte[1] = $id_producte;
+			$dadesProducte[2] = $preu_producte;
+			$dadesProducte[3] = $iva_producte;
+			$dadesProducte[4] = $disponibilitat_producte;
+
+			$producte = implode(":", $dadesProducte);
+			// Here I declare a variable that stores each line from the usuaris, it has a \n at the ending in order to have an enpty line at the bottom.
+			$linies_actualitzades = implode("\n", $productes) . "\n";
+
+			if (file_put_contents(FITXER_PRODUCTES, $linies_actualitzades) !== false) {
+				return true;
+			} else {
+				echo "Ha ocorregut un error escrivint al fitxer de productes.";
+				return false;
+			}
+		}
+	}
+
+	return false;
 }
