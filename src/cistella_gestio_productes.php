@@ -1,20 +1,60 @@
 <?php
 session_start();
+require_once __DIR__ . '/vendor/autoload.php'; // Asegúrate de que el autoloader de Composer está incluido
+use Dompdf\Dompdf;
+
 require("./biblioteca.php");
 
 $nomFitxer = DIRECTORI_CISTELLA . $_SESSION['usuari'];
 $_SESSION['producte'] = fLlegeixFitxer($nomFitxer);
 
 if (!isset($_SESSION['usuari'])) {
-	header("Location: ./Errors/error_acces.php");
+    header("Location: ./Errors/error_acces.php");
+    exit;
 } elseif (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
-	header("Location: ./logout_expira_sessio.php");
+    header("Location: ./logout_expira_sessio.php");
+    exit;
 }
 
 if (isset($_POST['producte'])) {
-	$_SESSION['producte'] = $_POST['producte'] . "\n";
-	header("Location: ./desar_cistella.php");
+    $_SESSION['producte'] = $_POST['producte'] . "\n";
+    header("Location: ./desar_cistella.php");
 }
+
+if (isset($_POST['generar_pdf']) && $_SESSION['tipus_usuari'] == 1) {
+    ob_start();
+    ?>
+    <div>
+        <h3><b>Llista de Productes:</b></h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom producte</th>
+                    <th>ID producte</th>
+                    <th>Preu producte</th>
+                    <th>IVA producte</th>
+                    <th>Disponibilitat</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $llista = fLlegeixFitxer(FITXER_PRODUCTES);
+                fGenerarLlistaProductes($llista);
+                ?>
+            </tbody>
+        </table>
+    </div>
+    <?php
+    $html = ob_get_clean();
+
+    $dompdf = new Dompdf();
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    $dompdf->stream("llista_productes.pdf");
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
