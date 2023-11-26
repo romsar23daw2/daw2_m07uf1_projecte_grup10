@@ -143,57 +143,47 @@ function fModificacioDadesAdmin($nomUsuari, $ctsnya, $correu, $tipus)
 	return $afegit;
 }
 
-// Function to register a new manager.
+// Class that defines the properties that an object of a manager could have.
+class Gestor
+{
+	// Here I declare the attributes that I'll use.
+	private $id;
+	private $ctsnya;
+	private $correu;
+	private $telefon;
 
-// Classe gestor que implementa los atributos que un gestor puede tener.
-// Se ha usado chatgpt para como ayuda para crear la classe. 
-class Gestor {
-   
-    public function getId() {
-        return $this->id;
-    }
+	// Here I define the constructor.
+	public function __construct($id, public $nomUsuari, $ctsnya, public $nomComplet, $correu, $telefon, public $tipus)
+	{
+		$this->id = $id;
+		$this->nomUsuari = $nomUsuari;
+		$this->ctsnya = $ctsnya;
+		$this->nomComplet = $nomComplet;
+		$this->correu = $correu;
+		$this->telefon = $telefon;
+		$this->tipus = $tipus;
+	}
 
-    public function getNomUsuari() {
-        return $this->nomUsuari;
-    }
+	// Function to register a new manager.
+	public function fRegistrarGestor($dades_nou_gestor)
+	{
+		$ctsnya_hash = password_hash($this->ctsnya, PASSWORD_DEFAULT);
+		$dades_nou_gestor = $this->id . ":" . $this->nomUsuari . ":" . $ctsnya_hash . ":" . $this->nomComplet . ":" . $this->correu . ":" . $this->telefon . ":"  . $this->tipus . "\n";
 
-    public function getCtsnya() {
-        return $this->ctsnya;
-    }
+		if ($fp = fopen(FITXER_GESTORS, "a")) {
+			if (fwrite($fp, $dades_nou_gestor)) {
+				$afegit = true;
+			} else {
+				$afegit = false;
+			}
 
-    public function getNomComplet() {
-        return $this->nomComplet;
-    }
-
-    public function getCorreu() {
-        return $this->correu;
-    }
-
-    public function getTelefon() {
-        return $this->telefon;
-    }
-
-    public function getTipus() {
-        return $this->tipus;
-    }
-}
-
-function fRegistrarGestor(Gestor $gestor){
-	$dades_nou_gestor = $id . ":" . $nomUsuari . ":" . $ctsnya_hash . ":" . $nomComplet . ":" . $correu . ":" . $telefon . ":"  . $tipus . "\n";
-
-	if ($fp = fopen(FITXER_GESTORS, "a")) {
-		if (fwrite($fp, $dades_nou_gestor)) {
-			$afegit = true;
+			fclose($fp);
 		} else {
 			$afegit = false;
 		}
 
-		fclose($fp);
-	} else {
-		$afegit = false;
+		return $afegit;
 	}
-
-	return $afegit;
 }
 
 // Function that I use to check the ID of a manager.
@@ -252,41 +242,68 @@ function fModificarGestor($id_usuari_comprova, $nou_id_usuari, $nomUsuari, $ctsn
 	return false;
 }
 
-// Function to register a new client.
-function fRegistrarClient($id, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $adrecaPostal, $numeroVisa, $nomGestorAssignat,  $tipus)
+class Client
 {
-	$ctsnya_hash = password_hash($ctsnya, PASSWORD_DEFAULT);
-	$dades_nou_client = $id . ":" . $nomUsuari . ":" . $ctsnya_hash . ":" . $nomComplet . ":" . $correu . ":" . $telefon . ":" . $adrecaPostal . ":" . $numeroVisa  . ":" . $nomGestorAssignat . ":" . $tipus . "\n";
+	// Here I declare the attributes that I'll use.
+	private $id;
+	private $ctsnya;
+	private $correu;
+	private $telefon;
+	private $adrecaPostal;
+	private $numeroVisa;
+	private $nomGestorAssignat;
 
-	if ($fp = fopen(FITXER_CLIENTS, "a")) {
-		if (fwrite($fp, $dades_nou_client)) {
-			$afegit = true;
+	// Here I define the constructor.
+	public function __construct($id, public $nomUsuari, $ctsnya, public $nomComplet, $correu, $telefon, $adrecaPostal, $numeroVisa, $nomGestorAssignat, public $tipus)
+	{
+		$this->id = $id;
+		$this->nomUsuari = $nomUsuari;
+		$this->ctsnya = $ctsnya;
+		$this->nomComplet = $nomComplet;
+		$this->correu = $correu;
+		$this->telefon = $telefon;
+		$this->adrecaPostal = $adrecaPostal;
+		$this->numeroVisa = $numeroVisa;
+		$this->nomGestorAssignat = $nomGestorAssignat;
+		$this->tipus = $tipus;
+	}
+
+	// Function to register a new client.
+	public function fRegistrarClient($dades_nou_client)
+	{
+		$ctsnya_hash = password_hash($this->ctsnya, PASSWORD_DEFAULT);
+		$dades_nou_client = $this->id . ":" . $this->nomUsuari . ":" . $ctsnya_hash . ":" . $this->nomComplet . ":" . $this->correu . ":" . $this->telefon . ":" . $this->adrecaPostal . ":" . $this->numeroVisa  . ":" . $this->nomGestorAssignat . ":" . $this->tipus . "\n";
+
+		if ($fp = fopen(FITXER_CLIENTS, "a")) {
+			if (fwrite($fp, $dades_nou_client)) {
+				$afegit = true;
+			} else {
+				$afegit = false;
+			}
+
+			fclose($fp);
+		}
+
+		// Create an empty file with the username of the client in DIRECTORI_COMANDA.
+		if ($fp = fopen(DIRECTORI_COMANDA . $this->nomUsuari, "w")) {  // "DIRECTORI_COMANDA . $nomUsuari" is to create the name of the user in the directory.
+			if (fwrite($fp, "")) {
+				$afegit = true;
+				fclose($fp);
+			}
+		}
+
+		// Create an empty file with the username of the client in DIRECTORI_CISTELLA.
+		if ($fp = fopen(DIRECTORI_CISTELLA . $this->nomUsuari, "w")) {
+			if (fwrite($fp, "")) {
+				$afegit = true;
+				fclose($fp);
+			}
 		} else {
 			$afegit = false;
 		}
 
-		fclose($fp);
+		return $afegit;
 	}
-
-	// Create an empty file with the username of the client in DIRECTORI_COMANDA.
-	if ($fp = fopen(DIRECTORI_COMANDA . $nomUsuari, "w")) {  // "DIRECTORI_COMANDA . $nomUsuari" is to create the name of the user in the directory.
-		if (fwrite($fp, "")) {
-			$afegit = true;
-			fclose($fp);
-		}
-	}
-
-	// Create an empty file with the username of the client in DIRECTORI_CISTELLA.
-	if ($fp = fopen(DIRECTORI_CISTELLA . $nomUsuari, "w")) {
-		if (fwrite($fp, "")) {
-			$afegit = true;
-			fclose($fp);
-		}
-	} else {
-		$afegit = false;
-	}
-
-	return $afegit;
 }
 
 // Function that I use to check the ID of a client.
@@ -338,7 +355,7 @@ function fModificarClient($id_usuari_comprova, $nou_id_usuari, $nomUsuari, $ctsn
 			if (file_put_contents(FITXER_CLIENTS, $linies_actualitzades) !== false) {
 				return true;
 			} else {
-				echo "Ha ocorregut un error escrivint al fitxer de gestors.";
+				echo "Ha ocorregut un error escrivint al fitxer de clients.";
 				return false;
 			}
 		}
@@ -498,6 +515,13 @@ function fLocalitzarProducte($id_producte)
 
 		if ($id == $id_producte) {
 			echo "Modificant el producte amb nom " . $nom .  " i ID equivalent a " . $id . ".";
+			return true;
+		}
+	}
+
+	echo "El producte amb id " . $id_producte .  " no existeix.";
+	return false;
+}
 
 function fAconsegueixemail($id_usuari_comprova)
 {
@@ -514,9 +538,6 @@ function fAconsegueixemail($id_usuari_comprova)
 		}
 	}
 
-	// echo "El gestor amb id " . $id_usuari_comprova[$valor] .  " no existeix.";
-
-	echo "El producte amb id " . $id_producte .  " no existeix.";
 	return false;
 }
 

@@ -40,7 +40,7 @@ if (isset($_POST['generar_pdf'])) {
                 require("biblioteca.php");
                 $llista = fLlegeixFitxer(FITXER_GESTORS);
                 fCreaTaulaGestors($llista);
-               
+
                 ?>
             </tbody>
         </table>
@@ -86,7 +86,6 @@ if (isset($_POST['generar_pdf'])) {
                     require("biblioteca.php");
                     $llista = fLlegeixFitxer(FITXER_GESTORS);
                     fCreaTaulaGestors($llista);
-                    fAconsegueixemail(99);
                     ?>
                 </tbody>
             </table>

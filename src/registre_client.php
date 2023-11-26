@@ -18,44 +18,37 @@ if (!isset($_SESSION['usuari'])) {
 }
 
 $parametres_complets = (
-    isset($_POST['id_nou_client']) &&
-    isset($_POST['nom_usuari']) &&
-    isset($_POST['cts_nou_client']) &&
-    isset($_POST['nom_complet_nou_client']) &&
-    isset($_POST['correu_nou_client']) &&
-    isset($_POST['telefon_nou_client']) &&
-    isset($_POST['adreca_nou_client']) &&
-    isset($_POST['num_visa_nou_client']) &&
-    isset($_POST['nom_gestor_nou_client']) &&
-    isset($_POST['tipus_usuari'])
+	isset($_POST['id_nou_client']) &&
+	isset($_POST['nom_usuari']) &&
+	isset($_POST['cts_nou_client']) &&
+	isset($_POST['nom_complet_nou_client']) &&
+	isset($_POST['correu_nou_client']) &&
+	isset($_POST['telefon_nou_client']) &&
+	isset($_POST['adreca_nou_client']) &&
+	isset($_POST['num_visa_nou_client']) &&
+	isset($_POST['nom_gestor_nou_client']) &&
+	isset($_POST['tipus_usuari'])
 );
 
 if ($parametres_complets) {
-    // Validación adicional (puedes personalizar las condiciones según tus requisitos)
-    if (strlen($_POST['nom_usuari']) < 3) {
-        echo "El nombre de usuario debe tener al menos 3 caracteres.";
-        exit();
-    }
+	$nou_client = new Client(
+		$_POST['id_nou_client'],
+		$_POST['nom_usuari'],
+		$_POST['cts_nou_client'],
+		$_POST['nom_complet_nou_client'],
+		$_POST['correu_nou_client'],
+		$_POST['telefon_nou_client'],
+		$_POST['adreca_nou_client'],
+		$_POST['num_visa_nou_client'],
+		$_POST['nom_gestor_nou_client'],
+		$_POST['tipus_usuari']
+	);
 
-    // Puedes agregar más validaciones según tus necesidades
+	// $nou_client->fRegistrarClient($nou_client) is because I use $nou_client to create a new cñient, and I need to specify the class if I don't, I can't access the method.
+	$afegit = $nou_client->fRegistrarClient($nou_client);
+	$_SESSION['afegit'] = $afegit;
 
-    $afegit = fRegistrarClient(
-        $_POST['id_nou_client'],
-        $_POST['nom_usuari'],
-        $_POST['cts_nou_client'],
-        $_POST['nom_complet_nou_client'],
-        $_POST['correu_nou_client'],
-        $_POST['telefon_nou_client'],
-        $_POST['adreca_nou_client'],
-        $_POST['num_visa_nou_client'],
-        $_POST['nom_gestor_nou_client'],
-        $_POST['tipus_usuari']
-    );
-
-    $_SESSION['afegit'] = $afegit;
-
-    header("refresh: 5; url=menu.php");
-    exit(); // Agregado para detener la ejecución del script después de la redirección.
+	header("refresh: 5; url=menu.php");
 }
 ?>
 

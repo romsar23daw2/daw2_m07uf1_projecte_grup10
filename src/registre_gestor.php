@@ -27,7 +27,8 @@ if ($parametres_complets) {
 		$_POST['tipus_usuari']
 	);
 
-	$afegit = fRegistrarGestor($nou_gestor);
+	// $nou_gestor->fRegistrarGestor($nou_gestor) is because I use $nou_gestor to create a new manager, and I need to specify the class if I don't, I can't access the method.
+	$afegit = $nou_gestor->fRegistrarGestor($nou_gestor);
 	$_SESSION['afegit'] = $afegit;
 
 	header("refresh: 5; url=menu.php");
@@ -45,7 +46,7 @@ if ($parametres_complets) {
 
 <body>
 	<h3><b>Registre d'un nou gestor:</b></h3>
-	
+
 	<form action="registre_gestor.php" method="POST">
 		<p>
 			<label>ID del nou gestor:</label>
