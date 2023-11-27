@@ -108,14 +108,25 @@ if (isset($_POST['generar_pdf']) && $_SESSION['tipus_usuari'] == 1) {
 				</tbody>
 			</table>
 
-			<br><b><u>LLISTA DE PRODUCTES:</u></b><br>
-			<form action="./cistella_gestio_productes.php" method="POST">
-				<input type="radio" name="producte" value="bombetes30W" /> Bombetes de 30 W<br />
-				<input type="radio" name="producte" value="bombetes60W" /> Bombetes de 60 W<br />
-				<input type="radio" name="producte" value="bombetes100W" /> Bombetes de 100 W<br /><br>
-				<input value="Selecciona" type="submit"><br><br>
-			</form>
-		</div>
+			<h3><b>Productes que es venen la botiga:</b></h3>
+            <form action="./cistella_gestio_productes.php" method="POST">
+                <?php
+                $llistaProductes = fLlegeixFitxer(FITXER_PRODUCTES);
+                foreach ($llistaProductes as $producte) {
+                    $dadesProducte = explode(":", $producte);
+                    $nomProducte = $dadesProducte[0];
+                    $disponibilitat = trim($dadesProducte[4]); 
+
+                    // Mostrar solo si el producto está disponible
+                    if ($disponibilitat == "Disponible" && !empty($nomProducte)) {
+                        echo '<input type="checkbox" name="producte[]" value="' . $nomProducte . '" /> ' . $nomProducte . '<br />';
+                    }
+                }
+                ?>
+                <br>
+                <input value="Selecciona" type="submit"><br><br>
+            </form>
+        </div>
 
 	<?php elseif ($_SESSION['tipus_usuari'] == 1) : ?>
 		<div>
