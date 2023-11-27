@@ -483,24 +483,18 @@ function fGenerarLlistaProductes($llista)
 	return 0;
 }
 
-// I need to finish it.
-function fComprovarDisponibilitat($id_p, $llista)
-{
-	foreach ($llista as $entrada) {
-		$dadesEntrada = explode(":", $entrada);
-		$nom_producte = $dadesEntrada[0];
-		$id_producte = $dadesEntrada[1];
-		$preu_producte = $dadesEntrada[2];
-		$iva_producte = $dadesEntrada[3];
-		$disponibilitat_producte = $dadesEntrada[4];
+// victor try it to finish
+function fComprovarDisponibilitat($id_p, $llista) {
+    foreach ($llista as $entrada) {
+        $dadesEntrada = explode(":", $entrada);
+        $id_producte = $dadesEntrada[1];
+        $disponibilitat_producte = $dadesEntrada[4];
 
-		// Check if the id of the product and if it's available:
-		if ($id_p == $nom_producte && $disponibilitat_producte == 'Disponible') {
-			echo "<tr><td>$nom_producte</td><td>$id_producte</td><td>$preu_producte</td><td>$iva_producte</td><td>$disponibilitat_producte</td><tr>";
-		}
-	}
-
-	return 0;
+        if ($id_p == $id_producte && trim($disponibilitat_producte) == 'Disponible') {
+            return true;
+        }
+    }
+    return false;
 }
 
 // Function I use to find a product.
