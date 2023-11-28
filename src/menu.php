@@ -33,7 +33,7 @@ if (!isset($_SESSION['usuari'])) {
 			<a href="./llista_clients.php">Llista de clients.</a><br>
 			<a href="./modificar_client.php">Modificar dades de un client.</a><br>
 
-			<p><a href="./modificar_dades_administrador.php">Modificació de dades del administrador.</a></p>
+			<p><a href="./modificar_administrador.php">Modificació de dades del administrador.</a></p>
 
 			<p><a href="./logout.php">Finalitza la sessió.</a></p>
 		</div>

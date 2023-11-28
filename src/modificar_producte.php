@@ -1,6 +1,6 @@
 <?php
 session_start();
-require("./biblioteca.php");
+require("./funcions.php");
 
 $nomFitxer = DIRECTORI_CISTELLA . $_SESSION['usuari'];
 $_SESSION['producte'] = fLlegeixFitxer($nomFitxer);

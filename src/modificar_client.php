@@ -1,5 +1,8 @@
 <?php
-require("./biblioteca.php");
+require("./funcions.php");
+
+// Now I import the file where I have the method to modify a client.
+require("./classes-gestor-client-admin.php");
 session_start();
 
 if (!isset($_SESSION['usuari'])) {
@@ -22,11 +25,13 @@ if (isset($_POST['id_client_trobat'])) {
 }
 
 // Parameters of the manager.
-$parametres_complets =  (isset($_POST['id_nou_client'])) && (isset($_POST['nom_usuari'])) && (isset($_POST['cts_nou_client'])) && (isset($_POST['nom_complet_nou_client'])) && (isset($_POST['correu_nou_client'])) && (isset($_POST['telefon_nou_client'])) && (isset($_POST['adreca_nou_client'])) && (isset($_POST['num_visa_nou_client']))  && (isset($_POST['nom_gestor_nou_client']));
+$parametres_complets = (isset($_POST['nom_usuari'])) && (isset($_POST['cts_nou_client'])) && (isset($_POST['nom_complet_nou_client'])) && (isset($_POST['correu_nou_client'])) && (isset($_POST['telefon_nou_client'])) && (isset($_POST['adreca_nou_client'])) && (isset($_POST['num_visa_nou_client']))  && (isset($_POST['nom_gestor_nou_client']));
 
 if ($parametres_complets) {
 	// Here i access $_SESSION['id_client_trobat'] in order to be able to compare the id from the manager, without needing to enter it again, and because of this, I'm able to change the ID of the manager.
-	$modificat = fModificarClient($_SESSION['id_client_trobat'], $_POST['id_nou_client'], $_POST['nom_usuari'], $_POST['cts_nou_client'], $_POST['nom_complet_nou_client'], $_POST['correu_nou_client'], $_POST['telefon_nou_client'], $_POST['adreca_nou_client'], $_POST['num_visa_nou_client'], $_POST['nom_gestor_nou_client'], $_POST['tipus_usuari']);
+	$client_modificat = new Client($_POST['id_client_trobat'], $_POST['nom_usuari'], $_POST['cts_nou_client'], $_POST['nom_complet_nou_client'], $_POST['correu_nou_client'], $_POST['telefon_nou_client'], $_POST['adreca_nou_client'], $_POST['num_visa_nou_client'], $_POST['nom_gestor_nou_client'], $_POST['tipus_usuari']);
+
+	$modificat = $client_modificat->fModificarClient($_SESSION['id_client_trobat'], $client_modificat);
 	$_SESSION['modificat'] = $modificat;
 
 	header("refresh: 5; url=menu.php"); // Passats 5 segons el navegador demana menu.php i es torna a menu.php.
@@ -52,7 +57,6 @@ if ($parametres_complets) {
 			if (!$client_trobat) {
 			?>
 		<div>
-
 			<label>ID del client a cercar:</label>
 			<input type="number" name="id_client_trobat" min=1 max=1000 required><br>
 			<br>
@@ -62,9 +66,6 @@ if ($parametres_complets) {
 			} elseif ($client_trobat) {
 	?>
 		<div>
-			<label>Nou ID del client:</label>
-			<input type="number" name="id_nou_client" min=0 max=1000 required><br>
-
 			<label>Nou nom d'usuari:</label>
 			<input type="text" name="nom_usuari" required><br>
 

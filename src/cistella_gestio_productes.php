@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__ . '/vendor/autoload.php'; // Asegúrate de que el autoloader de Composer está incluido
 use Dompdf\Dompdf;
 
-require("./biblioteca.php");
+require("./funcions.php");
 
 $nomFitxer = DIRECTORI_CISTELLA . $_SESSION['usuari'];
 $_SESSION['producte'] = fLlegeixFitxer($nomFitxer);

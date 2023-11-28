@@ -1,5 +1,8 @@
 <?php
-require("biblioteca.php");
+require("./funcions.php");
+
+// Now I import the file where I have the method to create a new client.
+require("./classes-gestor-client-admin.php");
 session_start();
 
 if (!isset($_SESSION['usuari'])) {

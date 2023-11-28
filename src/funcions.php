@@ -6,10 +6,10 @@ define('ADMIN', "2");
 define('GESTOR', "1");
 define('CLIENT', "0");
 
-define('FITXER_ADMINISTRADOR', "./usuaris/administrador");
-define('FITXER_GESTORS', "./usuaris/gestors");
-define('FITXER_CLIENTS', "./usuaris/clients");
-define('FITXER_PRODUCTES', "./productes/productes");
+define('FITXER_ADMINISTRADOR', "./usuaris/administrador.txt");
+define('FITXER_GESTORS', "./usuaris/gestors.txt");
+define('FITXER_CLIENTS', "./usuaris/clients.txt");
+define('FITXER_PRODUCTES', "./productes/productes.txt");
 
 define('DIRECTORI_COMANDA', "./comandes/");
 define('DIRECTORI_CISTELLA', "./cistelles/");
@@ -122,70 +122,6 @@ function fAutenticacioClient($nomUsuariComprova)
 	return $autenticat;
 }
 
-// Function to modify the credentials from the admin.
-function fModificacioDadesAdmin($nomUsuari, $ctsnya, $correu, $tipus)
-{
-	$ctsnya_hash = password_hash($ctsnya, PASSWORD_DEFAULT);
-	$dades_administrador = $nomUsuari . ":" . $ctsnya_hash . ":" . $correu . ":"  . $tipus . "\n";
-
-	if ($fp = fopen(FITXER_ADMINISTRADOR, "w")) {
-		if (fwrite($fp, $dades_administrador)) {
-			$afegit = true;
-		} else {
-			$afegit = false;
-		}
-
-		fclose($fp);
-	} else {
-		$afegit = false;
-	}
-
-	return $afegit;
-}
-
-// Class that defines the properties that an object of a manager could have.
-class Gestor
-{
-	// Here I declare the attributes that I'll use.
-	private $id;
-	private $ctsnya;
-	private $correu;
-	private $telefon;
-
-	// Here I define the constructor.
-	public function __construct($id, public $nomUsuari, $ctsnya, public $nomComplet, $correu, $telefon, public $tipus)
-	{
-		$this->id = $id;
-		$this->nomUsuari = $nomUsuari;
-		$this->ctsnya = $ctsnya;
-		$this->nomComplet = $nomComplet;
-		$this->correu = $correu;
-		$this->telefon = $telefon;
-		$this->tipus = $tipus;
-	}
-
-	// Function to register a new manager.
-	public function fRegistrarGestor($dades_nou_gestor)
-	{
-		$ctsnya_hash = password_hash($this->ctsnya, PASSWORD_DEFAULT);
-		$dades_nou_gestor = $this->id . ":" . $this->nomUsuari . ":" . $ctsnya_hash . ":" . $this->nomComplet . ":" . $this->correu . ":" . $this->telefon . ":"  . $this->tipus . "\n";
-
-		if ($fp = fopen(FITXER_GESTORS, "a")) {
-			if (fwrite($fp, $dades_nou_gestor)) {
-				$afegit = true;
-			} else {
-				$afegit = false;
-			}
-
-			fclose($fp);
-		} else {
-			$afegit = false;
-		}
-
-		return $afegit;
-	}
-}
-
 // Function that I use to check the ID of a manager.
 function fLocalitzarGestor($id_usuari_comprova)
 {
@@ -207,105 +143,6 @@ function fLocalitzarGestor($id_usuari_comprova)
 	return false;
 }
 
-// Function to modify a manager.
-function fModificarGestor($id_usuari_comprova, $nou_id_usuari, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $tipusUsuari)
-{
-	$usuaris = fLlegeixFitxer(FITXER_GESTORS);
-
-	// Here I must use &$usuari, as a pointer because I need to modify it later.
-	foreach ($usuaris as &$usuari) {
-		$dadesUsuari = explode(":", $usuari);
-		$id = $dadesUsuari[0];
-
-		if ($id == $id_usuari_comprova) {
-			$dadesUsuari[0] = $nou_id_usuari;
-			$dadesUsuari[1] = $nomUsuari;
-			$dadesUsuari[2] = password_hash($ctsnya, PASSWORD_DEFAULT);
-			$dadesUsuari[3] = $nomComplet;
-			$dadesUsuari[4] = $correu;
-			$dadesUsuari[5] = $telefon;
-			$dadesUsuari[6] = $tipusUsuari;
-
-			$usuari = implode(":", $dadesUsuari);
-			// Here I declare a variable that stores each line from the usuaris, it has a \n at the ending in order to have an enpty line at the bottom.
-			$linies_actualitzades = implode("\n", $usuaris) . "\n";
-
-			if (file_put_contents(FITXER_GESTORS, $linies_actualitzades) !== false) {
-				return true;
-			} else {
-				echo "Ha ocorregut un error escrivint al fitxer de gestors.";
-				return false;
-			}
-		}
-	}
-
-	return false;
-}
-
-class Client
-{
-	// Here I declare the attributes that I'll use.
-	private $id;
-	private $ctsnya;
-	private $correu;
-	private $telefon;
-	private $adrecaPostal;
-	private $numeroVisa;
-	private $nomGestorAssignat;
-
-	// Here I define the constructor.
-	public function __construct($id, public $nomUsuari, $ctsnya, public $nomComplet, $correu, $telefon, $adrecaPostal, $numeroVisa, $nomGestorAssignat, public $tipus)
-	{
-		$this->id = $id;
-		$this->nomUsuari = $nomUsuari;
-		$this->ctsnya = $ctsnya;
-		$this->nomComplet = $nomComplet;
-		$this->correu = $correu;
-		$this->telefon = $telefon;
-		$this->adrecaPostal = $adrecaPostal;
-		$this->numeroVisa = $numeroVisa;
-		$this->nomGestorAssignat = $nomGestorAssignat;
-		$this->tipus = $tipus;
-	}
-
-	// Function to register a new client.
-	public function fRegistrarClient($dades_nou_client)
-	{
-		$ctsnya_hash = password_hash($this->ctsnya, PASSWORD_DEFAULT);
-		$dades_nou_client = $this->id . ":" . $this->nomUsuari . ":" . $ctsnya_hash . ":" . $this->nomComplet . ":" . $this->correu . ":" . $this->telefon . ":" . $this->adrecaPostal . ":" . $this->numeroVisa  . ":" . $this->nomGestorAssignat . ":" . $this->tipus . "\n";
-
-		if ($fp = fopen(FITXER_CLIENTS, "a")) {
-			if (fwrite($fp, $dades_nou_client)) {
-				$afegit = true;
-			} else {
-				$afegit = false;
-			}
-
-			fclose($fp);
-		}
-
-		// Create an empty file with the username of the client in DIRECTORI_COMANDA.
-		if ($fp = fopen(DIRECTORI_COMANDA . $this->nomUsuari, "w")) {  // "DIRECTORI_COMANDA . $nomUsuari" is to create the name of the user in the directory.
-			if (fwrite($fp, "")) {
-				$afegit = true;
-				fclose($fp);
-			}
-		}
-
-		// Create an empty file with the username of the client in DIRECTORI_CISTELLA.
-		if ($fp = fopen(DIRECTORI_CISTELLA . $this->nomUsuari, "w")) {
-			if (fwrite($fp, "")) {
-				$afegit = true;
-				fclose($fp);
-			}
-		} else {
-			$afegit = false;
-		}
-
-		return $afegit;
-	}
-}
-
 // Function that I use to check the ID of a client.
 function fLocalitzarClient($id_usuari_comprova)
 {
@@ -323,44 +160,6 @@ function fLocalitzarClient($id_usuari_comprova)
 	}
 
 	echo "El client amb id " . $id_usuari_comprova .  " no existeix.";
-	return false;
-}
-
-// Function to modify a client.
-function fModificarClient($id_usuari_comprova, $nou_id_usuari, $nomUsuari, $ctsnya, $nomComplet, $correu, $telefon, $adrecaPostal, $numeroVisa, $nomGestorAssignat,  $tipusUsuari)
-{
-	$usuaris = fLlegeixFitxer(FITXER_CLIENTS);
-
-	// Here I must use &$usuari, as a pointer because I need to modify it later.
-	foreach ($usuaris as &$usuari) {
-		$dadesUsuari = explode(":", $usuari);
-		$id = $dadesUsuari[0];
-
-		if ($id == $id_usuari_comprova) {
-			$dadesUsuari[0] = $nou_id_usuari;
-			$dadesUsuari[1] = $nomUsuari;
-			$dadesUsuari[2] = password_hash($ctsnya, PASSWORD_DEFAULT);
-			$dadesUsuari[3] = $nomComplet;
-			$dadesUsuari[4] = $correu;
-			$dadesUsuari[5] = $telefon;
-			$dadesUsuari[6] = $adrecaPostal;
-			$numeroVisa[7] = $telefon;
-			$nomGestorAssignat[8] = $adrecaPostal;
-			$nomGestorAssignat[9] = $tipusUsuari;
-
-			$usuari = implode(":", $dadesUsuari);
-			// Here I declare a variable that stores each line from the usuaris, it has a \n at the ending in order to have an enpty line at the bottom.
-			$linies_actualitzades = implode("\n", $usuaris) . "\n";
-
-			if (file_put_contents(FITXER_CLIENTS, $linies_actualitzades) !== false) {
-				return true;
-			} else {
-				echo "Ha ocorregut un error escrivint al fitxer de clients.";
-				return false;
-			}
-		}
-	}
-
 	return false;
 }
 
@@ -484,17 +283,18 @@ function fGenerarLlistaProductes($llista)
 }
 
 // victor try it to finish
-function fComprovarDisponibilitat($id_p, $llista) {
-    foreach ($llista as $entrada) {
-        $dadesEntrada = explode(":", $entrada);
-        $id_producte = $dadesEntrada[1];
-        $disponibilitat_producte = $dadesEntrada[4];
+function fComprovarDisponibilitat($id_p, $llista)
+{
+	foreach ($llista as $entrada) {
+		$dadesEntrada = explode(":", $entrada);
+		$id_producte = $dadesEntrada[1];
+		$disponibilitat_producte = $dadesEntrada[4];
 
-        if ($id_p == $id_producte && trim($disponibilitat_producte) == 'Disponible') {
-            return true;
-        }
-    }
-    return false;
+		if ($id_p == $id_producte && trim($disponibilitat_producte) == 'Disponible') {
+			return true;
+		}
+	}
+	return false;
 }
 
 // Function I use to find a product.

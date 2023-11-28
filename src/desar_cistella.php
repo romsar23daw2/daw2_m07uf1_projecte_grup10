@@ -1,5 +1,5 @@
 <?php
-require("./biblioteca.php");
+require("./funcions.php");
 
 session_start();
 if (!isset($_SESSION['usuari'])) {

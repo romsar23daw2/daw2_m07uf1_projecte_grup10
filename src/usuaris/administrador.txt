@@ -1,0 +1,1 @@
+admin:$2y$10$iMBzO/rZ4PGKCBlRbkCB8O.kpXjAerkqngI05vFWqcV7v9LrVN7DO:admin@admin:2

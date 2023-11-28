@@ -32,7 +32,7 @@ if (isset($_POST['generar_pdf'])) {
 			</thead>
 			<tbody>
 				<?php
-				require("biblioteca.php");
+				require("./funcions.php");
 				$llista = fLlegeixFitxer(FITXER_CLIENTS);
 				fCreaTaulaClients($llista);
 				?>
@@ -82,7 +82,7 @@ if (isset($_POST['generar_pdf'])) {
 				</thead>
 				<tbody>
 					<?php
-					require("biblioteca.php");
+					require("./funcions.php");
 					$llista = fLlegeixFitxer(FITXER_CLIENTS);
 					fCreaTaulaClients($llista);
 					?>
@@ -115,7 +115,7 @@ if (isset($_POST['generar_pdf'])) {
 				</thead>
 				<tbody>
 					<?php
-					require("biblioteca.php");
+					require("./funcions.php");
 					$llista = fLlegeixFitxer(FITXER_CLIENTS);
 					fCreaTaulaClientsPerGestor($_SESSION['usuari'], $llista);
 					?>
@@ -141,7 +141,7 @@ if (isset($_POST['generar_pdf'])) {
 				</thead>
 				<tbody>
 					<?php
-					require("biblioteca.php");
+					require("./funcions.php");
 					$llista = fLlegeixFitxer(FITXER_CLIENTS);
 					fVeureDadesPersonalsClient($_SESSION['usuari'], $llista);
 					?>

@@ -1,5 +1,8 @@
 <?php
-require("./biblioteca.php");
+require("./funcions.php");
+
+// Now I import the file where I have the method to modify a manager.
+require("./classes-gestor-client-admin.php");
 session_start();
 
 if (!isset($_SESSION['usuari'])) {
@@ -22,11 +25,14 @@ if (isset($_POST['id_gestor_trobat'])) {
 }
 
 // Parameters of the manager.
-$parametres_complets =  (isset($_POST['id_gestor'])) && (isset($_POST['nom_usuari'])) && (isset($_POST['cts_nou_gestor'])) && (isset($_POST['nom_complet_nou_gestor'])) && (isset($_POST['correu_nou_gestor'])) && (isset($_POST['telefon_nou_gestor'])) && (isset($_POST['tipus_usuari']));
+$parametres_complets =  (isset($_POST['nom_usuari'])) && (isset($_POST['cts_nou_gestor'])) && (isset($_POST['nom_complet_nou_gestor'])) && (isset($_POST['correu_nou_gestor'])) && (isset($_POST['telefon_nou_gestor'])) && (isset($_POST['tipus_usuari']));
 
 if ($parametres_complets) {
-	// Here i access $_SESSION['id_gestor_trobat'] in order to be able to compare the id from the manager, without needing to enter it again, and because of this, I'm able to change the ID of the manager.
-	$modificat = fModificarGestor($_SESSION['id_gestor_trobat'], $_POST['id_gestor'], $_POST['nom_usuari'], $_POST['cts_nou_gestor'], $_POST['nom_complet_nou_gestor'], $_POST['correu_nou_gestor'], $_POST['telefon_nou_gestor'], $_POST['tipus_usuari']);
+	// Here i access $_SESSION['id_gestor'] in order to be able to compare the id from the manager, without needing to enter it again, and because of this, I'm able to change the ID of the manager.
+	$gestor_modificat = new Gestor($_POST['id_gestor_trobat'], $_POST['nom_usuari'], $_POST['cts_nou_gestor'], $_POST['nom_complet_nou_gestor'], $_POST['correu_nou_gestor'], $_POST['telefon_nou_gestor'], $_POST['tipus_usuari']);
+
+
+	$modificat = $gestor_modificat->fModificarGestor($_SESSION['id_gestor_trobat'], $gestor_modificat);
 	$_SESSION['modificat'] = $modificat;
 
 	header("refresh: 5; url=menu.php"); // Passats 5 segons el navegador demana menu.php i es torna a menu.php.
@@ -52,7 +58,6 @@ if ($parametres_complets) {
 			if (!$gestor_trobat) {
 			?>
 		<div>
-
 			<label>ID del gestor a cercar:</label>
 			<input type="number" name="id_gestor_trobat" min=1 max=100 required><br>
 			<br>
@@ -62,9 +67,6 @@ if ($parametres_complets) {
 			} elseif ($gestor_trobat) {
 	?>
 		<div>
-			<label>Nou ID del gestor:</label>
-			<input type="number" name="id_gestor" min=1 max=100 required><br>
-
 			<label>Nou nom de usuari:</label>
 			<input type="text" name="nom_usuari" required><br>
 
