@@ -37,7 +37,7 @@ if (isset($_POST['generar_pdf'])) {
             </thead>
             <tbody>
                 <?php
-                require("biblioteca.php");
+                require("./funcions.php");
                 $llista = fLlegeixFitxer(FITXER_GESTORS);
                 fCreaTaulaGestors($llista);
 
@@ -83,7 +83,7 @@ if (isset($_POST['generar_pdf'])) {
                 </thead>
                 <tbody>
                     <?php
-                    require("biblioteca.php");
+                    require("./funcions.php");
                     $llista = fLlegeixFitxer(FITXER_GESTORS);
                     fCreaTaulaGestors($llista);
                     ?>

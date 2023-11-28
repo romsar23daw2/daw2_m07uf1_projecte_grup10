@@ -1,5 +1,8 @@
 <?php
-require("./biblioteca.php");
+require("./funcions.php");
+
+// Now I import the file where I have the method to create a new manager.
+require("./classes-gestor-client-admin.php");
 session_start();
 
 if (!isset($_SESSION['usuari'])) {
@@ -17,7 +20,14 @@ if (!isset($_SESSION['usuari'])) {
 $parametres_complets = (isset($_POST['nom_usuari']) && isset($_POST['cts_admin']) && isset($_POST['correu_admin']) && isset($_POST['tipus_usuari']));
 
 if ($parametres_complets) {
-  $afegit = fModificacioDadesAdmin($_POST['nom_usuari'], $_POST['cts_admin'], $_POST['correu_admin'], $_POST['tipus_usuari']);
+  $admin_modificat = new Admin(
+    $_POST['nom_usuari'],
+    $_POST['cts_admin'],
+    $_POST['correu_admin'],
+    $_POST['tipus_usuari']
+  );
+
+  $afegit = $admin_modificat->fModificacioDadesAdmin($parametres_modificats);
   $_SESSION['afegit'] = $afegit;
 
   header("refresh: 5; url=menu.php"); // Passats 5 segons el navegador demana menu.php i es torna a menu.php.

@@ -7,3 +7,4 @@
 38:gestor06:$2y$10$7dr6XyQMMxOLlklbCscZH.Hmo6PNBfjpNBE4XSEpnve/ATsOas5tK:Víctor Toro:gestor06@gestor06:2490810982901:1
 81:Oriol:$2y$10$Vz.RKW4Gy3ETZ5RHQDX7LuPwuPwTyrq.RSil8x6fQQkGUpM6T3E4q:Oriol Serrallonga:Oriol@Oriol:2189401:1
 21:Binefa:$2y$10$MY5XZEhKpH99jW76Q0MxAO3Q3VgrEiJgYQ/0yAtCgqbeJbqpDzOgK:Jordi Binefa Martínez:Binefa@Binefa:1283901:1
+73:manuela:$2y$10$jeuNDK9DhMS0Sp.UkOx9IeJxKsBQGOBTkHWvTu8H8uqOarWO1dvr.:manuela:manuela:124:1

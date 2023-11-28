@@ -1,5 +1,5 @@
 <?php
-require("biblioteca.php");
+require("./funcions.php");
 
 if ((isset($_POST['usuari'])) && (isset($_POST['ctsnya']))) {
     // Here I have thee diferent variables, which I use to check the user type.
@@ -18,7 +18,7 @@ if ((isset($_POST['usuari'])) && (isset($_POST['ctsnya']))) {
 
         header("Location: menu.php");
     } elseif ($autenticat_gestor) {
-        session_start(); // Inici de sessió
+        session_start(); // Inici de sessió.
         $_SESSION['usuari'] = $_POST['usuari'];
         $_SESSION['tipus_usuari'] = 1;  // Here I set the user type for gestor.
         $_SESSION['expira'] = time() + TEMPS_EXPIRACIO;
