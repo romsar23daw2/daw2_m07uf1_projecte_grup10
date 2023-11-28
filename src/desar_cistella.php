@@ -16,8 +16,8 @@ if (isset($_POST['resp'])) {
                 exit;
             }
         } else {
-            // hay javascript, pero solo para que salga una alerta. Comprobar si inflinje las normas de Collados.
-            echo "<script>alert('El producto no está disponible.'); window.location.href='./cistella_gestio_productes.php';</script>";
+            fCreaCistella($_SESSION['usuari'], $_SESSION['producte']);
+            header("Location: ./cistella_gestio_productes.php");
             exit;
         }
     }
