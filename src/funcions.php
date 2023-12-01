@@ -110,17 +110,23 @@ function fAutenticacioClient($nomUsuariComprova)
 
 	foreach ($usuari_client as $usuari_c) {
 		$dadesUsuari = explode(":", $usuari_c);
-		$nomUsuari = $dadesUsuari[1]; // Here as I have an id before the name, the name is on the second index of the array.
+		$idUsuari = $dadesUsuari[0];  // Agrega esta línea para obtener el ID del cliente
+		$nomUsuari = $dadesUsuari[1]; // Aquí obtengo el nombre de usuario.
 		$ctsUsuari = $dadesUsuari[2];
 
 		if (($nomUsuari == $nomUsuariComprova) && (password_verify($_POST['ctsnya'], $ctsUsuari))) {
 			$autenticat = true;
+
+			// Aquí establezco $_SESSION['id_cliente'] con el ID del cliente autenticado
+			$_SESSION['id_cliente'] = $idUsuari;
+
 			break;
 		} else  $autenticat = false;
 	}
 
 	return $autenticat;
 }
+
 
 // Function that I use to check the ID of a manager.
 function fLocalitzarGestor($id_usuari_comprova)

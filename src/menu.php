@@ -48,6 +48,10 @@ if (!isset($_SESSION['usuari'])) {
 				<a href="./llista_clients.php">Llista de clients.</a><br>
 				<a href="./professional.php">Eviar correu al administrador per esborrar client.</a><br>
 			</p>
+      
+			<a href="./llista_clients.php">Llista de clients.</a><br>
+			<a href="./professional.php">Eviar correu al administrador per esborrar client.</a><br>
+			<a href="./recibir_mensajes.php">Visualitzar missatge del client.</a><br>
 
 			<p><a href="./cistella_gestio_productes.php">Gestió de productes.</a></p>
 
@@ -60,11 +64,11 @@ if (!isset($_SESSION['usuari'])) {
 			<h3><b>Menú del visualitzador:</b></h3>
 			<p><a href="./llista_clients.php">Visualitzar dades personals.</a><br></p>
 
-			<p>
-				<a href="./sendmail_Torrente">Eviar correu al gestor per modificacio/esborrament del compte de client.</a><br>
-				<a href="./sendmail_Torrente">Eviar correu al gestor per petició de justificació de comanda rebutjada.</a><br>
+    	<p>
+        <a href="./enviar_mensaje.php">Eviar correu al gestor per modificacio/esborrament del compte de client.</a><br>
+        <a href="./enviar_mensaje.php">Eviar correu al gestor per petició de justificació de comanda rebutjada.</a><br>
 			</p>
-
+        
 			<p>
 				<a href="./cistella_gestio_productes.php">Gestionar cistella.</a><br>
 				<a href="./serveis.php">Gestionar comanda.</a><br>
