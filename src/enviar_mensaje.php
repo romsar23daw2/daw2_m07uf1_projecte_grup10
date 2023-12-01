@@ -1,40 +1,21 @@
 <?php
 session_start();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["mensaje"])) {
-    // Obtén el gestor asociado al cliente de la sesión
-    $gestorAsociado = obtenerGestorAsignado($_SESSION['usuari']);
-
-    if ($gestorAsociado) {
-        // Guardar el mensaje en un archivo .txt específico para el gestor
-        $rutaArchivo = "mensajes_gestor/" . $gestorAsociado . ".txt";
-        $contenidoMensaje = "Mensaje de " . $_SESSION['usuari'] . ":\n" . $_POST["mensaje"] . "\nFecha: " . date("Y-m-d H:i:s") . "\n\n";
-
-        // Escribir el mensaje en el archivo
-        file_put_contents($rutaArchivo, $contenidoMensaje, FILE_APPEND);
-
-        // Redirigir a la página principal o mostrar un mensaje de éxito
-        header("Location: menu.php?mensaje_enviado=true");
-        exit();
-    } else {
-        // Manejar la situación en la que el cliente no tiene un gestor asociado
-        echo "Error: No se encontró un gestor asociado.";
-    }
-}
-
 // Función para obtener el gestor asociado al cliente
-function obtenerGestorAsignado($nombreUsuarioCliente) {
+function obtenerGestorAsignado($idCliente) {
     // Implementa la lógica para obtener el gestor asociado al cliente
     // Puedes usar la información proporcionada en la lista de usuarios
     // Devuelve el nombre de usuario del gestor o null si no se encuentra
     // Ejemplo de implementación:
     $usuarios = obtenerListaUsuarios(); // Implementa la función obtenerListaUsuarios()
+    
     foreach ($usuarios as $usuario) {
         $detalles = explode(':', $usuario);
-        if ($detalles[1] === $nombreUsuarioCliente) {
+        if ($detalles[0] === $idCliente) {
             return $detalles[10]; // Índice 10 corresponde al nombre de usuario del gestor asociado
         }
     }
+    
     return null; // Si no se encuentra el gestor asociado
 }
 
@@ -58,6 +39,30 @@ function obtenerListaUsuarios() {
 
     return $lineas;
 }
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["mensaje"])) {
+    // Obtén el ID del cliente de la sesión
+    $idCliente = $_SESSION['id_cliente']; // Asegúrate de tener la variable de sesión correcta para el ID del cliente
+
+    // Obtén el gestor asociado al cliente
+    $gestorAsociado = obtenerGestorAsignado($idCliente);
+
+    if ($gestorAsociado) {
+        // Guardar el mensaje en un archivo .txt específico para el gestor
+        $rutaArchivo = "mensajes_gestor/" . $gestorAsociado . ".txt";
+        $contenidoMensaje = "Mensaje de " . $_SESSION['usuari'] . ":\n" . $_POST["mensaje"] . "\nFecha: " . date("Y-m-d H:i:s") . "\n\n";
+
+        // Escribir el mensaje en el archivo
+        file_put_contents($rutaArchivo, $contenidoMensaje, FILE_APPEND);
+
+        // Redirigir a la página principal o mostrar un mensaje de éxito
+        header("Location: menu.php?mensaje_enviado=true");
+        exit();
+    } else {
+        // Manejar la situación en la que el cliente no tiene un gestor asociado
+        echo "Error: No se encontró un gestor asociado.";
+    }
+}
 ?>
 
 
@@ -72,7 +77,7 @@ function obtenerListaUsuarios() {
 
 <body>
     <h3><b>Enviar Mensaje al Gestor</b></h3>
-    <form action="enviar_mensaje_gestor.php" method="POST">
+    <form action="enviar_mensaje.php" method="POST">
         <label for="mensaje">Mensaje:</label>
         <textarea name="mensaje" id="mensaje" rows="4" cols="50"></textarea><br><br>
         <input type="submit" value="Enviar Mensaje">
