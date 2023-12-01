@@ -35,7 +35,7 @@ if ($parametres_complets) {
 
 <head>
   <meta charset="utf-8">
-  <title>Selecció de producte - Rellotgeria</title>
+  <title>Modificació de producte - Rellotgeria</title>
   <link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
 </head>
 
@@ -43,6 +43,7 @@ if ($parametres_complets) {
   <!-- If I'm a manager. -->
   <?php if ($_SESSION['tipus_usuari'] == 1) : ?>
     <form action="modificar_producte.php" method="POST">
+    <h3><b>Modificació d'un producte:</b></h3>
       <p>
         <?php
         // In order to just show this part of the form when I don't have a valid manager.
@@ -75,7 +76,7 @@ if ($parametres_complets) {
         <input type="text" name="disponibilitat_producte" required><br>
 
         <!-- php GESTOR; is to add the type of user at the end.  -->
-        <button type="submit" name="tipus_usuari">Modificar el producte.</button>
+        <button type="submit" name="modificar_producte">Modificar el producte.</button>
       </div>
     </form>
   <?php

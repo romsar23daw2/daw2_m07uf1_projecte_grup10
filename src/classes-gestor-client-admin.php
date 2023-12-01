@@ -222,6 +222,24 @@ class Client extends Usuari
           echo "Ha ocorregut un error escrivint al fitxer de clients.";
           return false;
         }
+
+        // Modify the file with the new username of the client in DIRECTORI_COMANDA.
+        if ($fp = fopen(DIRECTORI_COMANDA . $this->nomUsuari, "w")) { // "DIRECTORI_COMANDA . $nomUsuari" is to create the name of the user in the directory.
+          if (fwrite($fp, "")) {
+            $afegit = true;
+            fclose($fp);
+          }
+        }
+
+        // Create an empty file with the username of the client in DIRECTORI_CISTELLA.
+        if ($fp = fopen(DIRECTORI_CISTELLA . $this->nomUsuari, "w")) {
+          if (fwrite($fp, "")) {
+            $afegit = true;
+            fclose($fp);
+          }
+        } else {
+          $afegit = false;
+        }
       }
     }
 
