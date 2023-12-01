@@ -12,7 +12,7 @@ if (!isset($_SESSION['usuari'])) {
 	exit;
 }
 
-if (isset($_POST['generar_pdf'])) {
+if (isset($_POST['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
 	ob_start();
 ?>
 	<div>

@@ -2,7 +2,6 @@
 session_start();
 
 require_once __DIR__ . '/vendor/autoload.php';
-
 use Dompdf\Dompdf;
 
 if (!isset($_SESSION['usuari'])) {
@@ -20,7 +19,7 @@ if ($_SESSION['tipus_usuari'] != 2) {
     exit;
 }
 
-if (isset($_POST['generar_pdf'])) {
+if (isset($_POST['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
     ob_start();
 ?>
     <div>

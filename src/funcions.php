@@ -341,6 +341,26 @@ function fAconsegueixemail($id_usuari_comprova)
 	return false;
 }
 
+// Method to create a new product.
+function fCrearProducte($nom_producte, $id_producte, $preu_producte, $iva_producte, $disponibilitat_producte)
+{
+	$dades_nou_producte = $nom_producte . ":" . $id_producte . ":" . $preu_producte . ":" . $iva_producte . ":" . $disponibilitat_producte . "\n";
+
+	if ($fp = fopen(FITXER_PRODUCTES, "a")) {
+		if (fwrite($fp, $dades_nou_producte)) {
+			$creat = true;
+		} else {
+			$creat = false;
+		}
+
+		fclose($fp);
+	} else {
+		$creat = false;
+	}
+
+	return $creat;
+}
+
 // Function to modify a product.
 function fModificarProducte($id_producte_comprova, $nom_producte, $id_producte, $preu_producte, $iva_producte, $disponibilitat_producte)
 {

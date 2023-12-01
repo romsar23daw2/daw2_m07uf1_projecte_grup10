@@ -10,18 +10,9 @@ if (!isset($_SESSION['usuari'])) {
 if (isset($_POST['resp'])) {
     if ($_POST['resp'] == "y") {
         $llistaProductes = fLlegeixFitxer(FITXER_PRODUCTES);
-        if (fComprovarDisponibilitat($_SESSION['producte'], $llistaProductes)) {
-            if (!fCreaCistella($_SESSION['usuari'], $_SESSION['producte'])) {
-                header("Location: ./Errors/logout_error_cistella.php");
-                exit;
-            }
-        } else {
-            fCreaCistella($_SESSION['usuari'], $_SESSION['producte']);
-            header("Location: ./cistella_gestio_productes.php");
-            exit;
-        }
+        fCreaCistella($_SESSION['usuari'], $_SESSION['producte']);
+        header("Location: ./menu.php");
     }
-    header("Location: ./menu.php");
 }
 ?>
 <!DOCTYPE html>
