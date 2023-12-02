@@ -9,8 +9,16 @@ if (!isset($_SESSION['usuari'])) {
 
 if (isset($_POST['resp'])) {
     if ($_POST['resp'] == "y") {
-        $llistaProductes = fLlegeixFitxer(FITXER_PRODUCTES);
-        fCreaCistella($_SESSION['usuari'], $_SESSION['producte']);
+
+        foreach ($_SESSION['producte'] as $producte) {
+            fCreaCistella(
+                $_SESSION['usuari'],
+                $producte
+            );
+        }
+
+        header("Location: ./menu.php");
+    } else {
         header("Location: ./menu.php");
     }
 }
@@ -28,7 +36,15 @@ if (isset($_POST['resp'])) {
     <?php if ($_SESSION['tipus_usuari'] == 0) { ?>
         <h3><b>Cistella</b></h3>
         <p>Vols desar la cistella?:</p>
-        <form action="desar_cistella.php" method="POST">
+
+        <?php
+        // echo $_SESSION['producte'] . "<br>" . "<br>";
+        foreach ($_SESSION['producte'] as $producte) {
+            echo $producte . "<br>";
+        }
+        ?>
+
+        <form action="desar_cistella.php" method="post">
             <input type="radio" name="resp" value="y" />Sí<br />
             <input type="radio" name="resp" value="n" checked />No<br />
             <br>

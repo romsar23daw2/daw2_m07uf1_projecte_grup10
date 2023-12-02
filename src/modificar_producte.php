@@ -43,7 +43,7 @@ if ($parametres_complets) {
   <!-- If I'm a manager. -->
   <?php if ($_SESSION['tipus_usuari'] == 1) : ?>
     <form action="modificar_producte.php" method="POST">
-    <h3><b>Modificació d'un producte:</b></h3>
+      <h3><b>Modificació d'un producte:</b></h3>
       <p>
         <?php
         // In order to just show this part of the form when I don't have a valid manager.
