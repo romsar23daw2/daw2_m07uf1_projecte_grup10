@@ -19,7 +19,7 @@ if ($_SESSION['tipus_usuari'] != 2) {
     exit;
 }
 
-if (isset($_POST['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
+if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
     ob_start();
 ?>
     <div>
@@ -92,7 +92,7 @@ if (isset($_POST['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
 
         <div>
             <h3><b>Generar PDF de la llista de gestors:</b></h3>
-            <form method="post">
+            <form method="get">
                 <input type="submit" name="generar_pdf" value="Generar PDF">
             </form>
         </div>

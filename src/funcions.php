@@ -257,7 +257,7 @@ function fVeureDadesPersonalsClient($nom_usuari, $llista)
 	return 0;
 }
 
-// Function to create the cart fr the client.
+// Function to create the cart for the client.
 function fCreaCistella($nomUsuari, $nomProducte)
 {
 	$nomFitxer = DIRECTORI_CISTELLA . $nomUsuari;

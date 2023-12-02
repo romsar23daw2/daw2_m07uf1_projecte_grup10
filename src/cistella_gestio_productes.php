@@ -17,11 +17,15 @@ if (!isset($_SESSION['usuari'])) {
 }
 
 if (isset($_POST['producte'])) {
-	$_SESSION['producte'] = $_POST['producte'] . "\n";
+	foreach ($_POST['producte'] as $producte) {
+		// I've done this line with ChatGPT.
+		$_SESSION['producte'][] = $producte . "\n";
+	}
+
 	header("Location: ./desar_cistella.php");
 }
 
-if (isset($_POST['generar_pdf']) && $_SESSION['tipus_usuari'] == 1) {
+if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 1) {
 	ob_start();
 ?>
 	<div>
@@ -116,9 +120,9 @@ if (isset($_POST['generar_pdf']) && $_SESSION['tipus_usuari'] == 1) {
 					$nomProducte = $dadesProducte[0];
 					$disponibilitat = $dadesProducte[4];
 
-					// Mostrar solo si el producto está disponible
+					// Show only if the product is available.
 					if ($disponibilitat == "Disponible") {
-						echo '<input type="radio" name="producte" value="' . $nomProducte . '" /> ' . $nomProducte . '<br />';
+						echo '<input type="checkbox" name="producte[]" value="' . $nomProducte . '" /> ' . $nomProducte . '<br />';
 					}
 				}
 				?>
@@ -129,7 +133,7 @@ if (isset($_POST['generar_pdf']) && $_SESSION['tipus_usuari'] == 1) {
 
 	<?php elseif ($_SESSION['tipus_usuari'] == 1) : ?>
 		<div>
-			<h3><b>Llista de productes actuals:</b></h3>
+			<h3><b>Productes de la botiga:</b></h3>
 			<table>
 				<thead>
 					<tr>
@@ -161,7 +165,7 @@ if (isset($_POST['generar_pdf']) && $_SESSION['tipus_usuari'] == 1) {
 			</form>
 
 			<h3><b>Generar PDF de la llista dels productes:</b></h3>
-			<form method="post">
+			<form method="get">
 				<input type="submit" name="generar_pdf" value="Generar PDF">
 			</form>
 		</div>
