@@ -1,38 +1,43 @@
 <?php
-require("biblioteca.php");
+require("./funcions.php");
 
 if ((isset($_POST['usuari'])) && (isset($_POST['ctsnya']))) {
-	// Here I have thee diferent variables, which I use to check the user type.
+    // Here I have thee diferent variables, which I use to check the user type.
+    $autenticat_admin = fAutenticacioAdmin($_POST['usuari']);
+    $autenticat_gestor = fAutenticacioGestor($_POST['usuari']);
+    $autenticat_client = fAutenticacioClient($_POST['usuari']);
 
-	$autenticat_admin = fAutenticacioAdmin($_POST['usuari']);
-	$autenticat_gestor = fAutenticacioGestor($_POST['usuari']);
-	$autenticat_client = fAutenticacioClient($_POST['usuari']);
+    if ($autenticat_admin) {
+        session_start(); // Inici de sessió
+        $_SESSION['usuari'] = $_POST['usuari'];
+        $_SESSION['tipus_usuari'] = 2;  // Here I set the user type for the admin.
+        $_SESSION['expira'] = time() + TEMPS_EXPIRACIO;
 
-	if ($autenticat_admin) {
-		session_start(); // Inici de sessió
-		$_SESSION['usuari'] = $_POST['usuari'];
-		$_SESSION['tipus_usuari'] = 2;  // Here I set the user type for the admin.
-		//$_SESSION['usuari'] EMMAGATZEMA EL NOM DE L'USUARI VALIDAT
-		$_SESSION['expira'] = time() + TEMPS_EXPIRACIO;
-		// $_SESSION['expira'] EMMAGATZEMA EL TEMPS D'EXPIRACIÓ DE LA SESSIÓ = HORA ACTUAL + TEMPS_EXPIRACIÓ EN SEGONS
-		header("Location: menu.php");
-	} elseif ($autenticat_gestor) {
-		session_start(); // Inici de sessió
-		$_SESSION['usuari'] = $_POST['usuari'];
-		$_SESSION['tipus_usuari'] = 1;  // Here I set the user type for gestor.
-		$_SESSION['expira'] = time() + TEMPS_EXPIRACIO;
-		header("Location: menu.php");
-	} elseif ($autenticat_client) {
-		session_start(); // Inici de sessió
-		$_SESSION['usuari'] = $_POST['usuari'];
-		$_SESSION['tipus_usuari'] = 0;  // Here I set the user type for client.
-		$_SESSION['expira'] = time() + TEMPS_EXPIRACIO;
-		header("Location: menu.php");
-	}
+        // Almacena la dirección de correo electrónico del gestor en la sesión
+        $_SESSION['gestorEmail'] = fAconsegueixemail($_POST['usuari']);
 
-	if (!isset($_SESSION['usuari'])) {
-		header("Location: ./Errors/error_login.php");
-	}
+        header("Location: menu.php");
+    } elseif ($autenticat_gestor) {
+        session_start(); // Inici de sessió.
+        $_SESSION['usuari'] = $_POST['usuari'];
+        $_SESSION['tipus_usuari'] = 1;  // Here I set the user type for gestor.
+        $_SESSION['expira'] = time() + TEMPS_EXPIRACIO;
+
+        // Almacena la dirección de correo electrónico del gestor en la sesión
+        $_SESSION['gestorEmail'] = fAconsegueixemail($_POST['usuari']);
+
+        header("Location: menu.php");
+    } elseif ($autenticat_client) {
+        session_start(); // Inici de sessió
+        $_SESSION['usuari'] = $_POST['usuari'];
+        $_SESSION['tipus_usuari'] = 0;  // Here I set the user type for client.
+        $_SESSION['expira'] = time() + TEMPS_EXPIRACIO;
+        header("Location: menu.php");
+    }
+
+    if (!isset($_SESSION['usuari'])) {
+        header("Location: ./Errors/error_login.php");
+    }
 }
 ?>
 
@@ -40,26 +45,38 @@ if ((isset($_POST['usuari'])) && (isset($_POST['ctsnya']))) {
 <html lang="ca">
 
 <head>
-	<meta charset="utf-8">
-	<title>Iniciar sessió - Rellotgeria</title>
-	<link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
+    <meta charset="utf-8">
+    <title>Iniciar sessió - Rellotgeria</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
 </head>
 
-<body>
-	<h3><b>Inici de sessió la botiga de rellotges</b></h3>
-	<form action="login.php" method="POST">
-		<p>Indica el teu nom d'usuari: <input type="text" name="usuari"></p>
-		<p>Indica la teva contrasenya: <input type="password" name="ctsnya"></p>
-		<input type="submit" value="Envia">
-	</form>
-	<p><a href="index.php">Torna a la pàgina inicial</a></p>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h3><b>Inici de sessió la botiga de rellotges</b></h3>
+        <form action="login.php" method="POST">
+            <div class="form-group">
+                <label for="usuari">Indica el teu nom d'usuari:</label>
+                <input type="text" class="form-control" name="usuari" required>
+            </div>
+            <div class="form-group">
+                <label for="ctsnya">Indica la teva contrasenya:</label>
+                <input type="password" class="form-control" name="ctsnya" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Envia</button>
+        </form>
+        <p class="mt-3"><a href="index.php">Torna a la pàgina inicial</a></p>
 
-	<label class="diahora">
-		<?php
-		date_default_timezone_set('Europe/Andorra');
-		echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
-		?>
-		<label class="diahora">
+        <label class="diahora mt-3">
+            <?php
+            date_default_timezone_set('Europe/Andorra');
+            echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
+            ?>
+        </label>
+    </div>
 </body>
 
 </html>

@@ -1,5 +1,8 @@
 <?php
-require("./biblioteca.php");
+require("./funcions.php");
+
+// Now I import the file where I have the method to modify a client.
+require("./classes-gestor-client-admin.php");
 session_start();
 
 if (!isset($_SESSION['usuari'])) {
@@ -22,11 +25,13 @@ if (isset($_POST['id_client_trobat'])) {
 }
 
 // Parameters of the manager.
-$parametres_complets =  (isset($_POST['id_nou_client'])) && (isset($_POST['nom_usuari'])) && (isset($_POST['cts_nou_client'])) && (isset($_POST['nom_complet_nou_client'])) && (isset($_POST['correu_nou_client'])) && (isset($_POST['telefon_nou_client'])) && (isset($_POST['adreca_nou_client'])) && (isset($_POST['num_visa_nou_client']))  && (isset($_POST['nom_gestor_nou_client']));
+$parametres_complets = (isset($_POST['nom_usuari'])) && (isset($_POST['cts_nou_client'])) && (isset($_POST['nom_complet_nou_client'])) && (isset($_POST['correu_nou_client'])) && (isset($_POST['telefon_nou_client'])) && (isset($_POST['adreca_nou_client'])) && (isset($_POST['num_visa_nou_client']))  && (isset($_POST['nom_gestor_nou_client']));
 
 if ($parametres_complets) {
 	// Here i access $_SESSION['id_client_trobat'] in order to be able to compare the id from the manager, without needing to enter it again, and because of this, I'm able to change the ID of the manager.
-	$modificat = fModificarClient($_SESSION['id_client_trobat'], $_POST['id_nou_client'], $_POST['nom_usuari'], $_POST['cts_nou_client'], $_POST['nom_complet_nou_client'], $_POST['correu_nou_client'], $_POST['telefon_nou_client'], $_POST['adreca_nou_client'],$_POST['num_visa_nou_client'],$_POST['nom_gestor_nou_client'],$_POST['tipus_usuari']);
+	$client_modificat = new Client($_POST['id_client_trobat'], $_POST['nom_usuari'], $_POST['cts_nou_client'], $_POST['nom_complet_nou_client'], $_POST['correu_nou_client'], $_POST['telefon_nou_client'], $_POST['adreca_nou_client'], $_POST['num_visa_nou_client'], $_POST['nom_gestor_nou_client'], $_POST['tipus_usuari']);
+
+	$modificat = $client_modificat->fModificarClient($_SESSION['id_client_trobat'], $client_modificat);
 	$_SESSION['modificat'] = $modificat;
 
 	header("refresh: 5; url=menu.php"); // Passats 5 segons el navegador demana menu.php i es torna a menu.php.
@@ -52,7 +57,6 @@ if ($parametres_complets) {
 			if (!$client_trobat) {
 			?>
 		<div>
-
 			<label>ID del client a cercar:</label>
 			<input type="number" name="id_client_trobat" min=1 max=1000 required><br>
 			<br>
@@ -62,35 +66,32 @@ if ($parametres_complets) {
 			} elseif ($client_trobat) {
 	?>
 		<div>
-			<label>ID del nou client:</label>
-			<input type="number" name="id_nou_client" min=0 max=1000 required><br>
-
-			<label>Nom d'usuari:</label>
+			<label>Nou nom d'usuari:</label>
 			<input type="text" name="nom_usuari" required><br>
 
-			<label>Contrasenya del nou client:</label>
+			<label>Nova contrasenya del client:</label>
 			<input type="password" name="cts_nou_client" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Mínims: 8 caràcters, una majúscula, una minúscula, un número i un caràter especial" required><br>
 
-			<label>Nom complet del nou client:</label>
+			<label>Nou nom complet del client:</label>
 			<input type="text" name="nom_complet_nou_client" required><br>
 
-			<label>Correu del nou client:</label>
+			<label>Nou correu del client:</label>
 			<input type="text" name="correu_nou_client" required><br>
 
-			<label>Telèfon de contacte del nou client:</label>
+			<label>Nou telèfon de contacte del client:</label>
 			<input type="number" name="telefon_nou_client" required><br>
 
-			<label>Adreça postal del nou client:</label>
+			<label>Nova adreça postal del client:</label>
 			<input type="number" name="adreca_nou_client" required><br>
 
-			<label>Número de visa del nou client:</label>
+			<label>Nou número de visa del client:</label>
 			<input type="number" name="num_visa_nou_client" required><br>
 
-			<label>Nom del gestor assignat pel nou client:</label>
+			<label>Nou nom del gestor assignat pel client:</label>
 			<input type="text" name="nom_gestor_nou_client"><br>
 			</p>
 
-			<button type="submit" name="tipus_usuari" value=<?php echo USR ?>>Modificar client.</button> <!-- value=<?php echo GESTOR ?> is to be able the type of user.-->
+			<button type="submit" name="tipus_usuari" value=<?php echo CLIENT ?>>Modificar client.</button> <!-- value=<?php echo CLIENT ?> is to be able the type of user.-->
 		</div>
 	</form>
 <?php

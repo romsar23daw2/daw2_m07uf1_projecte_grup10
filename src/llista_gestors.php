@@ -2,6 +2,7 @@
 session_start();
 
 require_once __DIR__ . '/vendor/autoload.php';
+use Dompdf\Dompdf;
 
 if (!isset($_SESSION['usuari'])) {
     header("Location: ./Errors/error_acces.php");
@@ -18,9 +19,9 @@ if ($_SESSION['tipus_usuari'] != 2) {
     exit;
 }
 
-if (isset($_POST['generate_pdf'])) {
+if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
     ob_start();
-    ?>
+?>
     <div>
         <h3><b>Llista de gestors:</b></h3>
         <table>
@@ -35,17 +36,18 @@ if (isset($_POST['generate_pdf'])) {
             </thead>
             <tbody>
                 <?php
-                require("biblioteca.php");
+                require("./funcions.php");
                 $llista = fLlegeixFitxer(FITXER_GESTORS);
                 fCreaTaulaGestors($llista);
+
                 ?>
             </tbody>
         </table>
     </div>
-    <?php
+<?php
     $html = ob_get_clean();
 
-    $dompdf = new Dompdf\Dompdf();
+    $dompdf = new Dompdf();
     $dompdf->loadHtml($html);
     $dompdf->setPaper('A4', 'portrait');
     $dompdf->render();
@@ -80,7 +82,7 @@ if (isset($_POST['generate_pdf'])) {
                 </thead>
                 <tbody>
                     <?php
-                    require("biblioteca.php");
+                    require("./funcions.php");
                     $llista = fLlegeixFitxer(FITXER_GESTORS);
                     fCreaTaulaGestors($llista);
                     ?>
@@ -90,15 +92,15 @@ if (isset($_POST['generate_pdf'])) {
 
         <div>
             <h3><b>Generar PDF de la llista de gestors:</b></h3>
-            <form method="post">
-                <input type="submit" name="generate_pdf" value="Generar PDF">
+            <form method="get">
+                <input type="submit" name="generar_pdf" value="Generar PDF">
             </form>
         </div>
     <?php else : ?>
-<!-- Only an admin can access here. -->
+        <!-- Only an admin can access here. -->
         <?php header("Location: ./Errors/error_autoritzacio.php"); ?>
         <?php exit; ?>
-    	<?php endif; ?>
+    <?php endif; ?>
 
     <p><a href="menu.php">Torna al menú</a></p>
 

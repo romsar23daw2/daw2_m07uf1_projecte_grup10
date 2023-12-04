@@ -1,0 +1,10 @@
+1:gestor00:$2y$10$Ks4fVKWaJ6ZSRQP874A6dumCT.WFTXDl9mniPU4V3tyz70Ug2LW5a:Juuii Fusté:a48465927@gmail.com:123456789:1
+10:gestor01:$2y$10$BQPq0O5uiBDcS/TGgJEg2.aTZfLu.gUcy7lD4064Z.CM75NEzExtm:Pepa la Cerda:gestor01@pepa-la-cerda:125981:1
+99:gestor02:$2y$10$fyW/JkIG2QrTOhD86..oW.7FcGjKF7nAvZsnVX/ub1s1v30BwUaUK:Jaime Torrente:gestor02@gestor02:10294:1
+4:gestor03:$2y$10$HnAK8IZmBiD/ZVuY1INBeej1lMMJx3.WkTBKgNWQBnN2AniO9pHDq:Pepito el Saltamontes:gestor03@el-saltamontes:123456789:1
+17:gestor04:$2y$10$zNpsyRMmDqMl7iLG1621neF46zZNstN7yQBlbqYrzUuPOSe84EG9G:El naranjito:gestor04@gestor04:578105125:1
+44:gestor05:$2y$10$KF2JSKXDGeRMYLYWwZ/LC.sVNQwY001fUPSw3rTd/4jY566jqqlyC:Filomena la Morena:gestor05@gestor05:58321904721:1
+38:gestor06:$2y$10$7dr6XyQMMxOLlklbCscZH.Hmo6PNBfjpNBE4XSEpnve/ATsOas5tK:Víctor Toro:gestor06@gestor06:2490810982901:1
+81:Oriol:$2y$10$Vz.RKW4Gy3ETZ5RHQDX7LuPwuPwTyrq.RSil8x6fQQkGUpM6T3E4q:Oriol Serrallonga:Oriol@Oriol:2189401:1
+21:Binefa:$2y$10$MY5XZEhKpH99jW76Q0MxAO3Q3VgrEiJgYQ/0yAtCgqbeJbqpDzOgK:Jordi Binefa Martínez:Binefa@Binefa:1283901:1
+73:manuela:$2y$10$jeuNDK9DhMS0Sp.UkOx9IeJxKsBQGOBTkHWvTu8H8uqOarWO1dvr.:manuela:manuela:124:1
