@@ -47,6 +47,7 @@ if ((isset($_POST['usuari'])) && (isset($_POST['ctsnya']))) {
 <head>
     <meta charset="utf-8">
     <title>Iniciar sessió - Rellotgeria</title>
+<<<<<<< HEAD
     <link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
 </head>
 
@@ -65,6 +66,38 @@ if ((isset($_POST['usuari'])) && (isset($_POST['ctsnya']))) {
         echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
         ?>
         <label class="diahora">
+=======
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
+</head>
+
+<body class="bg-light">
+    <div class="container mt-5">
+        <h3><b>Inici de sessió la botiga de rellotges</b></h3>
+        <form action="login.php" method="POST">
+            <div class="form-group">
+                <label for="usuari">Indica el teu nom d'usuari:</label>
+                <input type="text" class="form-control" name="usuari" required>
+            </div>
+            <div class="form-group">
+                <label for="ctsnya">Indica la teva contrasenya:</label>
+                <input type="password" class="form-control" name="ctsnya" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Envia</button>
+        </form>
+        <p class="mt-3"><a href="index.php">Torna a la pàgina inicial</a></p>
+
+        <label class="diahora mt-3">
+            <?php
+            date_default_timezone_set('Europe/Andorra');
+            echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
+            ?>
+        </label>
+    </div>
+>>>>>>> origin/atm
 </body>
 
 </html>

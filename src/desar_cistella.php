@@ -35,14 +35,15 @@ if (isset($_POST['resp'])) {
 <body>
     <?php if ($_SESSION['tipus_usuari'] == 0) { ?>
         <h3><b>Cistella</b></h3>
-        <p>Vols desar la cistella?:</p>
+        <u>Productes:</u><br>
 
         <?php
-        // echo $_SESSION['producte'] . "<br>" . "<br>";
         foreach ($_SESSION['producte'] as $producte) {
             echo $producte . "<br>";
         }
         ?>
+
+        <p>Vols desar la cistella?:</p>
 
         <form action="desar_cistella.php" method="post">
             <input type="radio" name="resp" value="y" />Sí<br />
