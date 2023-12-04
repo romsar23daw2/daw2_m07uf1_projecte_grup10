@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
     <style>
         body {
-            background-image: url('imagenes/background.jpg');
-            background-size: 100%; 
+            background-image: url('./Assets/Images/background.jpg');
+            background-size: 100%;
             background-repeat: no-repeat;
             background-position: center;
             display: flex;
@@ -24,8 +24,8 @@
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 8px;
-            background-color: rgba(255, 255, 255, 0.8); 
-            backdrop-filter: blur(5px); 
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
         }
     </style>
 </head>
