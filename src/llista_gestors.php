@@ -2,6 +2,7 @@
 session_start();
 
 require_once __DIR__ . '/vendor/autoload.php';
+
 use Dompdf\Dompdf;
 
 if (!isset($_SESSION['usuari'])) {
@@ -91,6 +92,9 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
         </div>
 
         <div>
+            <h3><b>Esborrar gestor:</b></h3><br>
+            <button type="submit" name="esborar_gestor" class="btn btn-danger">Esborrar gestor</button><br><br>
+
             <h3><b>Generar PDF de la llista de gestors:</b></h3><br>
             <form method="get">
                 <button type="submit" name="generar_pdf" class="btn btn-primary">Generar PDF</button>

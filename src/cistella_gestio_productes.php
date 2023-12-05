@@ -170,6 +170,10 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 1) {
                 <input class="btn btn-primary" type="submit" name="modificar_productes" value="Modificar producte">
             </form><br>
 
+            <form action="#" method="POST">
+                <input class="btn btn-danger" type="submit" name="esborrar_producte" value="Esborar producte">
+            </form><br>
+
             <h3><b>Generar PDF de la llista dels productes:</b></h3>
             <form method="get">
                 <input class="btn btn-success" type="submit" name="generar_pdf" value="Generar PDF">

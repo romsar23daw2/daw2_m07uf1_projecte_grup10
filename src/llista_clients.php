@@ -91,6 +91,12 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
 		</div>
 
 		<div class="container text-center mt-4">
+			<h3><b>Esborrar gestor:</b></h3><br>
+
+			<form method="post">
+				<button type="submit" name="esborrar_client" class="btn btn-danger">Esborrar client</button><br><br>
+			</form>
+
 			<h3><b>Generar PDF de la llista de clients:</b></h3><br>
 			<form method="get">
 				<input type="submit" class="btn btn-primary" name="generar_pdf" value="Generar PDF">
@@ -150,22 +156,21 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
 		<?php header("Location: ./Errors/error_autoritzacio.php"); ?>
 	<?php endif; ?><br>
 
-	<p class="text-center mt-4"><a href="menu.php" class="btn btn-secondary">Torna al menú</a></p><br<br><br>
+	<p class="text-center mt-4"><a href="menu.php" class="btn btn-secondary">Torna al menú</a></p>
+	<br<br><br>
 
 		<div class="mt-3 d-flex justify-content-center">
-            <p class="text-muted">
-                Usuari utilitzant l'agenda: <?php echo $_SESSION['usuari']; ?>
-                <br>
-                Data i hora: <?php date_default_timezone_set('Europe/Andorra');
-                                echo date('d/m/Y h:i:s'); ?>
-            </p>
-        </div>
+			<p class="text-muted">
+				Usuari utilitzant l'agenda: <?php echo $_SESSION['usuari']; ?>
+				<br>
+				Data i hora: <?php date_default_timezone_set('Europe/Andorra');
+											echo date('d/m/Y h:i:s'); ?>
+			</p>
+		</div>
 
-
-
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
 
