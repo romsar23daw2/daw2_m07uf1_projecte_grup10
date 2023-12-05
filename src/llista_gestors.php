@@ -62,22 +62,22 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
 <head>
     <meta charset="utf-8">
     <title>Llista de gestors - Rellotgeria</title>
-    <link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
-<body>
+<body class="container mt-5">
 
     <?php if ($_SESSION['tipus_usuari'] == 2) : ?>
         <div>
             <h3><b>Llista de gestors:</b></h3>
-            <table>
-                <thead>
+            <table class="table table-bordered">
+                <thead class="thead-dark">
                     <tr>
-                        <th>Identificador</th>
-                        <th>Nom de usuari</th>
-                        <th>Nom complet</th>
-                        <th>Correu electrònic</th>
-                        <th>Telèfon de contacte</th>
+                        <th scope="col">Identificador</th>
+                        <th scope="col">Nom de usuari</th>
+                        <th scope="col">Nom complet</th>
+                        <th scope="col">Correu electrònic</th>
+                        <th scope="col">Telèfon de contacte</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -91,9 +91,9 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
         </div>
 
         <div>
-            <h3><b>Generar PDF de la llista de gestors:</b></h3>
+            <h3><b>Generar PDF de la llista de gestors:</b></h3><br>
             <form method="get">
-                <input type="submit" name="generar_pdf" value="Generar PDF">
+                <button type="submit" name="generar_pdf" class="btn btn-primary">Generar PDF</button>
             </form>
         </div>
     <?php else : ?>
@@ -102,9 +102,9 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
         <?php exit; ?>
     <?php endif; ?>
 
-    <p><a href="menu.php">Torna al menú</a></p>
+    <p class="mt-3"><a href="menu.php" class="btn btn-secondary">Torna al menú</a></p>
 
-    <label class="diahora">
+    <label class="diahora mt-4">
         <?php
         echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
         date_default_timezone_set('Europe/Andorra');
@@ -112,6 +112,9 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
         ?>
     </label>
 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 
 </html>

@@ -37,9 +37,10 @@ if ($parametres_complets) {
   <meta charset="utf-8">
   <title>Modificació de producte - Rellotgeria</title>
   <link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
-<body>
+<body class="container mt-5">
   <!-- If I'm a manager. -->
   <?php if ($_SESSION['tipus_usuari'] == 1) : ?>
     <form action="modificar_producte.php" method="POST">
@@ -54,7 +55,7 @@ if ($parametres_complets) {
         <label>ID del producte a cercar:</label>
         <input type="number" name="id_producte_trobat" required><br>
         <br>
-        <button type="submit">Cercar producte.</button>
+        <button type="submit" class="btn btn-primary">Cercar producte.</button>
       </div>
     <?php
         } elseif ($producte_trobat) {
@@ -73,10 +74,10 @@ if ($parametres_complets) {
         <input type="text" name="iva_producte" required><br>
 
         <label>Diponibilitat del producte:</label>
-        <input type="text" name="disponibilitat_producte" required><br>
+        <input type="text" name="disponibilitat_producte" required><br><br>
 
         <!-- php GESTOR; is to add the type of user at the end.  -->
-        <button type="submit" name="modificar_producte">Modificar el producte.</button>
+        <button type="submit" name="modificar_producte" class="btn btn-primary">Modificar el producte.</button>
       </div>
     </form>
   <?php
@@ -91,23 +92,30 @@ if ($parametres_complets) {
 <?php endif; ?>
 
 <label class="diahora">
-  <p><a href="./menu.php">Torna al menú</a></p>
+<p class="mt-3"><a href="./cistella_gestio_productes.php" class="btn btn-secondary">Torna a la cistella</a></p>
 
-  <?php
-  echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
-  date_default_timezone_set('Europe/Andorra');
-  echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
+  <label class="diahora mt-4">
+        <?php
+        echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
 
-  if (isset($_SESSION['modificat'])) {
-    if ($_SESSION['modificat']) echo "<p style='color:red'>El producte ha estat modificat correctament</p>";
-    else {
-      echo "El producte no ha estat registrat<br>";
-      echo "Comprova si hi ha algún problema del sistema per poder modificar productes<br>";
-    }
+        date_default_timezone_set('Europe/Andorra');
+        echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
 
-    unset($_SESSION['modificat']);
-  }
-  ?>
+        if (isset($_SESSION['modificat'])) {
+            if ($_SESSION['modificat']) echo "<p style='color:red'>El client ha estat modificat correctament</p>";
+            else {
+                echo "L'Usuari no ha estat registrat<br>";
+                echo "Comprova si hi ha algún problema del sistema per poder enregistrar nous usuaris<br>";
+            }
+
+            unset($_SESSION['modificat']);
+        }
+        ?>
+    </label>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 
 </html>

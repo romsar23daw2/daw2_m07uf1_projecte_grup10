@@ -314,7 +314,7 @@ function fLocalitzarProducte($id_producte)
 		$id = $dadesProducte[1];
 
 		if ($id == $id_producte) {
-			echo "Modificant el producte amb nom " . $nom .  " i ID equivalent a " . $id . ".";
+			echo "Modificant el producte amb nom " . $nom .  " i ID equivalent a " . $id . "." . "<br><br>";
 			return true;
 		}
 	}

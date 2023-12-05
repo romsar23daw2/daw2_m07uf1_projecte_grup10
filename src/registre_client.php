@@ -59,66 +59,87 @@ if ($parametres_complets) {
 <html lang="ca">
 
 <head>
-	<meta charset="utf-8">
-	<title>Registrar client - Rellotgeria</title>
-	<link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
+    <meta charset="utf-8">
+    <title>Registrar client - Rellotgeria</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
-<body>
-	<h3><b>Registre d'un nou client:</b></h3>
+<body class="container mt-5">
 
-	<form action="registre_client.php" method="POST">
-		<p>
-			<label>ID del nou client:</label>
-			<input type="number" name="id_nou_client" min=0 max=1000 required><br>
+    <h3><b>Registre d'un nou client:</b></h3>
 
-			<label>Nom d'usuari:</label>
-			<input type="text" name="nom_usuari" required><br>
+    <form action="registre_client.php" method="POST">
+        <div class="form-group">
+            <label for="id_nou_client">ID del nou client:</label>
+            <input type="number" class="form-control" id="id_nou_client" name="id_nou_client" min="0" max="1000" required>
+        </div>
 
-			<label>Contrasenya del nou client:</label>
-			<input type="password" name="cts_nou_client" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Mínims: 8 caràcters, una majúscula, una minúscula, un número i un caràter especial" required><br>
+        <div class="form-group">
+            <label for="nom_usuari">Nom d'usuari:</label>
+            <input type="text" class="form-control" id="nom_usuari" name="nom_usuari" required>
+        </div>
 
-			<label>Nom complet del nou client:</label>
-			<input type="text" name="nom_complet_nou_client" required><br>
+        <div class="form-group">
+            <label for="cts_nou_client">Contrasenya del nou client:</label>
+            <input type="password" class="form-control" id="cts_nou_client" name="cts_nou_client" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Mínims: 8 caràcters, una majúscula, una minúscula, un número i un caràter especial" required>
+        </div>
 
-			<label>Correu del nou client:</label>
-			<input type="text" name="correu_nou_client" required><br>
+        <div class="form-group">
+            <label for="nom_complet_nou_client">Nom complet del nou client:</label>
+            <input type="text" class="form-control" id="nom_complet_nou_client" name="nom_complet_nou_client" required>
+        </div>
 
-			<label>Telèfon de contacte del nou client:</label>
-			<input type="number" name="telefon_nou_client" required><br>
+        <div class="form-group">
+            <label for="correu_nou_client">Correu del nou client:</label>
+            <input type="text" class="form-control" id="correu_nou_client" name="correu_nou_client" required>
+        </div>
 
-			<label>Adreça postal del nou client:</label>
-			<input type="number" name="adreca_nou_client" required><br>
+        <div class="form-group">
+            <label for="telefon_nou_client">Telèfon de contacte del nou client:</label>
+            <input type="number" class="form-control" id="telefon_nou_client" name="telefon_nou_client" required>
+        </div>
 
-			<label>Número de visa del nou client:</label>
-			<input type="number" name="num_visa_nou_client" required><br>
+        <div class="form-group">
+            <label for="adreca_nou_client">Adreça postal del nou client:</label>
+            <input type="number" class="form-control" id="adreca_nou_client" name="adreca_nou_client" required>
+        </div>
 
-			<label>Nom del gestor assignat pel nou client:</label>
-			<input type="text" name="nom_gestor_nou_client"><br>
-		</p>
+        <div class="form-group">
+            <label for="num_visa_nou_client">Número de visa del nou client:</label>
+            <input type="number" class="form-control" id="num_visa_nou_client" name="num_visa_nou_client" required>
+        </div>
 
-		<button type="submit" name="tipus_usuari" value=<?php echo CLIENT ?>>Crear client.</button> <!-- value=<?php echo CLIENT ?> is to be able the type of user.-->
-	</form>
+        <div class="form-group">
+            <label for="nom_gestor_nou_client">Nom del gestor assignat pel nou client:</label>
+            <input type="text" class="form-control" id="nom_gestor_nou_client" name="nom_gestor_nou_client">
+        </div>
 
-	<p><a href="menu.php">Torna al menú.</a></p>
+        <button type="submit" class="btn btn-primary" name="tipus_usuari" value=<?php echo CLIENT ?>>Crear client.</button>
+    </form>
 
-	<label class="diahora">
-		<?php
-		echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
-		date_default_timezone_set('Europe/Andorra');
-		echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
+    <p class="mt-3"><a href="menu.php" class="btn btn-secondary">Torna al menú</a></p>
 
-		if (isset($_SESSION['afegit'])) {
-			if ($_SESSION['afegit']) echo "<p style='color:red'>El client ha estat registrat correctament</p>";
-			else {
-				echo "L'Usuari no ha estat registrat<br>";
-				echo "Comprova si hi ha algún problema del sistema per poder enregistrar nous usuaris<br>";
-			}
+    <label class="diahora mt-4">
+        <?php
+        echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
+        date_default_timezone_set('Europe/Andorra');
+        echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
 
-			unset($_SESSION['afegit']);
-		}
-		?>
-	</label>
+        if (isset($_SESSION['afegit'])) {
+            if ($_SESSION['afegit']) echo "<p style='color:red'>El client ha estat registrat correctament</p>";
+            else {
+                echo "L'Usuari no ha estat registrat<br>";
+                echo "Comprova si hi ha algún problema del sistema per poder enregistrar nous usuaris<br>";
+            }
+
+            unset($_SESSION['afegit']);
+        }
+        ?>
+    </label>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 
 </html>

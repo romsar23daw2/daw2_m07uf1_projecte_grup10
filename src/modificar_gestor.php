@@ -43,75 +43,78 @@ if ($parametres_complets) {
 <html lang="ca">
 
 <head>
-	<meta charset="utf-8">
-	<title>Modificar gestor - Rellotgeria</title>
-	<link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
+    <meta charset="utf-8">
+    <title>Modificar gestor - Rellotgeria</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
-<body>
-	<h3><b>Modificació d'un gestor:</b></h3>
+<body class="container mt-5">
 
-	<form action="modificar_gestor.php" method="POST">
-		<p>
-			<?php
-			// In order to just show this part of the form when I don't have a valid manager.
-			if (!$gestor_trobat) {
-			?>
-		<div>
-			<label>ID del gestor a cercar:</label>
-			<input type="number" name="id_gestor_trobat" min=1 max=100 required><br>
-			<br>
-			<button type="submit">Cercar gestor.</button>
-		</div>
-	<?php
-			} elseif ($gestor_trobat) {
-	?>
-		<div>
-			<label>Nou nom de usuari:</label>
-			<input type="text" name="nom_usuari" required><br>
+    <h3><b>Modificació d'un gestor:</b></h3>
 
-			<label>Nova contrasenya del gestor:</label>
-			<input type="password" name="cts_nou_gestor" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Mínims: 8 caràcters, una majúscula, una minúscula, un número i un caràcter especial" required><br>
+    <form action="modificar_gestor.php" method="POST">
+        <p>
+            <?php
+            if (!$gestor_trobat) {
+            ?>
+                <div>
+                    <label>ID del gestor a cercar:</label>
+                    <input type="number" name="id_gestor_trobat" min="1" max="100" required><br>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Cercar gestor</button>
+                </div>
+            <?php
+            } elseif ($gestor_trobat) {
+            ?>
+                <div>
+                    <label>Nou nom de usuari:</label>
+                    <input type="text" name="nom_usuari" required><br>
 
-			<label>Nou nom complet del gestor:</label>
-			<input type="text" name="nom_complet_nou_gestor" required><br>
+                    <label>Nova contrasenya del gestor:</label>
+                    <input type="password" name="cts_nou_gestor" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Mínims: 8 caràcters, una majúscula, una minúscula, un número i un caràcter especial" required><br>
 
-			<label>Nou correu del gestor:</label>
-			<input type="text" name="correu_nou_gestor" required><br>
+                    <label>Nou nom complet del gestor:</label>
+                    <input type="text" name="nom_complet_nou_gestor" required><br>
 
-			<label>Nou telèfon de contacte del gestor:</label>
-			<input type="number" name="telefon_nou_gestor" required><br>
+                    <label>Nou correu del gestor:</label>
+                    <input type="text" name="correu_nou_gestor" required><br>
 
-			<!-- php GESTOR; is to add the type of user at the end.  -->
-			<button type="submit" name="tipus_usuari" value=<?php echo GESTOR ?>>Modificar el gestor.</button>
-		</div>
-	</form>
-<?php
-			}
-?>
-</p>
-</form>
+                    <label>Nou telèfon de contacte del gestor:</label>
+                    <input type="number" name="telefon_nou_gestor" required><br>
 
-<p><a href="menu.php">Torna al menú.</a></p>
+                    <button type="submit" name="tipus_usuari" value=<?php echo GESTOR ?> class="btn btn-primary">Modificar el gestor</button>
+                </div>
+        </p>
+        </form>
+    <?php
+            }
+    ?>
+    </form>
 
-<label class="diahora">
-	<?php
-	echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
+    <p class="mt-3"><a href="menu.php" class="btn btn-secondary">Torna al menú</a></p>
 
-	date_default_timezone_set('Europe/Andorra');
-	echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
+    <label class="diahora mt-4">
+        <?php
+        echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
 
-	if (isset($_SESSION['modificat'])) {
-		if ($_SESSION['modificat']) echo "<p style='color:red'>El gestor ha estat modificat correctament</p>";
-		else {
-			echo "L'Usuari no ha estat registrat<br>";
-			echo "Comprova si hi ha algún problema del sistema per poder enregistrar nous usuaris<br>";
-		}
+        date_default_timezone_set('Europe/Andorra');
+        echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
 
-		unset($_SESSION['modificat']);
-	}
-	?>
-</label>
+        if (isset($_SESSION['modificat'])) {
+            if ($_SESSION['modificat']) echo "<p style='color:red'>El gestor ha estat modificat correctament</p>";
+            else {
+                echo "L'Usuari no ha estat registrat<br>";
+                echo "Comprova si hi ha algún problema del sistema per poder enregistrar nous usuaris<br>";
+            }
+
+            unset($_SESSION['modificat']);
+        }
+        ?>
+    </label>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 
 </html>

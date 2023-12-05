@@ -64,125 +64,134 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 1) {
 <html lang="ca">
 
 <head>
-	<meta charset="utf-8">
-	<title>Selecció de producte - Rellotgeria</title>
-	<link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
+    <meta charset="utf-8">
+    <title>Selecció de producte - Rellotgeria</title>
+    <link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
-<body>
-	<!-- If I'm a client. -->
-	<?php if ($_SESSION['tipus_usuari'] == 0) : ?>
-		<?php if ($_SESSION['producte']) {
-			echo "<b><u>Productes en la cistella: </u></b>" . "<br>";
-			echo "<br>" . "<table>" . "<tr>";
+<body class="bg-light">
 
-			foreach ($_SESSION['producte'] as $indexProducte => $producte) {
-				echo "<td>";
-				echo $producte;
-				echo "</td>";
+    <?php if ($_SESSION['tipus_usuari'] == 0) : ?>
+        <?php if ($_SESSION['producte']) : ?>
+            <div class="container mt-4">
+                <b><u>Productes en la cistella: </u></b><br>
+                <br>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tr>
+                            <?php foreach ($_SESSION['producte'] as $indexProducte => $producte) : ?>
+                                <td><?php echo $producte; ?></td>
+                                <?php if ($indexProducte % 2 == 1) : ?>
+                        </tr>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+                </table>
+                </div>
+                <br>
+            </div>
+        <?php else : ?>
+            <div class="container mt-4">
+                Cap producte a la cistella<br>
+            </div>
+        <?php endif; ?>
 
-				if ($indexProducte % 2 == 1) {
-					echo "</tr>";
-				}
-			}
-			echo "</table>" . "<br>";
-		} else {
-			echo "Cap producte a la cistella<br>";
-		}
-		?>
+        <div class="container mt-4">
+            <h3><b>Productes de la botiga:</b></h3>
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Nom producte</th>
+                        <th>ID producte</th>
+                        <th>Preu producte</th>
+                        <th>IVA producte</th>
+                        <th>Disponibilitat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $llista = fLlegeixFitxer(FITXER_PRODUCTES);
+                    fGenerarLlistaProductes($llista);
+                    ?>
+                </tbody>
+            </table>
+        </div>
 
-		<div>
-			<h3><b>Productes de la botiga:</b></h3>
-			<table>
-				<thead>
-					<tr>
-						<th>Nom producte</th>
-						<th>ID producte</th>
-						<th>Preu producte</th>
-						<th>IVA producte</th>
-						<th>Disponibilitat</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php
-					$llista = fLlegeixFitxer(FITXER_PRODUCTES);
-					fGenerarLlistaProductes($llista);
-					?>
-				</tbody>
-			</table>
+        <div class="container mt-4">
+            <h3>Gestió de productes</h3>
 
-			<h3><b>Productes que es venen la botiga:</b></h3>
-			<form action="./cistella_gestio_productes.php" method="POST">
-				<?php
-				$llistaProductes = fLlegeixFitxer(FITXER_PRODUCTES);
-				foreach ($llistaProductes as $producte) {
-					$dadesProducte = explode(":", $producte);
-					$nomProducte = $dadesProducte[0];
-					$disponibilitat = $dadesProducte[4];
+            <form action="./crear_producte.php" method="POST">
+                <input class="btn btn-primary" type="submit" name="crear_producte" value="Crear producte">
+            </form>
 
-					// Show only if the product is available.
-					if ($disponibilitat == "Disponible") {
-						echo '<input type="checkbox" name="producte[]" value="' . $nomProducte . '" /> ' . $nomProducte . '<br />';
-					}
-				}
-				?>
-				<br>
-				<input value="Selecciona" type="submit"><br><br>
-			</form>
-		</div>
+            <form action="./modificar_producte.php" method="POST">
+                <input class="btn btn-primary" type="submit" name="modificar_productes" value="Modificar producte">
+            </form>
 
-	<?php elseif ($_SESSION['tipus_usuari'] == 1) : ?>
-		<div>
-			<h3><b>Productes de la botiga:</b></h3>
-			<table>
-				<thead>
-					<tr>
-						<th>Nom producte</th>
-						<th>ID producte</th>
-						<th>Preu producte</th>
-						<th>IVA producte</th>
-						<th>Disponibilitat</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php
-					$llista = fLlegeixFitxer(FITXER_PRODUCTES);
-					fGenerarLlistaProductes($llista);
-					?>
-				</tbody>
-			</table>
-		</div>
+            <h3><b>Generar PDF de la llista dels productes:</b></h3>
+            <form method="get">
+                <input class="btn btn-success" type="submit" name="generar_pdf" value="Generar PDF">
+            </form>
+        </div>
 
-		<div>
-			<h3>Gestió de productes</h3>
+    <?php elseif ($_SESSION['tipus_usuari'] == 1) : ?>
+        <div class="container mt-4">
+            <h3><b>Productes de la botiga:</b></h3>
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Nom producte</th>
+                        <th>ID producte</th>
+                        <th>Preu producte</th>
+                        <th>IVA producte</th>
+                        <th>Disponibilitat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $llista = fLlegeixFitxer(FITXER_PRODUCTES);
+                    fGenerarLlistaProductes($llista);
+                    ?>
+                </tbody>
+            </table>
+        </div>
 
-			<form action="./crear_producte.php" method="POST">
-				<input type="submit" name="crear_producte" value="Crear producte">
-			</form>
+        <div class="container mt-4">
+            <h3>Gestió de productes</h3>
 
-			<form action="./modificar_producte.php" method="POST">
-				<input type="submit" name="modificar_productes" value="Modificar producte">
-			</form>
+            <form action="./crear_producte.php" method="POST">
+                <input class="btn btn-primary" type="submit" name="crear_producte" value="Crear producte">
+            </form><br>
 
-			<h3><b>Generar PDF de la llista dels productes:</b></h3>
-			<form method="get">
-				<input type="submit" name="generar_pdf" value="Generar PDF">
-			</form>
-		</div>
-	<?php else :
-		// No one else can acess to this.
-		header("Location: ./Errors/error_acces.php");
-	?>
-	<?php endif; ?>
+            <form action="./modificar_producte.php" method="POST">
+                <input class="btn btn-primary" type="submit" name="modificar_productes" value="Modificar producte">
+            </form><br>
 
-	<label class="diahora">
-		<p><a href="./menu.php">Torna al menú</a></p>
+            <h3><b>Generar PDF de la llista dels productes:</b></h3>
+            <form method="get">
+                <input class="btn btn-success" type="submit" name="generar_pdf" value="Generar PDF">
+            </form><br>
+        </div>
 
-		<?php
-		echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
-		date_default_timezone_set('Europe/Andorra');
-		echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
-		?>
+    <?php else :
+        header("Location: ./Errors/error_acces.php");
+    ?>
+    <?php endif; ?>
+
+    <label class="diahora container mt-4">
+        <p><a href="./menu.php">Torna al menú</a></p>
+
+        <?php
+        echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
+        date_default_timezone_set('Europe/Andorra');
+        echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
+        ?>
+    </label>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>

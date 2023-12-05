@@ -59,16 +59,16 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
 	<meta charset="utf-8">
 	<title>Dades de clients - Rellotgeria</title>
 	<link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
 <body>
 
 	<?php if ($_SESSION['tipus_usuari'] == 2) : ?>
-		<!-- If logged in with the admin, show all managers. In this case, as I need to use a function inside the PHP code, I echo the table in individual parts. -->
-		<div>
-			<h3><b>Llista de clients:</b></h3>
-			<table>
-				<thead>
+		<div class="container mt-4">
+			<h3 class="mb-4"><b>Llista de clients:</b></h3>
+			<table class="table table-bordered">
+				<thead class="thead-dark">
 					<tr>
 						<th>Identificador</th>
 						<th>Nom de usuari</th>
@@ -90,18 +90,17 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
 			</table>
 		</div>
 
-		<div>
-			<h3><b>Generar PDF de la llista de clients:</b></h3>
+		<div class="container text-center mt-4">
+			<h3><b>Generar PDF de la llista de clients:</b></h3><br>
 			<form method="get">
-				<input type="submit" name="generar_pdf" value="Generar PDF">
+				<input type="submit" class="btn btn-primary" name="generar_pdf" value="Generar PDF">
 			</form>
 		</div>
 	<?php elseif ($_SESSION['tipus_usuari'] == 1) : ?>
-		<!-- If logged in with the manager, create a table showing the clients that a manager has, not using the ID but the username of the manager. -->
-		<div>
-			<h3><b>Llista de clients:</b></h3>
-			<table>
-				<thead>
+		<div class="container mt-4">
+			<h3 class="mb-4"><b>Llista de clients:</b></h3>
+			<table class="table table-bordered">
+				<thead class="thead-dark">
 					<tr>
 						<th>Identificador</th>
 						<th>Nom de usuari</th>
@@ -123,11 +122,10 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
 			</table>
 		</div>
 	<?php elseif ($_SESSION['tipus_usuari'] == 0) : ?>
-		<!-- If logged in with the client, show the personal data from the client. -->
-		<div>
-			<h3><b>Dades personals:</b></h3>
-			<table>
-				<thead>
+		<div class="container mt-4">
+			<h3 class="mb-4"><b>Dades personals:</b></h3>
+			<table class="table table-bordered">
+				<thead class="thead-dark">
 					<tr>
 						<th>Identificador</th>
 						<th>Nom de usuari</th>
@@ -149,19 +147,25 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
 			</table>
 		</div>
 	<?php else : ?>
-		<!-- If it's someone else, it shouldn't be here, so redirect to "error_autoritzacio". -->
 		<?php header("Location: ./Errors/error_autoritzacio.php"); ?>
-	<?php endif; ?>
+	<?php endif; ?><br>
 
-	<p><a href="menu.php">Torna al menú</a></p>
+	<p class="text-center mt-4"><a href="menu.php" class="btn btn-secondary">Torna al menú</a></p><br<br><br>
 
-	<label class="diahora">
-		<?php
-		echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
-		date_default_timezone_set('Europe/Andorra');
-		echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
-		?>
-	</label>
+		<div class="mt-3 d-flex justify-content-center">
+            <p class="text-muted">
+                Usuari utilitzant l'agenda: <?php echo $_SESSION['usuari']; ?>
+                <br>
+                Data i hora: <?php date_default_timezone_set('Europe/Andorra');
+                                echo date('d/m/Y h:i:s'); ?>
+            </p>
+        </div>
+
+
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
 
