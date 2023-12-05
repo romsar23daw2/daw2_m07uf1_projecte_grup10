@@ -41,7 +41,7 @@ if (!isset($_SESSION['usuari'])) {
                     <h3 class="card-title">Menú del gestor:</h3>
                     <ul class="list-group">
                         <li class="list-group-item"><a href="./llista_clients.php">Llista de clients</a></li>
-                        <li class="list-group-item"><a href="./professional.php">Enviar correu al administrador per esborrar client</a></li>
+                        <li class="list-group-item"><a href="./sendmail_Torrente">Enviar correu al administrador per esborrar client</a></li>
                         <li class="list-group-item"><a href="./cistella_gestio_productes.php">Gestió de productes</a></li>
                     </ul>
                     <a href="./logout.php" class="btn btn-danger mt-3">Finalitza la sessió</a>

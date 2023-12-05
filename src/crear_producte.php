@@ -30,31 +30,41 @@ if ($parametres_complets) {
   <meta charset="utf-8">
   <title>Selecció de producte - Rellotgeria</title>
   <link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
-<body>
+<body class="container mt-5">
   <!-- If I'm a manager. -->
   <?php if ($_SESSION['tipus_usuari'] == 1) : ?>
-    <h3><b>Creació d'un producte:</b></h3>
+    <h3><b>Creació d'un producte:</b></h3><br>
 
     <form action="crear_producte.php" method="POST">
-      <div>
+      <div class="form-group">
         <label>Nom del producte:</label>
-        <input type="text" name="nom_producte"><br>
+        <input type="text" class="form-control" name="nom_producte"><br>
+      </div>
 
+      <div class="form-group">
         <label>ID del producte:</label>
-        <input type="number" name="id_producte" required><br>
+        <input type="number" class="form-control" name="id_producte" required><br>
+      </div>
 
+      <div class="form-group">
         <label>Preu del producte:</label>
-        <input type="text" name="preu_producte" required><br>
+        <input type="text" class="form-control" name="preu_producte" required><br>
+      </div>
 
+      <div class="form-group">
         <label>IVA del producte:</label>
-        <input type="text" name="iva_producte" required><br>
+        <input type="text" class="form-control" name="iva_producte" required><br>
+      </div>
 
+      <div class="form-group">  
         <label>Diponibilitat del producte:</label>
-        <input type="text" name="disponibilitat_producte" required><br>
+        <input type="text" class="form-control" name="disponibilitat_producte" required><br><br>
+      </div>
 
-        <button type="submit" name="crear_producte">Crear producte.</button>
+        <button type="submit" class="btn btn-primary" name="crear_producte">Crear producte.</button>
       </div>
     </form>
   <?php else :
@@ -63,24 +73,29 @@ if ($parametres_complets) {
   ?>
   <?php endif; ?>
 
-  <label class="diahora">
-    <p><a href="./menu.php">Torna al menú</a></p>
+  <label class="diahora mt-4">
+  <p class="mt-3"><a href="./cistella_gestio_productes.php" class="btn btn-secondary">Torna a la cistella</a></p>
 
-    <?php
-    echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
-    date_default_timezone_set('Europe/Andorra');
-    echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
+  <label class="diahora mt-4">
+        <?php
+        echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
+        date_default_timezone_set('Europe/Andorra');
+        echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
 
-    if (isset($_SESSION['modificat'])) {
-      if ($_SESSION['modificat']) echo "<p style='color:red'>El producte ha estat creat correctament</p>";
-      else {
-        echo "El producte no ha estat registrat<br>";
-        echo "Comprova si hi ha algún problema del sistema per poder modificar productes<br>";
-      }
+        if (isset($_SESSION['afegit'])) {
+            if ($_SESSION['afegit']) echo "<p style='color:red'>El client ha estat registrat correctament</p>";
+            else {
+                echo "L'Usuari no ha estat registrat<br>";
+                echo "Comprova si hi ha algún problema del sistema per poder enregistrar nous usuaris<br>";
+            }
 
-      unset($_SESSION['modificat']);
-    }
-    ?>
+            unset($_SESSION['afegit']);
+        }
+        ?>
+    </label>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 
 </html>

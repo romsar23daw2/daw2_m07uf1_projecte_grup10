@@ -42,84 +42,88 @@ if ($parametres_complets) {
 <html lang="ca">
 
 <head>
-	<meta charset="utf-8">
-	<title>Modificar client - Rellotgeria</title>
-	<link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
+    <meta charset="utf-8">
+    <title>Modificar client - Rellotgeria</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
-<body>
-	<h3><b>Modificació d'un client:</b></h3>
+<body class="container mt-5">
 
-	<form action="modificar_client.php" method="POST">
-		<p>
-			<?php
-			// In order to just show this part of the form when I don't have a valid manager.
-			if (!$client_trobat) {
-			?>
-		<div>
-			<label>ID del client a cercar:</label>
-			<input type="number" name="id_client_trobat" min=1 max=1000 required><br>
-			<br>
-			<button type="submit">Cercar client.</button>
-		</div>
-	<?php
-			} elseif ($client_trobat) {
-	?>
-		<div>
-			<label>Nou nom d'usuari:</label>
-			<input type="text" name="nom_usuari" required><br>
+    <h3><b>Modificació d'un client:</b></h3>
 
-			<label>Nova contrasenya del client:</label>
-			<input type="password" name="cts_nou_client" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Mínims: 8 caràcters, una majúscula, una minúscula, un número i un caràter especial" required><br>
+    <form action="modificar_client.php" method="POST">
+        <p>
+            <?php
+            if (!$client_trobat) {
+            ?>
+                <div>
+                    <label>ID del client a cercar:</label>
+                    <input type="number" name="id_client_trobat" min="1" max="1000" required><br>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Cercar client</button>
+                </div>
+            <?php
+            } elseif ($client_trobat) {
+            ?>
+                <div>
+                    <label>Nou nom d'usuari:</label>
+                    <input type="text" name="nom_usuari" required><br>
 
-			<label>Nou nom complet del client:</label>
-			<input type="text" name="nom_complet_nou_client" required><br>
+                    <label>Nova contrasenya del client:</label>
+                    <input type="password" name="cts_nou_client" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Mínims: 8 caràcters, una majúscula, una minúscula, un número i un caràter especial" required><br>
 
-			<label>Nou correu del client:</label>
-			<input type="text" name="correu_nou_client" required><br>
+                    <label>Nou nom complet del client:</label>
+                    <input type="text" name="nom_complet_nou_client" required><br>
 
-			<label>Nou telèfon de contacte del client:</label>
-			<input type="number" name="telefon_nou_client" required><br>
+                    <label>Nou correu del client:</label>
+                    <input type="text" name="correu_nou_client" required><br>
 
-			<label>Nova adreça postal del client:</label>
-			<input type="number" name="adreca_nou_client" required><br>
+                    <label>Nou telèfon de contacte del client:</label>
+                    <input type="number" name="telefon_nou_client" required><br>
 
-			<label>Nou número de visa del client:</label>
-			<input type="number" name="num_visa_nou_client" required><br>
+                    <label>Nova adreça postal del client:</label>
+                    <input type="number" name="adreca_nou_client" required><br>
 
-			<label>Nou nom del gestor assignat pel client:</label>
-			<input type="text" name="nom_gestor_nou_client"><br>
-			</p>
+                    <label>Nou número de visa del client:</label>
+                    <input type="number" name="num_visa_nou_client" required><br>
 
-			<button type="submit" name="tipus_usuari" value=<?php echo CLIENT ?>>Modificar client.</button> <!-- value=<?php echo CLIENT ?> is to be able the type of user.-->
-		</div>
-	</form>
-<?php
-			}
-?>
-</p>
-</form>
+                    <label>Nou nom del gestor assignat pel client:</label>
+                    <input type="text" name="nom_gestor_nou_client"><br>
+                    </p>
 
-<p><a href="menu.php">Torna al menú.</a></p>
+                    <button type="submit" name="tipus_usuari" value=<?php echo CLIENT ?> class="btn btn-primary">Modificar client</button>
+                </div>
+        </p>
+        </form>
+    <?php
+            }
+    ?>
+    </form>
 
-<label class="diahora">
-	<?php
-	echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
+    <p class="mt-3"><a href="menu.php" class="btn btn-secondary">Torna al menú</a></p>
 
-	date_default_timezone_set('Europe/Andorra');
-	echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
+    <label class="diahora mt-4">
+        <?php
+        echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
 
-	if (isset($_SESSION['modificat'])) {
-		if ($_SESSION['modificat']) echo "<p style='color:red'>El client ha estat modificat correctament</p>";
-		else {
-			echo "L'Usuari no ha estat registrat<br>";
-			echo "Comprova si hi ha algún problema del sistema per poder enregistrar nous usuaris<br>";
-		}
+        date_default_timezone_set('Europe/Andorra');
+        echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
 
-		unset($_SESSION['modificat']);
-	}
-	?>
-</label>
+        if (isset($_SESSION['modificat'])) {
+            if ($_SESSION['modificat']) echo "<p style='color:red'>El client ha estat modificat correctament</p>";
+            else {
+                echo "L'Usuari no ha estat registrat<br>";
+                echo "Comprova si hi ha algún problema del sistema per poder enregistrar nous usuaris<br>";
+            }
+
+            unset($_SESSION['modificat']);
+        }
+        ?>
+    </label>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 
 </html>

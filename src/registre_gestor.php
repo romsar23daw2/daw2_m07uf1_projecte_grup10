@@ -42,57 +42,72 @@ if ($parametres_complets) {
 <html lang="ca">
 
 <head>
-	<meta charset="utf-8">
-	<title>Registrar gestor - Rellotgeria</title>
-	<link rel="stylesheet" href="./Assets/Stylesheets/agenda.css">
+    <meta charset="utf-8">
+    <title>Registrar gestor - Rellotgeria</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
-<body>
-	<h3><b>Registre d'un nou gestor:</b></h3>
+<body class="container mt-5">
 
-	<form action="registre_gestor.php" method="POST">
-		<p>
-			<label>ID del nou gestor:</label>
-			<input type="number" name="id_nou_gestor" min=1 max=100 required><br>
+    <h3><b>Registre d'un nou gestor:</b></h3>
 
-			<label>Nom d'usuari:</label>
-			<input type="text" name="nom_usuari" required><br>
+    <form action="registre_gestor.php" method="POST">
+        <div class="form-group">
+            <label for="id_nou_gestor">ID del nou gestor:</label>
+            <input type="number" class="form-control" id="id_nou_gestor" name="id_nou_gestor" min="1" max="100" required>
+        </div>
 
-			<label>Contrasenya del nou gestor:</label>
-			<input type="password" name="cts_nou_gestor" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Mínims: 8 caràcters, una majúscula, una minúscula, un número i un caràter especial" required><br>
+        <div class="form-group">
+            <label for="nom_usuari">Nom d'usuari:</label>
+            <input type="text" class="form-control" id="nom_usuari" name="nom_usuari" required>
+        </div>
 
-			<label>Nom complet del nou gestor:</label>
-			<input type="text" name="nom_complet_nou_gestor" required><br>
+        <div class="form-group">
+            <label for="cts_nou_gestor">Contrasenya del nou gestor:</label>
+            <input type="password" class="form-control" id="cts_nou_gestor" name="cts_nou_gestor" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Mínims: 8 caràcters, una majúscula, una minúscula, un número i un caràter especial" required>
+        </div>
 
-			<label>Correu del nou gestor:</label>
-			<input type="text" name="correu_nou_gestor" required><br>
+        <div class="form-group">
+            <label for="nom_complet_nou_gestor">Nom complet del nou gestor:</label>
+            <input type="text" class="form-control" id="nom_complet_nou_gestor" name="nom_complet_nou_gestor" required>
+        </div>
 
-			<label>Telèfon de contacte del nou gestor:</label>
-			<input type="number" name="telefon_nou_gestor" required>
-		</p>
+        <div class="form-group">
+            <label for="correu_nou_gestor">Correu del nou gestor:</label>
+            <input type="text" class="form-control" id="correu_nou_gestor" name="correu_nou_gestor" required>
+        </div>
 
-		<button type="submit" name="tipus_usuari" value=<?php echo GESTOR ?>>Crear nou gestor.</button>
-	</form>
+        <div class="form-group">
+            <label for="telefon_nou_gestor">Telèfon de contacte del nou gestor:</label>
+            <input type="number" class="form-control" id="telefon_nou_gestor" name="telefon_nou_gestor" required>
+        </div>
 
-	<p><a href="menu.php">Torna al menú.</a></p>
+        <button type="submit" class="btn btn-primary" name="tipus_usuari" value=<?php echo GESTOR ?>>Crear nou gestor.</button>
+    </form>
 
-	<label class="diahora">
-		<?php
-		echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
-		date_default_timezone_set('Europe/Andorra');
-		echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
+    <p class="mt-3"><a href="menu.php" class="btn btn-secondary">Torna al menú</a></p>
 
-		if (isset($_SESSION['afegit'])) {
-			if ($_SESSION['afegit']) echo "<p style='color:red'>El gestor ha estat registrat correctament</p>";
-			else {
-				echo "L'Usuari no ha estat registrat<br>";
-				echo "Comprova si hi ha algún problema del sistema per poder enregistrar nous usuaris<br>";
-			}
+    <label class="diahora mt-4">
+        <?php
+        echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
+        date_default_timezone_set('Europe/Andorra');
+        echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
 
-			unset($_SESSION['afegit']);
-		}
-		?>
-	</label>
+        if (isset($_SESSION['afegit'])) {
+            if ($_SESSION['afegit']) echo "<p style='color:red'>El gestor ha estat registrat correctament</p>";
+            else {
+                echo "L'Usuari no ha estat registrat<br>";
+                echo "Comprova si hi ha algún problema del sistema per poder enregistrar nous usuaris<br>";
+            }
+
+            unset($_SESSION['afegit']);
+        }
+        ?>
+    </label>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 
 </html>

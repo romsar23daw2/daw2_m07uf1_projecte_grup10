@@ -8,8 +8,6 @@ require 'phpmailer/src/SMTP.php';
 
 session_start(); // Inicia la sesión, asegúrate de llamar a esto al principio del script
 
-// Agrega esta línea para imprimir el contenido de la sesión
-var_dump($_SESSION);
 
 if (isset($_POST["send"])) {
     // Verifica si el usuario está autenticado
@@ -21,12 +19,12 @@ if (isset($_POST["send"])) {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'a48465927@gmail.com'; // Reemplaza con tu correo
-            $mail->Password = 'ghiikpskvgwsgpyt'; // Reemplaza con tu contraseña
+            $mail->Username = 'a48465927@gmail.com'; 
+            $mail->Password = 'ghiikpskvgwsgpyt'; 
             $mail->SMTPSecure = 'ssl';
             $mail->Port = 465;
 
-            $mail->setFrom('tu_correo@gmail.com'); // Reemplaza con tu correo
+            $mail->setFrom('tu_correo@gmail.com'); 
 
             // Define un array asociativo de usuarios y sus correos electrónicos correspondientes
             $usuariosCorreos = [
