@@ -127,6 +127,7 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 1) {
 
                     // Mostrar solo si el producto está disponible
                     // Show only if the product is available.
+        
                     if ($disponibilitat == "Disponible") {
                         echo '<input type="checkbox" name="producte[]" value="' . $nomProducte . '" /> ' . $nomProducte . '<br />';
                     }
