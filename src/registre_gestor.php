@@ -6,35 +6,35 @@ require("./classes-gestor-client-admin.php");
 session_start();
 
 if (!isset($_SESSION['usuari'])) {
-	header("Location: ./Errors/error_acces.php");
+    header("Location: ./Errors/error_acces.php");
 } else {
-	$autoritzat_admin = fAutoritzacio($_SESSION['usuari']);
+    $autoritzat_admin = fAutoritzacio($_SESSION['usuari']);
 
-	if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
-		header("Location: ./logout_expira_sessio.php");
-	} else if (!$autoritzat_admin) {
-		header("Location: ./Errors/error_autoritzacio.php");
-	}
+    if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
+        header("Location: ./logout_expira_sessio.php");
+    } else if (!$autoritzat_admin) {
+        header("Location: ./Errors/error_autoritzacio.php");
+    }
 }
 
 $parametres_complets = (isset($_POST['id_nou_gestor'])) && (isset($_POST['nom_usuari'])) && (isset($_POST['cts_nou_gestor'])) && (isset($_POST['nom_complet_nou_gestor'])) && (isset($_POST['correu_nou_gestor'])) && (isset($_POST['telefon_nou_gestor'])) && (isset($_POST['tipus_usuari']));
 
 if ($parametres_complets) {
-	$nou_gestor = new Gestor(
-		$_POST['id_nou_gestor'],
-		$_POST['nom_usuari'],
-		$_POST['cts_nou_gestor'],
-		$_POST['nom_complet_nou_gestor'],
-		$_POST['correu_nou_gestor'],
-		$_POST['telefon_nou_gestor'],
-		$_POST['tipus_usuari']
-	);
+    $nou_gestor = new Gestor(
+        $_POST['id_nou_gestor'],
+        $_POST['nom_usuari'],
+        $_POST['cts_nou_gestor'],
+        $_POST['nom_complet_nou_gestor'],
+        $_POST['correu_nou_gestor'],
+        $_POST['telefon_nou_gestor'],
+        $_POST['tipus_usuari']
+    );
 
-	// $nou_gestor->fRegistrarGestor($nou_gestor) is because I use $nou_gestor to create a new manager, and I need to specify the class if I don't, I can't access the method.
-	$afegit = $nou_gestor->fRegistrarGestor($nou_gestor);
-	$_SESSION['afegit'] = $afegit;
+    // $nou_gestor->fRegistrarGestor($nou_gestor) is because I use $nou_gestor to create a new manager, and I need to specify the class if I don't, I can't access the method.
+    $afegit = $nou_gestor->fRegistrarGestor($nou_gestor);
+    $_SESSION['afegit'] = $afegit;
 
-	header("refresh: 5; url=menu.php");
+    header("refresh: 5; url=menu.php");
 }
 ?>
 
@@ -104,10 +104,6 @@ if ($parametres_complets) {
         }
         ?>
     </label>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 
 </html>

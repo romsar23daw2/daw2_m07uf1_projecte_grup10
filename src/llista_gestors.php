@@ -92,9 +92,6 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
         </div>
 
         <div>
-            <h3><b>Esborrar gestor:</b></h3><br>
-            <button type="submit" name="esborar_gestor" class="btn btn-danger">Esborrar gestor</button><br><br>
-
             <h3><b>Generar PDF de la llista de gestors:</b></h3><br>
             <form method="get">
                 <button type="submit" name="generar_pdf" class="btn btn-primary">Generar PDF</button>
@@ -115,10 +112,6 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
         echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
         ?>
     </label>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 
 </html>

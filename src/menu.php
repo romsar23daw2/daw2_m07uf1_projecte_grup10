@@ -27,9 +27,9 @@ if (!isset($_SESSION['usuari'])) {
                         <li class="list-group-item"><a href="./registre_gestor.php">Registrar nou gestor</a></li>
                         <li class="list-group-item"><a href="./registre_client.php">Registrar nou client</a></li>
                         <li class="list-group-item"><a href="./llista_gestors.php">Llista de gestors</a></li>
-                        <li class="list-group-item"><a href="./modificar_gestor.php">Modificar o esborrar dades de un gestor</a></li>
+                        <li class="list-group-item"><a href="./modificar_borrar_gestor.php">Modificar o esborrar dades d'un gestor</a></li>
                         <li class="list-group-item"><a href="./llista_clients.php">Llista de clients</a></li>
-                        <li class="list-group-item"><a href="./modificar_client.php">Modificar o esborrar dades de un client</a></li>
+                        <li class="list-group-item"><a href="./modificar_borrar_client.php">Modificar o esborrar dades d'un client</a></li>
                         <li class="list-group-item"><a href="./modificar_administrador.php">Modificació de dades del administrador</a></li>
                     </ul>
                     <a href="./logout.php" class="btn btn-danger mt-3">Finalitza la sessió</a>
@@ -41,7 +41,7 @@ if (!isset($_SESSION['usuari'])) {
                     <h3 class="card-title">Menú del gestor:</h3>
                     <ul class="list-group">
                         <li class="list-group-item"><a href="./llista_clients.php">Llista de clients</a></li>
-                        <li class="list-group-item"><a href="./sendmail_Torrente">Enviar correu al administrador per esborrar client</a></li>
+                        <li class="list-group-item"><a href="./enviar_correus/">Enviar correu al administrador per esborrar client</a></li>
                         <li class="list-group-item"><a href="./cistella_gestio_productes.php">Gestió de productes</a></li>
                     </ul>
                     <a href="./logout.php" class="btn btn-danger mt-3">Finalitza la sessió</a>
@@ -53,7 +53,7 @@ if (!isset($_SESSION['usuari'])) {
                     <h3 class="card-title">Menú del client:</h3>
                     <ul class="list-group">
                         <li class="list-group-item"><a href="./llista_clients.php">Visualitzar dades personals</a></li>
-                        <li class="list-group-item"><a href="./sendmail_Torrente">Enviar correu al gestor</a></li>
+                        <li class="list-group-item"><a href="./enviar_correus/">Enviar correu al gestor</a></li>
                         <li class="list-group-item"><a href="./cistella_gestio_productes.php">Gestionar cistella</a></li>
                         <li class="list-group-item"><a href="./serveis.php">Gestionar comanda</a></li>
                     </ul>

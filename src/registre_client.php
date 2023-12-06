@@ -6,52 +6,52 @@ require("./classes-gestor-client-admin.php");
 session_start();
 
 if (!isset($_SESSION['usuari'])) {
-	header("Location: ./Errors/error_acces.php");
-	exit(); // Agregado para detener la ejecución del script después de la redirección.
+    header("Location: ./Errors/error_acces.php");
+    exit(); // Agregado para detener la ejecución del script después de la redirección.
 } else {
-	$autoritzat_admin = fAutoritzacio($_SESSION['usuari']);
+    $autoritzat_admin = fAutoritzacio($_SESSION['usuari']);
 
-	if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
-		header("Location: ./logout_expira_sessio.php");
-		exit(); // Agregado para detener la ejecución del script después de la redirección.
-	} else if (!$autoritzat_admin) {
-		header("Location: ./Errors/error_autoritzacio.php");
-		exit(); // Agregado para detener la ejecución del script después de la redirección.
-	}
+    if (!isset($_SESSION['expira']) || (time() - $_SESSION['expira'] >= 0)) {
+        header("Location: ./logout_expira_sessio.php");
+        exit(); // Agregado para detener la ejecución del script después de la redirección.
+    } else if (!$autoritzat_admin) {
+        header("Location: ./Errors/error_autoritzacio.php");
+        exit(); // Agregado para detener la ejecución del script después de la redirección.
+    }
 }
 
 $parametres_complets = (
-	isset($_POST['id_nou_client']) &&
-	isset($_POST['nom_usuari']) &&
-	isset($_POST['cts_nou_client']) &&
-	isset($_POST['nom_complet_nou_client']) &&
-	isset($_POST['correu_nou_client']) &&
-	isset($_POST['telefon_nou_client']) &&
-	isset($_POST['adreca_nou_client']) &&
-	isset($_POST['num_visa_nou_client']) &&
-	isset($_POST['nom_gestor_nou_client']) &&
-	isset($_POST['tipus_usuari'])
+    isset($_POST['id_nou_client']) &&
+    isset($_POST['nom_usuari']) &&
+    isset($_POST['cts_nou_client']) &&
+    isset($_POST['nom_complet_nou_client']) &&
+    isset($_POST['correu_nou_client']) &&
+    isset($_POST['telefon_nou_client']) &&
+    isset($_POST['adreca_nou_client']) &&
+    isset($_POST['num_visa_nou_client']) &&
+    isset($_POST['nom_gestor_nou_client']) &&
+    isset($_POST['tipus_usuari'])
 );
 
 if ($parametres_complets) {
-	$nou_client = new Client(
-		$_POST['id_nou_client'],
-		$_POST['nom_usuari'],
-		$_POST['cts_nou_client'],
-		$_POST['nom_complet_nou_client'],
-		$_POST['correu_nou_client'],
-		$_POST['telefon_nou_client'],
-		$_POST['adreca_nou_client'],
-		$_POST['num_visa_nou_client'],
-		$_POST['nom_gestor_nou_client'],
-		$_POST['tipus_usuari']
-	);
+    $nou_client = new Client(
+        $_POST['id_nou_client'],
+        $_POST['nom_usuari'],
+        $_POST['cts_nou_client'],
+        $_POST['nom_complet_nou_client'],
+        $_POST['correu_nou_client'],
+        $_POST['telefon_nou_client'],
+        $_POST['adreca_nou_client'],
+        $_POST['num_visa_nou_client'],
+        $_POST['nom_gestor_nou_client'],
+        $_POST['tipus_usuari']
+    );
 
-	// $nou_client->fRegistrarClient($nou_client) is because I use $nou_client to create a new cñient, and I need to specify the class if I don't, I can't access the method.
-	$afegit = $nou_client->fRegistrarClient($nou_client);
-	$_SESSION['afegit'] = $afegit;
+    // $nou_client->fRegistrarClient($nou_client) is because I use $nou_client to create a new cñient, and I need to specify the class if I don't, I can't access the method.
+    $afegit = $nou_client->fRegistrarClient($nou_client);
+    $_SESSION['afegit'] = $afegit;
 
-	header("refresh: 5; url=menu.php");
+    header("refresh: 5; url=menu.php");
 }
 ?>
 
@@ -136,10 +136,6 @@ if ($parametres_complets) {
         }
         ?>
     </label>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 
 </html>
