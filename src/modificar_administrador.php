@@ -38,59 +38,55 @@ if ($parametres_complets) {
 <html lang="ca">
 
 <head>
-    <meta charset="utf-8">
-    <title>Modificar dades - Rellotgeria</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <meta charset="utf-8">
+  <title>Modificar dades - Rellotgeria</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
 <body class="container mt-5">
 
-    <h3><b>Modificació de credencials de l'administrador:</b></h3>
+  <h3><b>Modificació de credencials de l'administrador:</b></h3>
 
-    <form action="modificar_dades_administrador.php" method="POST">
-        <p>
-            <div class="form-group">
-                <label for="nom_usuari">Nou nom d'usuari:</label>
-                <input type="text" class="form-control" name="nom_usuari" required>
-            </div>
+  <form action="modificar_dades_administrador.php" method="POST">
+    <p>
+    <div class="form-group">
+      <label for="nom_usuari">Nou nom d'usuari:</label>
+      <input type="text" class="form-control" name="nom_usuari" required>
+    </div>
 
-            <div class="form-group">
-                <label for="cts_admin">Nova contrasenya:</label>
-                <input type="password" class="form-control" name="cts_admin" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Mínims: 8 caràcters, una majúscula, una minúscula, un número i un caràter especial" required>
-            </div>
+    <div class="form-group">
+      <label for="cts_admin">Nova contrasenya:</label>
+      <input type="password" class="form-control" name="cts_admin" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Mínims: 8 caràcters, una majúscula, una minúscula, un número i un caràter especial" required>
+    </div>
 
-            <div class="form-group">
-                <label for="correu_admin">Nou correu de l'administrador:</label>
-                <input type="text" class="form-control" name="correu_admin" required>
-            </div>
-        </p><br>
+    <div class="form-group">
+      <label for="correu_admin">Nou correu de l'administrador:</label>
+      <input type="text" class="form-control" name="correu_admin" required>
+    </div>
+    </p><br>
 
-        <button type="submit" name="tipus_usuari" value=<?php echo ADMIN ?> class="btn btn-primary">Modificar credencials</button>
-    </form>
+    <button type="submit" name="tipus_usuari" value=<?php echo ADMIN ?> class="btn btn-primary">Modificar credencials</button>
+  </form>
 
-    <p class="mt-3"><a href="./menu.php" class="btn btn-secondary">Torna al menú</a></p>
+  <p class="mt-3"><a href="./menu.php" class="btn btn-secondary">Torna al menú</a></p>
 
-    <label class="diahora mt-4">
-        <?php
-        echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
-        date_default_timezone_set('Europe/Andorra');
-        echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
+  <label class="diahora mt-4">
+    <?php
+    echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
+    date_default_timezone_set('Europe/Andorra');
+    echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
 
-        if (isset($_SESSION['afegit'])) {
-            if ($_SESSION['afegit']) echo "<p style='color:red'>L'Administrador ha estat modificat correctament</p>";
-            else {
-                echo "L'Administrador no ha estat modificat<br>";
-                echo "Comprova si hi ha algún problema del sistema per poder modificar l'Administrador<br>";
-            }
+    if (isset($_SESSION['afegit'])) {
+      if ($_SESSION['afegit']) echo "<p style='color:red'>L'Administrador ha estat modificat correctament</p>";
+      else {
+        echo "L'Administrador no ha estat modificat<br>";
+        echo "Comprova si hi ha algún problema del sistema per poder modificar l'Administrador<br>";
+      }
 
-            unset($_SESSION['afegit']);
-        }
-        ?>
-    </label>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+      unset($_SESSION['afegit']);
+    }
+    ?>
+  </label>
 </body>
 
 </html>
