@@ -51,7 +51,7 @@ if ($parametres_complets) {
 
     <h3><b>Modificació d'un client:</b></h3>
 
-    <form action="modificar_client.php" method="POST">
+    <form action="modificar_borrar_client.php" method="POST">
         <p>
             <?php
             if (!$client_trobat) {
