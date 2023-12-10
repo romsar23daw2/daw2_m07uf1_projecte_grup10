@@ -62,42 +62,60 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 
-<body>
-
+<body class="container mt-5">
 	<?php if ($_SESSION['tipus_usuari'] == 2) : ?>
-		<div class="container mt-4">
-			<h3 class="mb-4"><b>Llista de clients:</b></h3>
-			<table class="table table-bordered">
-				<thead class="thead-dark">
-					<tr>
-						<th>Identificador</th>
-						<th>Nom de usuari</th>
-						<th>Nom complet</th>
-						<th>Correu electrònic</th>
-						<th>Telèfon de contacte</th>
-						<th>Adreça postal</th>
-						<th>Número targeta visa</th>
-						<th>Gestor assignat</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php
-					require("./funcions.php");
-					$llista = fLlegeixFitxer(FITXER_CLIENTS);
-					fCreaTaulaClients($llista);
-					?>
-				</tbody>
-			</table>
+		<div>
+			<?php
+			require("./funcions.php");
+
+			// If the FITXER_GESTORS doesn't exist, or is empty, means that there aren't managers.
+			if (!fLlegeixFitxer(FITXER_CLIENTS)) :
+				echo "No hi ha cap client registrat.";
+			?>
+
+			<?php else : ?>
+				<h3 class="mb-4"><b>Llista de clients:</b></h3>
+				<table class="table table-bordered">
+					<thead class="thead-dark">
+						<tr>
+							<th>Identificador</th>
+							<th>Nom de usuari</th>
+							<th>Nom complet</th>
+							<th>Correu electrònic</th>
+							<th>Telèfon de contacte</th>
+							<th>Adreça postal</th>
+							<th>Número targeta visa</th>
+							<th>Gestor assignat</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php
+						$llista = fLlegeixFitxer(FITXER_CLIENTS);
+						fCreaTaulaClients($llista);
+						?>
+					</tbody>
+				</table>
 		</div>
 
-		<div class="container text-center mt-4">
+		<div>
 			<h3><b>Generar PDF de la llista de clients:</b></h3><br>
 			<form method="get">
 				<input type="submit" class="btn btn-primary" name="generar_pdf" value="Generar PDF">
 			</form>
 		</div>
-	<?php elseif ($_SESSION['tipus_usuari'] == 1) : ?>
-		<div class="container mt-4">
+	<?php endif; ?>
+
+<?php elseif ($_SESSION['tipus_usuari'] == 1) : ?>
+	<div class="container mt-4">
+
+		<?php
+		require("./funcions.php");
+
+		// If the FITXER_GESTORS doesn't exist, or is empty, means that there aren't managers.
+		if (!fLlegeixFitxer(FITXER_CLIENTS)) :
+			echo "El gestor amb nom " . $_SESSION['usuari'] . " no té cap client assignat";
+		?>
+		<?php else : ?>
 			<h3 class="mb-4"><b>Llista de clients:</b></h3>
 			<table class="table table-bordered">
 				<thead class="thead-dark">
@@ -114,53 +132,52 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
 				</thead>
 				<tbody>
 					<?php
-					require("./funcions.php");
 					$llista = fLlegeixFitxer(FITXER_CLIENTS);
 					fCreaTaulaClientsPerGestor($_SESSION['usuari'], $llista);
 					?>
 				</tbody>
 			</table>
-		</div>
-	<?php elseif ($_SESSION['tipus_usuari'] == 0) : ?>
-		<div class="container mt-4">
-			<h3 class="mb-4"><b>Dades personals:</b></h3>
-			<table class="table table-bordered">
-				<thead class="thead-dark">
-					<tr>
-						<th>Identificador</th>
-						<th>Nom de usuari</th>
-						<th>Nom complet</th>
-						<th>Correu electrònic</th>
-						<th>Telèfon de contacte</th>
-						<th>Adreça postal</th>
-						<th>Número targeta visa</th>
-						<th>Gestor assignat</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php
-					require("./funcions.php");
-					$llista = fLlegeixFitxer(FITXER_CLIENTS);
-					fVeureDadesPersonalsClient($_SESSION['usuari'], $llista);
-					?>
-				</tbody>
-			</table>
-		</div>
-	<?php else : ?>
-		<?php header("Location: ./Errors/error_autoritzacio.php"); ?>
-	<?php endif; ?><br>
+	</div>
+<?php endif; ?>
 
-	<p class="text-center mt-4"><a href="menu.php" class="btn btn-secondary">Torna al menú</a></p>
-	<br<br><br>
+<?php elseif ($_SESSION['tipus_usuari'] == 0) : ?>
+	<div class="container mt-4">
+		<h3 class="mb-4"><b>Dades personals:</b></h3>
+		<table class="table table-bordered">
+			<thead class="thead-dark">
+				<tr>
+					<th>Identificador</th>
+					<th>Nom de usuari</th>
+					<th>Nom complet</th>
+					<th>Correu electrònic</th>
+					<th>Telèfon de contacte</th>
+					<th>Adreça postal</th>
+					<th>Número targeta visa</th>
+					<th>Gestor assignat</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+				require("./funcions.php");
+				$llista = fLlegeixFitxer(FITXER_CLIENTS);
+				fVeureDadesPersonalsClient($_SESSION['usuari'], $llista);
+				?>
+			</tbody>
+		</table>
+	</div>
+<?php else : ?>
+	<?php header("Location: ./Errors/error_autoritzacio.php"); ?>
+<?php endif; ?><br>
 
-		<div class="mt-3 d-flex justify-content-center">
-			<p class="text-muted">
-				Usuari utilitzant l'agenda: <?php echo $_SESSION['usuari']; ?>
-				<br>
-				Data i hora: <?php date_default_timezone_set('Europe/Andorra');
-											echo date('d/m/Y h:i:s'); ?>
-			</p>
-		</div>
+<p class="mt-3"><a href="menu.php" class="btn btn-secondary">Torna al menú</a></p>
+<div class="mt-4">
+	<p class="text-muted">
+		Usuari utilitzant l'agenda: <?php echo $_SESSION['usuari']; ?>
+		<br>
+		Data i hora: <?php date_default_timezone_set('Europe/Andorra');
+									echo date('d/m/Y h:i:s'); ?>
+	</p>
+</div>
 </body>
 
 </html>

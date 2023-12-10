@@ -74,7 +74,7 @@ if ($parametres_complets) {
   <?php endif; ?>
 
   <label class="diahora mt-4">
-  <p class="mt-3"><a href="./cistella_gestio_productes.php" class="btn btn-secondary">Torna a la cistella</a></p>
+  <p class="mt-3"><a href="./cistella_gestio_productes.php" class="btn btn-secondary">Torna al menú de gestió de productes</a></p>
 
   <label class="diahora mt-4">
         <?php

@@ -67,51 +67,59 @@ if (isset($_GET['generar_pdf']) && $_SESSION['tipus_usuari'] == 2) {
 </head>
 
 <body class="container mt-5">
-
     <?php if ($_SESSION['tipus_usuari'] == 2) : ?>
         <div>
-            <h3><b>Llista de gestors:</b></h3>
-            <table class="table table-bordered">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Identificador</th>
-                        <th scope="col">Nom de usuari</th>
-                        <th scope="col">Nom complet</th>
-                        <th scope="col">Correu electrònic</th>
-                        <th scope="col">Telèfon de contacte</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    require("./funcions.php");
-                    $llista = fLlegeixFitxer(FITXER_GESTORS);
-                    fCreaTaulaGestors($llista);
-                    ?>
-                </tbody>
-            </table>
-        </div>
+            <?php
+            require("./funcions.php");
 
+            // If the FITXER_GESTORS doesn't exist, or is empty, means that there aren't managers.
+            if (!fLlegeixFitxer(FITXER_GESTORS)) :
+                echo "No hi ha cap gestor registrat.";
+            ?>
+
+            <?php else : ?>
+                <h3><b>Llista de gestors:</b></h3>
+                <table class="table table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Identificador</th>
+                            <th scope="col">Nom de usuari</th>
+                            <th scope="col">Nom complet</th>
+                            <th scope="col">Correu electrònic</th>
+                            <th scope="col">Telèfon de contacte</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $llista = fLlegeixFitxer(FITXER_GESTORS);
+                        fCreaTaulaGestors($llista);
+                        ?>
+                    </tbody>
+                </table>
+        </div>
         <div>
             <h3><b>Generar PDF de la llista de gestors:</b></h3><br>
             <form method="get">
                 <button type="submit" name="generar_pdf" class="btn btn-primary">Generar PDF</button>
             </form>
         </div>
-    <?php else : ?>
-        <!-- Only an admin can access here. -->
-        <?php header("Location: ./Errors/error_autoritzacio.php"); ?>
-        <?php exit; ?>
     <?php endif; ?>
 
-    <p class="mt-3"><a href="menu.php" class="btn btn-secondary">Torna al menú</a></p>
+<?php else : ?>
+    <!-- Only an admin can access here. -->
+    <?php header("Location: ./Errors/error_autoritzacio.php"); ?>
+    <?php exit; ?>
+<?php endif; ?>
 
-    <label class="diahora mt-4">
-        <?php
-        echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
-        date_default_timezone_set('Europe/Andorra');
-        echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
-        ?>
-    </label>
+<p class="mt-3"><a href="menu.php" class="btn btn-secondary">Torna al menú</a></p>
+
+<label class="diahora mt-4">
+    <?php
+    echo "<p>Usuari utilitzant l'agenda: " . $_SESSION['usuari'] . "</p>";
+    date_default_timezone_set('Europe/Andorra');
+    echo "<p>Data i hora: " . date('d/m/Y h:i:s') . "</p>";
+    ?>
+</label>
 </body>
 
 </html>
