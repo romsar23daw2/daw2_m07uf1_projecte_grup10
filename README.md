@@ -1,5 +1,5 @@
 # daw2_m07uf1_projecte_grup10 - Fet per Víctor Toro, Alex Torrente, Romà Sardá Casellas i Leo.
-Botiga de venta de rellotges
+Botiga de venta de rellotges.
 
 # Projecte DAW2 M07UF1 - Grup 10
 
@@ -29,12 +29,12 @@ cd daw2_m07uf1_projecte_grup10
 vagrant up
 4. Un cop la màquina virtual estigui en funcionament, accedeix a ella:
 vagrant ssh
-
 5. Navega al directori del projecte dins de la màquina virtual i arrenca el servidor web.
+6. Realitzar el comandament `ip a` per així aconseguir l'adreça ip de la màquina virtual.
 
 ## Ús
 
-Un cop l'entorn estigui configurat i el servidor en funcionament, pots accedir a l'aplicació web a través del teu navegador a l'adreça configurada en Vagrant, típicament `http://localhost:8000`.
+Un cop l'entorn estigui configurat i el servidor en funcionament, pots accedir a l'aplicació web a través del teu navegador a l'adreça configurada en Vagrant, així incicant l'adreça ip de la màquina virtual i accedint al directori.
 
 
 
